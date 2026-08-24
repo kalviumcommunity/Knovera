@@ -1,0 +1,39 @@
+2023-10-25 10:15:30,123 - INFO - Sending request to model: gpt-3.5-turbo
+2023-10-25 10:15:30,123 - INFO - Outgoing messages payload: [
+  {
+    "role": "system",
+    "content": "You are a helpful RAG assistant."
+  },
+  {
+    "role": "user",
+    "content": "What is the capital of France?"
+  }
+]
+2023-10-25 10:15:31,456 - INFO - Incoming response payload: {
+  "id": "chatcmpl-12345",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The capital of France is Paris.",
+        "role": "assistant",
+        "function_call": null,
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1698243331,
+  "model": "gpt-3.5-turbo-0613",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 7,
+    "prompt_tokens": 24,
+    "total_tokens": 31
+  }
+}
+2023-10-25 10:15:31,457 - INFO - Token usage: CompletionUsage(completion_tokens=7, prompt_tokens=24, total_tokens=31)
+
+--- Assistant Reply ---
+The capital of France is Paris.
+-----------------------

@@ -1,0 +1,21 @@
+# Team Workflow and Conventions
+
+## Branching Strategy
+- **Main branch** holds releasable code only.
+- **Feature branches** follow `feature/[description]` naming convention (e.g., `feature/data-ingestion`, `fix/validation-logic`).
+- Branches are deleted after they are merged into main.
+
+## Commit Message Convention
+- **Types used:** `feat`, `fix`, `docs`, `refactor`, `chore`.
+- **Format:** `[type]: [description]`
+- **Why:** Enables automated changelog generation and maintains a clear, readable project history.
+
+## PR Review Process
+- PRs require **at least one approval** before merge.
+- Code review focuses on: correctness, clarity, data integrity, and test coverage.
+- Commit messages are reviewed as part of code review to ensure compliance with conventions.
+
+## GitHub Issue Tracking Approach
+- Every feature or fix starts with an issue.
+- Issues must have labels, assignees, and detailed descriptions.
+- Issues are closed when the corresponding PR is merged.

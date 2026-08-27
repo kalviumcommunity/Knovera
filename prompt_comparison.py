@@ -61,14 +61,14 @@ MOCK_RESPONSES = {
 def run_prompt_comparison():
     load_dotenv()
     
-    api_key = os.getenv("OPENAI_API_KEY")
-    base_url = os.getenv("OPENAI_BASE_URL")
-    model_name = os.getenv("OPENAI_MODEL", os.getenv("CHAT_MODEL", "gpt-3.5-turbo"))
+    api_key = os.getenv("OPENROUTER_API_KEY", os.getenv("OPENAI_API_KEY"))
+    base_url = os.getenv("OPENROUTER_BASE_URL", os.getenv("OPENAI_BASE_URL", "https://openrouter.ai/api/v1"))
+    model_name = os.getenv("OPENROUTER_MODEL", os.getenv("OPENAI_MODEL", os.getenv("CHAT_MODEL", "gpt-3.5-turbo")))
     
     use_mock = not api_key or api_key == "your_openai_api_key_here"
     if use_mock:
-        logging.warning("No valid OPENAI_API_KEY found in .env. Running in offline comparison demo mode.")
-        print("[NOTICE] Running in comparison demo mode (offline simulation). Set OPENAI_API_KEY in .env for live API calls.\n")
+        logging.warning("No valid API key found in .env. Running in offline comparison demo mode.")
+        print("[NOTICE] Running in comparison demo mode (offline simulation). Set OPENROUTER_API_KEY in .env for live API calls.\n")
     else:
         client_kwargs = {"api_key": api_key}
         if base_url:
@@ -114,7 +114,7 @@ def run_prompt_comparison():
                 output_lines.append(f"Tokens Used: Prompt={usage.prompt_tokens}, Completion={usage.completion_tokens}, Total={usage.total_tokens}\n")
             
         except AuthenticationError:
-            err_msg = "[ERROR 401] Authentication failed. Check your OPENAI_API_KEY."
+            err_msg = "[ERROR 401] Authentication failed. Check your API key."
             logging.error(err_msg)
             output_lines.append(f"Assistant Reply: {err_msg}\n")
         except RateLimitError:

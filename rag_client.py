@@ -18,12 +18,12 @@ def main():
     # Task 1: Load config from .env
     load_dotenv()
     
-    api_key = os.getenv("OPENAI_API_KEY")
-    base_url = os.getenv("OPENAI_BASE_URL")
-    model_name = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
+    api_key = os.getenv("OPENROUTER_API_KEY", os.getenv("OPENAI_API_KEY"))
+    base_url = os.getenv("OPENROUTER_BASE_URL", os.getenv("OPENAI_BASE_URL", "https://openrouter.ai/api/v1"))
+    model_name = os.getenv("OPENROUTER_MODEL", os.getenv("OPENAI_MODEL", "gpt-3.5-turbo"))
     
     if not api_key:
-        logging.error("Missing OPENAI_API_KEY in .env file")
+        logging.error("Missing OPENROUTER_API_KEY or OPENAI_API_KEY in .env file")
         return
         
     client = OpenAI(
@@ -61,7 +61,7 @@ def main():
         
     # Task 4: Handle errors clearly
     except AuthenticationError:
-        logging.error("Authentication Failed (401): Please check your OPENAI_API_KEY. It may be invalid or expired.")
+        logging.error("Authentication Failed (401): Please check your API key. It may be invalid or expired.")
     except RateLimitError:
         logging.error("Rate Limit Exceeded (429): You are sending requests too quickly or have exhausted your quota.")
     except APIError as e:

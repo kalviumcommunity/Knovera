@@ -68,6 +68,11 @@ Cost Breakdown Across Model Providers:
     - Output Rate : $0.01000 / 1K tokens  | Output Cost: $0.000450
     - TOTAL COST PER CALL: $0.001375 (~$1.375 per 1K calls)
 
+  Model: Ling-3.0-Tiny
+    - Input Rate  : $0.00000 / 1K tokens  | Input Cost : $0.000000
+    - Output Rate : $0.00000 / 1K tokens  | Output Cost: $0.000000
+    - TOTAL COST PER CALL: $0.000000 (~$0.000 per 1K calls)
+
 [Scenario B: Corpus Scale & Retrieval Operations (4,000 Documents)]
   1. One-time Corpus Ingestion & Embedding Cost:
      - Total Corpus Documents  : 4,000
@@ -81,6 +86,7 @@ Cost Breakdown Across Model Providers:
      - Total Monthly Output Tokens: 450,000 tokens
      - Estimated Monthly Cost (GPT-3.5-Turbo) : $5.41
      - Estimated Monthly Cost (GPT-4o-Mini)   : $1.69
+     - Estimated Monthly Cost (Ling-3.0-Tiny) : $0.00
 
 -------------------------------------------------------------------------
 TASK 4: LENGTH–TOKEN RELATIONSHIP & NON-LINEARITY DEMONSTRATION

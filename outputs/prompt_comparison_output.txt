@@ -10,23 +10,14 @@ You are Knovera, an internal support assistant for staff documentation. Your sco
 --- Prompt Variation 1 (Vague Prompt) ---
 Description: Ambiguous query with no constraints on format, length, or specifics.
 User Prompt: "Explain our refund policy."
-Assistant Reply:
-Our standard refund policy allows customers to request a refund within 30 days of purchase for unused products. Please contact customer support with your original receipt and order ID to initiate the return process.
-Tokens Used: Prompt=58, Completion=36, Total=94
+Assistant Reply: [ERROR API] API call failed: Error code: 404 - {'error': {'message': 'No endpoints found for inclusionai/ling-3.0-tiny:free.', 'code': 404}, 'user_id': 'user_3HbUotK0cIBBl54QUjDisb2LWET'}
 
 --- Prompt Variation 2 (Clear & Constrained Prompt) ---
 Description: Specific query defining the exact task, required detail, and length constraint.
 User Prompt: "In one concise sentence, state the standard refund window in days and key eligibility criteria."
-Assistant Reply:
-The standard refund window is 30 days from purchase for unused items with proof of purchase.
-Tokens Used: Prompt=64, Completion=17, Total=81
+Assistant Reply: [ERROR API] API call failed: Error code: 404 - {'error': {'message': 'No endpoints found for inclusionai/ling-3.0-tiny:free.', 'code': 404}, 'user_id': 'user_3HbUotK0cIBBl54QUjDisb2LWET'}
 
 --- Prompt Variation 3 (Explicit Format Constraint) ---
 Description: Strict format constraint instructing the model to output parsed JSON for machine handling.
 User Prompt: "State our refund window. Reply ONLY with a valid JSON object matching this schema: {"refund_window_days": int, "policy_summary": string}."
-Assistant Reply:
-{
-  "refund_window_days": 30,
-  "policy_summary": "Refunds are eligible within 30 days of purchase for unused items with receipt."
-}
-Tokens Used: Prompt=76, Completion=28, Total=104
+Assistant Reply: [ERROR API] API call failed: Error code: 404 - {'error': {'message': 'No endpoints found for inclusionai/ling-3.0-tiny:free.', 'code': 404}, 'user_id': 'user_3HbUotK0cIBBl54QUjDisb2LWET'}

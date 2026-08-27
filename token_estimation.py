@@ -92,7 +92,8 @@ DEMO_SAMPLES = [
 PRICING_MODELS = {
     "GPT-3.5-Turbo": {"input": 0.0005, "output": 0.0015, "embedding": 0.00010},
     "GPT-4o-Mini":   {"input": 0.00015, "output": 0.00060, "embedding": 0.00002},
-    "GPT-4o":        {"input": 0.0025,  "output": 0.0100,  "embedding": 0.00002}
+    "GPT-4o":        {"input": 0.0025,  "output": 0.0100,  "embedding": 0.00002},
+    "Ling-3.0-Tiny": {"input": 0.0, "output": 0.0, "embedding": 0.0}
 }
 
 
@@ -247,12 +248,14 @@ def run_token_estimation():
 
     cost_gpt35 = calculate_cost(total_monthly_input_tokens, total_monthly_output_tokens, PRICING_MODELS["GPT-3.5-Turbo"]["input"], PRICING_MODELS["GPT-3.5-Turbo"]["output"])
     cost_gpt4o_mini = calculate_cost(total_monthly_input_tokens, total_monthly_output_tokens, PRICING_MODELS["GPT-4o-Mini"]["input"], PRICING_MODELS["GPT-4o-Mini"]["output"])
+    cost_ling = calculate_cost(total_monthly_input_tokens, total_monthly_output_tokens, PRICING_MODELS["Ling-3.0-Tiny"]["input"], PRICING_MODELS["Ling-3.0-Tiny"]["output"])
 
     output_lines.append(f"     - Tokens per Query (Input)  : {monthly_input_tokens_per_query} tokens (3 chunks retrieved)")
     output_lines.append(f"     - Total Monthly Input Tokens: {total_monthly_input_tokens:,} tokens")
     output_lines.append(f"     - Total Monthly Output Tokens: {total_monthly_output_tokens:,} tokens")
     output_lines.append(f"     - Estimated Monthly Cost (GPT-3.5-Turbo) : ${cost_gpt35['total_cost']:.2f}")
     output_lines.append(f"     - Estimated Monthly Cost (GPT-4o-Mini)   : ${cost_gpt4o_mini['total_cost']:.2f}")
+    output_lines.append(f"     - Estimated Monthly Cost (Ling-3.0-Tiny) : ${cost_ling['total_cost']:.2f}")
 
     # -------------------------------------------------------------------------
     # Task 4: Length–Token Relationship Demonstration

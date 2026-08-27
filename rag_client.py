@@ -65,7 +65,9 @@ def main():
             response = client.chat.completions.create(
                 model=model_name,
                 messages=messages,
-                temperature=0.7
+                temperature=0.1,
+                max_tokens=300,
+                stop=["\n\nUser:", "User:"]
             )
             
             reply_content = response.choices[0].message.content

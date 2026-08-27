@@ -1,0 +1,39 @@
+================================================================================
+KNOVERA - MODEL PARAMETER EXPERIMENTS
+================================================================================
+Model used: openrouter/free
+
+--- EXPERIMENT 1: TEMPERATURE (0.0 vs 1.0) ---
+Testing how randomness affects output consistency and creativity.
+
+[Temperature = 0.0]
+Result (first 250 chars):
+# The History of Refund Policies in the Retail Industry
+
+The concept of refunds in retail has a rich and evolving history, dating back to the late 19th and early 20th centuries. In the early days of commerce, transactions were largely considered fina...
+
+[Temperature = 1.0]
+Result (first 250 chars):
+The concept of a retail refund is relatively modern, rooted in an era when "caveat emptor" let the buyer beware, and transactions were often informal, credit-based, or conducted in open markets where returns were at the sole discretion of the seller ...
+
+
+--- EXPERIMENT 2: MAX TOKENS (20 vs 300) ---
+Testing how max_tokens caps output length to protect against runaway costs.
+
+[Max Tokens = 20]
+Tokens Used: Prompt=61, Completion=20
+Result:
+We need exactly 3 long paragraphs. Each paragraph should be long (multiple sentences). Must be about
+
+[Max Tokens = 300]
+Tokens Used: Prompt=51, Completion=300
+Result:
+None
+
+
+--- EXPERIMENT 3: STOP SEQUENCE ---
+Testing early stopping to prevent the model from rambling past a specific point.
+
+[Stop Sequence = ['refund']]
+Result:
+None

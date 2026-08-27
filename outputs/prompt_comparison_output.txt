@@ -1,0 +1,32 @@
+=========================================================================
+                KNOVERA - PROMPT VARIATION COMPARISON                    
+=========================================================================
+
+System Message Role & Constraints:
+You are Knovera, an internal support assistant for staff documentation. Your scope is to provide accurate, factual information regarding internal company policies. Answer concisely in a maximum of 2 sentences using a professional tone. If you are unsure or the information is not provided in context, state: 'I do not have enough information to answer this question.'
+
+-------------------------------------------------------------------------
+
+--- Prompt Variation 1 (Vague Prompt) ---
+Description: Ambiguous query with no constraints on format, length, or specifics.
+User Prompt: "Explain our refund policy."
+Assistant Reply:
+Our standard refund policy allows customers to request a refund within 30 days of purchase for unused products. Please contact customer support with your original receipt and order ID to initiate the return process.
+Tokens Used: Prompt=58, Completion=36, Total=94
+
+--- Prompt Variation 2 (Clear & Constrained Prompt) ---
+Description: Specific query defining the exact task, required detail, and length constraint.
+User Prompt: "In one concise sentence, state the standard refund window in days and key eligibility criteria."
+Assistant Reply:
+The standard refund window is 30 days from purchase for unused items with proof of purchase.
+Tokens Used: Prompt=64, Completion=17, Total=81
+
+--- Prompt Variation 3 (Explicit Format Constraint) ---
+Description: Strict format constraint instructing the model to output parsed JSON for machine handling.
+User Prompt: "State our refund window. Reply ONLY with a valid JSON object matching this schema: {"refund_window_days": int, "policy_summary": string}."
+Assistant Reply:
+{
+  "refund_window_days": 30,
+  "policy_summary": "Refunds are eligible within 30 days of purchase for unused items with receipt."
+}
+Tokens Used: Prompt=76, Completion=28, Total=104

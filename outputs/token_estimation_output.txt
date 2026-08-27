@@ -1,0 +1,132 @@
+=========================================================================
+        KNOVERA - TOKENS, TOKENIZATION & COST ESTIMATION REPORT         
+=========================================================================
+
+-------------------------------------------------------------------------
+TASK 1 & TASK 2: TOKEN COUNTS FOR THREE PROJECT SAMPLES
+-------------------------------------------------------------------------
+
+--- Sample 1 (Short User Query) ---
+Text Snippet: "What is our standard customer refund window and eligibility criteria?"
+  • Character Count : 69 chars
+  • Word Count      : 10 words
+  • Token Count     : 11 tokens
+  • Chars / Token   : 6.27
+  • Tokens / Word   : 1.10
+
+--- Sample 2 (Medium Policy Section) ---
+Text Snippet: "Knovera Customer Satisfaction & Refund Policy: Standard refund requests must be submitted within 30 calendar days of the..."
+  • Character Count : 370 chars
+  • Word Count      : 58 words
+  • Token Count     : 69 tokens
+  • Chars / Token   : 5.36
+  • Tokens / Word   : 1.19
+
+--- Sample 3 (Long SOP Document / Context Chunk) ---
+Text Snippet: "Knovera Standard Operating Procedure (SOP-FIN-2026-04): Customer Returns and Refund Processing
+
+1. Overview & Purpose
+Th..."
+  • Character Count : 1530 chars
+  • Word Count      : 214 words
+  • Token Count     : 288 tokens
+  • Chars / Token   : 5.31
+  • Tokens / Word   : 1.35
+
+Summary Table - Project Samples:
+Sample Label                               | Chars  | Words  | Tokens | Chars/Tok
+------------------------------------------------------------------------------
+Sample 1 (Short User Query)                | 69     | 10     | 11     | 6.27     
+Sample 2 (Medium Policy Section)           | 370    | 58     | 69     | 5.36     
+Sample 3 (Long SOP Document / Context Chunk) | 1530   | 214    | 288    | 5.31     
+
+-------------------------------------------------------------------------
+TASK 3: COST ESTIMATION (INPUT VS OUTPUT BILLING)
+-------------------------------------------------------------------------
+
+[Scenario A: Single RAG Query Execution]
+  • System Prompt Tokens  : 71
+  • Context Chunk Tokens  : 288
+  • User Query Tokens     : 11
+  • Total Input Tokens    : 370
+  • Expected Output Tokens: 45
+
+Cost Breakdown Across Model Providers:
+
+  Model: GPT-3.5-Turbo
+    - Input Rate  : $0.00050 / 1K tokens  | Input Cost : $0.000185
+    - Output Rate : $0.00150 / 1K tokens  | Output Cost: $0.000068
+    - TOTAL COST PER CALL: $0.000253 (~$0.253 per 1K calls)
+
+  Model: GPT-4o-Mini
+    - Input Rate  : $0.00015 / 1K tokens  | Input Cost : $0.000055
+    - Output Rate : $0.00060 / 1K tokens  | Output Cost: $0.000027
+    - TOTAL COST PER CALL: $0.000082 (~$0.082 per 1K calls)
+
+  Model: GPT-4o
+    - Input Rate  : $0.00250 / 1K tokens  | Input Cost : $0.000925
+    - Output Rate : $0.01000 / 1K tokens  | Output Cost: $0.000450
+    - TOTAL COST PER CALL: $0.001375 (~$1.375 per 1K calls)
+
+[Scenario B: Corpus Scale & Retrieval Operations (4,000 Documents)]
+  1. One-time Corpus Ingestion & Embedding Cost:
+     - Total Corpus Documents  : 4,000
+     - Average Tokens / Doc    : 288 tokens
+     - Total Corpus Tokens     : 1,152,000 tokens
+     - Embedding Cost ($0.00002/1K): $0.0230
+
+  2. Monthly Operational Query Scaling (10,000 Queries/Month with Top-3 Chunk Retrieval):
+     - Tokens per Query (Input)  : 946 tokens (3 chunks retrieved)
+     - Total Monthly Input Tokens: 9,460,000 tokens
+     - Total Monthly Output Tokens: 450,000 tokens
+     - Estimated Monthly Cost (GPT-3.5-Turbo) : $5.41
+     - Estimated Monthly Cost (GPT-4o-Mini)   : $1.69
+
+-------------------------------------------------------------------------
+TASK 4: LENGTH–TOKEN RELATIONSHIP & NON-LINEARITY DEMONSTRATION
+-------------------------------------------------------------------------
+Demonstrating that character length and word count track with token count,
+but are NOT strictly proportional due to sub-word BPE tokenization:
+
+Category                            | Chars | Words | Tokens | Chars/Tok | Tok/Word
+--------------------------------------------------------------------------------
+1. Standard English Text            | 92    | 16    | 18     | 5.11      | 1.12    
+2. Technical Jargon / Long Words    | 84    | 5     | 11     | 7.64      | 2.20    
+3. Code & Formatted JSON Payload    | 112   | 11    | 42     | 2.67      | 3.82    
+4. Multilingual & Special Symbols   | 89    | 13    | 37     | 2.41      | 2.85    
+
+Detailed Insights & Analysis:
+
+[1. Standard English Text]
+  Sample Text : "The standard refund window is 30 calendar days from the date of purchase with valid receipt."
+  Note        : Typical English prose (~4 chars per token, ~0.75-0.8 words per token).
+  Metrics     : 92 chars, 16 words => 18 tokens.
+  Token IDs   : [791, 5410, 21639, 3321, 374, 220, 966, 13470, 2919, 505, 279, 2457, 315, 7782, 449, 2764, 23383, 13]
+
+[2. Technical Jargon / Long Words]
+  Sample Text : "unrefundable hyperparameterization internationalization microservices infrastructure"
+  Note        : Long or compound words split into sub-word tokens (e.g. 'un' + 'refundable').
+  Metrics     : 84 chars, 5 words => 11 tokens.
+  Token IDs   : [359, 69583, 481, 17508, 16577, 2065, 6625, 2065, 8162, 13069, 14054]
+
+[3. Code & Formatted JSON Payload]
+  Sample Text : "{
+  "refund_window_days": 30,
+  "status": "APPROVED",
+  "metadata": {"user_id": "usr_99812", "amount": 149.99}
+}"
+  Note        : Syntax symbols ({}, quotes, colons, newlines, indents) increase token count per character.
+  Metrics     : 112 chars, 11 words => 42 tokens.
+  Token IDs   : [517, 220, 330, 69583, 12856, 29453, 794, 220, 966, 345, 220, 330, 2899, 794, 330, 2599, 9295, 22449, 761, 220, 330, 18103, 794, 5324, 882, 851, 794, 330, 7208, 62, 19416, 717, 498, 330, 6173, 794, 220, 10161, 13, 1484, 534, 92]
+
+[4. Multilingual & Special Symbols]
+  Sample Text : "Politique de remboursement: 30 jours. 返金ポリシー: 30日. 🚀 Priority Support: 100% Guaranteed! 💰"
+  Note        : Non-English alphabets and emojis require multiple byte-level tokens per character.
+  Metrics     : 89 chars, 13 words => 37 tokens.
+  Token IDs   : [97447, 2428, 409, 1323, 65, 5366, 479, 25, 220, 966, 49301, 13, 33281, 242, 35330, 89154, 37823, 57207, 11972, 25, 220, 966, 9080, 13, 11410, 248, 222, 33020, 9365, 25, 220, 1041, 4, 81537, 0, 64139, 108]
+
+Key Takeaways on Non-Linear Tokenization:
+  1. Standard English prose averages ~4 characters per token (~0.75 words per token).
+  2. Long, technical, or un-common words split into multiple sub-word tokens (e.g. 'hyperparameterization').
+  3. Code and JSON formatting contain spaces, quotes, colons, and brackets that increase token density.
+  4. Multilingual text and Unicode emojis take multiple byte tokens per character, making them significantly more expensive.

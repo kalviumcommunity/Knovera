@@ -30,6 +30,7 @@ To run this project on a fresh machine, follow these steps:
    - With the environment activated and keys in place, you can run:
      - Core API client: `python rag_client.py`
      - Prompt comparison test suite: `python prompt_comparison.py`
+     - Token counter & cost estimator: `python token_estimation.py`
 
 ## Prompt Construction & Roles (Assignment 3.13)
 
@@ -37,6 +38,13 @@ To run this project on a fresh machine, follow these steps:
 - **Prompt Notes & Analysis**: See [`prompts/prompt_notes.md`](file:///d:/Project/Knovera/prompts/prompt_notes.md) for a detailed breakdown of system vs user roles, scope, constraints, and side-by-side prompt variation comparison.
 - **Output Logs**: Generated outputs from `prompt_comparison.py` are saved in [`outputs/prompt_comparison_output.txt`](file:///d:/Project/Knovera/outputs/prompt_comparison_output.txt).
 
+## Tokens, Tokenization & Cost Estimation (Assignment 3.14)
+
+- **Token Estimation Script**: [`token_estimation.py`](file:///d:/Project/Knovera/token_estimation.py) calculates token counts using `tiktoken` (`cl100k_base`), computes input vs output billing costs, and models corpus-scale token economics.
+- **Analysis & Notes**: Comprehensive notes on token definitions, context limits, non-linear BPE tokenization, and video walkthrough outline are available in [`prompts/token_estimation_notes.md`](file:///d:/Project/Knovera/prompts/token_estimation_notes.md).
+- **Output Results**: Full printed counts and cost estimations are saved to [`outputs/token_estimation_output.txt`](file:///d:/Project/Knovera/outputs/token_estimation_output.txt).
+
 ## Clean-Run Proof
 
-The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+

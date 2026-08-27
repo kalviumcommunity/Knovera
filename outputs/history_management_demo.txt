@@ -1,0 +1,154 @@
+================================================================================
+KNOVERA - MULTI-TURN RAG CONVERSATION WITH HISTORY MANAGEMENT
+================================================================================
+
+SCENARIO SETUP:
+--------------------------------------------------------------------------------
+System Prompt: You are Knovera, an internal support assistant for staff documentation. Your scope is to provide acc...
+Token Budget: 500 tokens (small to force aggressive trimming)
+Total Conversation Turns: 10
+
+NAIVE APPROACH (no trimming):
+  Total tokens if all messages kept: 700
+  Budget overrun: ~200 tokens over limit
+
+INTELLIGENT APPROACH (with history manager):
+--------------------------------------------------------------------------------
+
+TURN 1:
+--------------------------------------------------------------------------------
+  User: [USER] (8 tokens) What is our standard customer refund window?
+  Assistant: [ASSISTANT] (60 tokens) The standard refund window for Knovera is 30 calendar days from the date of purc...
+  History tokens BEFORE trim: 139
+  ✓ Within budget (using 27.8%)
+  Final status: 3 messages, 139 tokens (27.8% of budget)
+
+TURN 2:
+--------------------------------------------------------------------------------
+  User: [USER] (9 tokens) Can you explain the return merchandise authorization process?
+  Assistant: [ASSISTANT] (66 tokens) When a customer initiates a return, our support team verifies the order in the C...
+  History tokens BEFORE trim: 214
+  ✓ Within budget (using 42.8%)
+  Final status: 5 messages, 214 tokens (42.8% of budget)
+
+TURN 3:
+--------------------------------------------------------------------------------
+  User: [USER] (10 tokens) What about items that are customized or digital products?
+  Assistant: [ASSISTANT] (54 tokens) Customized orders and downloadable digital software licenses are typically non-r...
+  History tokens BEFORE trim: 278
+  ✓ Within budget (using 55.6%)
+  Final status: 7 messages, 278 tokens (55.6% of budget)
+
+TURN 4:
+--------------------------------------------------------------------------------
+  User: [USER] (8 tokens) Are there exceptions for large refund amounts?
+  Assistant: [ASSISTANT] (43 tokens) Yes, any refund request exceeding $1,000 USD or requesting wire transfer reimbur...
+  History tokens BEFORE trim: 329
+  ✓ Within budget (using 65.8%)
+  Final status: 9 messages, 329 tokens (65.8% of budget)
+
+TURN 5:
+--------------------------------------------------------------------------------
+  User: [USER] (10 tokens) What is the store credit policy for late returns?
+  Assistant: [ASSISTANT] (50 tokens) For requests made between 31 and 60 days after purchase, store credit may be iss...
+  History tokens BEFORE trim: 389
+  ✓ Within budget (using 77.8%)
+  Final status: 11 messages, 389 tokens (77.8% of budget)
+
+TURN 6:
+--------------------------------------------------------------------------------
+  User: [USER] (10 tokens) How do we handle disputes or customer escalations?
+  Assistant: [ASSISTANT] (46 tokens) Disputed refund cases are escalated to the Customer Relations team, who review t...
+  History tokens BEFORE trim: 445
+  ⚠️  Approaching token budget (80% threshold = 400)
+  ✓ Trimmed 1 old turn(s)
+    Tokens freed: 68
+    History tokens AFTER trim: 377
+  Final status: 11 messages, 377 tokens (75.4% of budget)
+
+TURN 7:
+--------------------------------------------------------------------------------
+  User: [USER] (9 tokens) What documentation is required for a refund claim?
+  Assistant: [ASSISTANT] (56 tokens) Required documentation includes: a valid sales receipt or order reference ID, pr...
+  History tokens BEFORE trim: 442
+  ⚠️  Approaching token budget (80% threshold = 400)
+  ✓ Trimmed 1 old turn(s)
+    Tokens freed: 75
+    History tokens AFTER trim: 367
+  Final status: 11 messages, 367 tokens (73.4% of budget)
+
+TURN 8:
+--------------------------------------------------------------------------------
+  User: [USER] (13 tokens) Can refunds be issued to a different payment method than the original?
+  Assistant: [ASSISTANT] (47 tokens) Refunds are always issued to the original payment method to prevent fraud and en...
+  History tokens BEFORE trim: 427
+  ⚠️  Approaching token budget (80% threshold = 400)
+  ✓ Trimmed 1 old turn(s)
+    Tokens freed: 64
+    History tokens AFTER trim: 363
+  Final status: 11 messages, 363 tokens (72.6% of budget)
+
+TURN 9:
+--------------------------------------------------------------------------------
+  User: [USER] (10 tokens) What is our policy on international returns and refunds?
+  Assistant: [ASSISTANT] (48 tokens) International returns follow the same 30-day window but require customers to arr...
+  History tokens BEFORE trim: 421
+  ⚠️  Approaching token budget (80% threshold = 400)
+  ✓ Trimmed 1 old turn(s)
+    Tokens freed: 51
+    History tokens AFTER trim: 370
+  Final status: 11 messages, 370 tokens (74.0% of budget)
+
+TURN 10:
+--------------------------------------------------------------------------------
+  User: [USER] (12 tokens) How should staff handle repeat return requests from the same customer?
+  Assistant: [ASSISTANT] (60 tokens) Staff should review the customer's return history in the CRM. Multiple returns (...
+  History tokens BEFORE trim: 442
+  ⚠️  Approaching token budget (80% threshold = 400)
+  ✓ Trimmed 1 old turn(s)
+    Tokens freed: 60
+    History tokens AFTER trim: 382
+  Final status: 11 messages, 382 tokens (76.4% of budget)
+
+================================================================================
+FINAL SUMMARY
+================================================================================
+
+Total turns completed: 10
+Current messages in history: 11
+Current token count: 382
+Token budget: 500
+Within budget: ✓ YES
+Usage: 76.4%
+
+TRIMMING EVENTS:
+Total trim events: 5
+  Turn 6: Removed 1 turn(s), saved 68 tokens → 377 tokens remain
+  Turn 7: Removed 1 turn(s), saved 75 tokens → 367 tokens remain
+  Turn 8: Removed 1 turn(s), saved 64 tokens → 363 tokens remain
+  Turn 9: Removed 1 turn(s), saved 51 tokens → 370 tokens remain
+  Turn 10: Removed 1 turn(s), saved 60 tokens → 382 tokens remain
+Total tokens saved by trimming: 318
+
+TOKEN USAGE OVER TIME:
+Turn   Messages     Tokens     %Budget    Trimmed?  
+------------------------------------------------
+1      3            139        27.8       No        
+2      5            214        42.8       No        
+3      7            278        55.6       No        
+4      9            329        65.8       No        
+5      11           389        77.8       No        
+6      11           377        75.4       Yes       
+7      11           367        73.4       Yes       
+8      11           363        72.6       Yes       
+9      11           370        74.0       Yes       
+10     11           382        76.4       Yes       
+
+================================================================================
+CONCLUSION
+================================================================================
+✓ Handled 10 conversation turns
+✓ Stayed within 500 token budget
+✓ Trimmed old turns intelligently to preserve recent context
+✓ Final history: 11 messages, 382 tokens
+✓ All API requests would succeed without hitting token limits

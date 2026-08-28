@@ -1,0 +1,65 @@
+================================================================================
+       KNOVERA RAG ASSISTANT - DOCUMENT LOADING & INTAKE REPORT
+================================================================================
+Sprint 2 · Concept 10 · Document Processing (Assignment 3.19)
+
+-------------------------------------------------------------------------
+TASK 1 & TASK 3: MULTI-FORMAT INTAKE & SOURCE IDENTITY PRESERVATION
+-------------------------------------------------------------------------
+Scanning directory 'data/' for PDF, TXT, HTML, and Markdown files...
+
+
+-------------------------------------------------------------------------
+TASK 4: INTAKE CONFIRMATION & SAMPLE EXTRACTED TEXT
+-------------------------------------------------------------------------
+--- Document #1 ---
+Source Identifier : api_documentation.md
+Format Extension  : .md
+Character Length  : 945 chars
+Absolute Path     : D:\Project\Knovera\data\api_documentation.md
+Text Preview      : '# Knovera Vector RAG API Documentation  ## Overview The Knovera API enables seamless integration between internal document repositories and downstream Retrieval-Augmented Generatio'...
+
+--- Document #2 ---
+Source Identifier : customer_policy.txt
+Format Extension  : .txt
+Character Length  : 992 chars
+Absolute Path     : D:\Project\Knovera\data\customer_policy.txt
+Text Preview      : 'KNOVERA CUSTOMER SERVICE & REFUND POLICY Document ID: POL-2026-089 Effective Date: January 15, 2026  1. Overview Knovera is committed to delivering high-quality enterprise support '...
+
+--- Document #3 ---
+Source Identifier : employee_handbook.pdf
+Format Extension  : .pdf
+Character Length  : 558 chars
+Absolute Path     : D:\Project\Knovera\data\employee_handbook.pdf
+Text Preview      : 'KNOVERA INTERNAL EMPLOYEE HANDBOOK Version 3.2 - 2026 Section 1: General Code of Conduct All Knovera team members are expected to uphold the highest standards of professional ethic'...
+
+--- Document #4 ---
+Source Identifier : release_notes.html
+Format Extension  : .html
+Character Length  : 493 chars
+Absolute Path     : D:\Project\Knovera\data\release_notes.html
+Text Preview      : 'Knovera Platform Release Notes - v2.4.0 New Features & Improvements Multi-Format Intake Engine: Native support for PDFs, Markdown, HTML, and plain text document loading. Source Cit'...
+
+-------------------------------------------------------------------------
+TASK 2: GRACEFUL ERROR HANDLING & UNREADABLE FILE SURVIVAL
+-------------------------------------------------------------------------
+Demonstrating individual error handling for missing and invalid files:
+
+SKIP [MISSING] missing_doc_99.pdf: Caught expected error -> File not found at path: 'data\missing_doc_99.pdf'
+SKIP [CORRUPT] corrupt_file.pdf: Caught expected error -> Corrupt or malformed PDF: Stream has ended unexpectedly
+SKIP [UNSUPPORTED] unsupported_file.xyz: Caught expected error -> Unsupported document format '.xyz'
+
+-------------------------------------------------------------------------
+INTAKE SUMMARY STATISTICS
+-------------------------------------------------------------------------
+Total Files Scanned      : 7
+Successfully Loaded Files: 4
+Skipped / Failed Files   : 3
+Total Characters Ingested: 2988 chars
+Ingested Formats         : .md: 1, .txt: 1, .pdf: 1, .html: 1
+
+Skipped File Reasons:
+  - .gitkeep: Unsupported document format ''
+  - corrupt_file.pdf: Corrupt or malformed PDF: Stream has ended unexpectedly
+  - unsupported_file.xyz: Unsupported document format '.xyz'
+================================================================================

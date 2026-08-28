@@ -1,0 +1,16 @@
+KNOVERA CUSTOMER SERVICE & REFUND POLICY
+Document ID: POL-2026-089
+Effective Date: January 15, 2026
+
+1. Overview
+Knovera is committed to delivering high-quality enterprise support and RAG solutions. This policy outlines our standard customer service response times, eligible refund windows, and escalation procedures.
+
+2. Service Level Agreements (SLAs)
+- Tier 1 Technical Support: Initial response within 2 business hours.
+- Tier 2 Specialized Engineering: Initial response within 6 business hours.
+- Emergency Outage Response: 24/7 dedicated response within 15 minutes.
+
+3. Customer Refund & Cancellation Criteria
+- Customers are eligible for a 100% full refund within a 30-day window from the initial subscription activation date.
+- Refund requests submitted after 30 days but before 60 days are subject to a pro-rated service fee calculation.
+- No refunds will be issued for billing cycles beyond 60 days, though accounts can be paused or cancelled at any time without additional penalty.

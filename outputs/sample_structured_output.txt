@@ -4,13 +4,13 @@ Sample Structured Output Execution Results:
 Test Case: Normal Request
 Question: What is the refund window according to standard e-commerce policies?
 Final Parsed Object: {
-  "answer": "Standard e-commerce refund windows typically range from 14 to 30 days after purchase, though some retailers may offer longer periods.",
+  "answer": "Typically, standard e-commerce refund windows are 14 to 30 days after purchase, though some retailers may offer longer periods.",
   "source": "General e-commerce policy guidelines"
 }
 ------------------------------
 
 Test Case: Malformed & Recovery
-Question: What is the capital of France?
+Question: What is the warranty period for electronics?
 Final Parsed Object: null
 ------------------------------
 

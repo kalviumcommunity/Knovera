@@ -1,0 +1,15 @@
+[
+  {
+    "Test": "Normal Request",
+    "Question": "What is the refund window according to standard e-commerce policies?",
+    "Result": {
+      "answer": "Typically, standard e-commerce refund windows are 14 to 30 days after purchase, though some retailers may offer longer periods.",
+      "source": "General e-commerce policy guidelines"
+    }
+  },
+  {
+    "Test": "Malformed & Recovery",
+    "Question": "What is the warranty period for electronics?",
+    "Result": null
+  }
+]

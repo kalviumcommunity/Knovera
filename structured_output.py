@@ -38,9 +38,9 @@ def get_answer_from_model(client, model_name, question, force_malformed=False):
         '{"answer": string, "source": string}. No extra text.'
     )
     
-    # Intentionally provide a bad system prompt to test malformed output recovery
+    # Intentionally return a malformed JSON to test recovery
     if force_malformed:
-        system_prompt = "Reply with plain text, NOT JSON. Ignore previous instructions."
+        return '{"answer": "This is a malformed response without a source field."}'
 
     messages = [
         {"role": "system", "content": system_prompt},
@@ -139,14 +139,14 @@ def main():
     q1 = "What is the refund window according to standard e-commerce policies?"
     ans1 = ask_question(client, model_name, q1)
     results.append({"Test": "Normal Request", "Question": q1, "Result": ans1})
-    print(f"Result: {ans1}\n")
+    print(f"Result:\n{json.dumps(ans1, indent=2)}\n")
     
     print("--- Test 2: Simulating Malformed JSON and Recovery ---")
     # Forcing malformed output by providing a bad system prompt first
-    q2 = "What is the capital of France?"
+    q2 = "What is the warranty period for electronics?"
     ans2 = ask_question(client, model_name, q2, force_malformed=True)
     results.append({"Test": "Malformed & Recovery", "Question": q2, "Result": ans2})
-    print(f"Result: {ans2}\n")
+    print(f"Result:\n{json.dumps(ans2, indent=2)}\n")
     
     # Save the sample parsed results to a text file for Task 5
     with open("outputs/sample_structured_output.txt", "w") as f:
@@ -158,7 +158,11 @@ def main():
             f.write(f"Final Parsed Object: {json.dumps(res['Result'], indent=2)}\n")
             f.write("-" * 30 + "\n\n")
             
-    print("Results have been saved to 'outputs/sample_structured_output.txt'.")
+    # Also save to JSON
+    with open("outputs/sample_structured_output.json", "w") as f:
+        json.dump(results, f, indent=2)
+            
+    print("Results have been saved to 'outputs/sample_structured_output.txt' and 'outputs/sample_structured_output.json'.")
 
 if __name__ == "__main__":
     main()

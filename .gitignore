@@ -1,6 +1,5 @@
 .venv/
 .env
-data/
 *.log
 
 src/__pycache__

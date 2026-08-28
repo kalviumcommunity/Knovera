@@ -2,3 +2,5 @@ chromadb==0.5.23
 openai==1.99.3
 python-dotenv==1.0.0
 tiktoken==0.14.0
+pypdf>=5.0.0
+beautifulsoup4>=4.12.0

@@ -31,6 +31,7 @@ To run this project on a fresh machine, follow these steps:
      - Core API client: `python rag_client.py`
      - Prompt comparison test suite: `python prompt_comparison.py`
      - Token counter & cost estimator: `python token_estimation.py`
+     - Document loading & multi-format intake demo: `python document_loading_demo.py`
 
 ## Prompt Construction & Roles (Assignment 3.13)
 
@@ -44,7 +45,14 @@ To run this project on a fresh machine, follow these steps:
 - **Analysis & Notes**: Comprehensive notes on token definitions, context limits, non-linear BPE tokenization, and video walkthrough outline are available in [`prompts/token_estimation_notes.md`](file:///d:/Project/Knovera/prompts/token_estimation_notes.md).
 - **Output Results**: Full printed counts and cost estimations are saved to [`outputs/token_estimation_output.txt`](file:///d:/Project/Knovera/outputs/token_estimation_output.txt).
 
+## Document Loading & Multi-Format Intake (Assignment 3.19)
+
+- **Core Loader Engine**: Implemented in [`src/document_loader.py`](file:///d:/Project/Knovera/src/document_loader.py), supporting multi-format text extraction (PDF, TXT, HTML, MD), graceful failure handling for missing or unreadable/corrupt files, source metadata preservation, and intake stats.
+- **Interactive Demo**: Run [`document_loading_demo.py`](file:///d:/Project/Knovera/document_loading_demo.py) to ingest the sample corpus in [`data/`](file:///d:/Project/Knovera/data/) and print length + text previews for each file.
+- **Sample Corpus**: Includes valid multi-format files (`.pdf`, `.txt`, `.html`, `.md`) alongside intentionally corrupted (`corrupt_file.pdf`) and unsupported (`unsupported_file.xyz`) test files.
+- **Technical Notes & Video Script**: Comprehensive concepts breakdown, PDF vs text challenges, source identity tracking, error handling, and 3-5 min video script outline are available in [`prompts/document_loading_notes.md`](file:///d:/Project/Knovera/prompts/document_loading_notes.md).
+- **Output Results**: Full intake log and statistics saved to [`outputs/document_loading_output.txt`](file:///d:/Project/Knovera/outputs/document_loading_output.txt).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
-

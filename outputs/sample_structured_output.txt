@@ -1,0 +1,19 @@
+Sample Structured Output Execution Results:
+=============================================
+
+Test Case: Normal Request
+Question: What is the refund window according to standard e-commerce policies?
+Final Parsed Object: {
+  "answer": "Standard e-commerce refund windows typically range from 14 to 30 days for most retailers, with many following the EU's 14-day cooling-off period for online purchases. In the US, 30 days is common, though policies vary by retailer (e.g., Amazon: 30 days, Costco: 90 days for electronics). Some companies offer extended windows up to 60-90 days.",
+  "source": "Standard e-commerce industry practices"
+}
+------------------------------
+
+Test Case: Malformed & Recovery
+Question: What is the capital of France?
+Final Parsed Object: {
+  "answer": "Paris",
+  "source": "Common knowledge"
+}
+------------------------------
+

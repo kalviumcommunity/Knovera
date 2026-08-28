@@ -15,6 +15,9 @@ def parse(raw, required=("answer", "source")):
     Parse and validate the JSON response.
     Returns (data, None) if successful, or (None, error_message) if it fails.
     """
+    if not raw or not isinstance(raw, str):
+        return None, "empty or non-string response"
+        
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:

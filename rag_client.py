@@ -6,7 +6,7 @@ from openai import OpenAI, AuthenticationError, RateLimitError, APIError
 import sys
 
 from src.history_manager import HistoryManager
-
+from structured_output import parse
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -35,7 +35,12 @@ def main():
     )
     
     # Initialize HistoryManager
-    system_message = "You are a helpful RAG assistant."
+    # Initialize HistoryManager with strict JSON instructions
+    system_message = (
+        'You are a helpful RAG assistant. '
+        'Reply with ONLY a JSON object: '
+        '{"answer": string, "source": string}. No extra text or prose.'
+    )
     history = HistoryManager(system_message=system_message, token_budget=4000)
     
     print("Welcome to Knovera RAG Assistant!")
@@ -62,13 +67,25 @@ def main():
             logging.info(f"Outgoing messages payload: {json.dumps(messages, indent=2)}")
             
             # Task 2: Send request
-            response = client.chat.completions.create(
-                model=model_name,
-                messages=messages,
-                temperature=0.1,
-                max_tokens=300,
-                stop=["\n\nUser:", "User:"]
-            )
+            # Task 2: Send request with JSON mode enforcement
+            try:
+                response = client.chat.completions.create(
+                    model=model_name,
+                    messages=messages,
+                    temperature=0.1,
+                    max_tokens=300,
+                    response_format={"type": "json_object"},
+                    stop=["\n\nUser:", "User:"]
+                )
+            except Exception as e:
+                logging.warning(f"JSON mode failed ({e}), falling back to standard request")
+                response = client.chat.completions.create(
+                    model=model_name,
+                    messages=messages,
+                    temperature=0.1,
+                    max_tokens=300,
+                    stop=["\n\nUser:", "User:"]
+                )
             
             reply_content = response.choices[0].message.content
             
@@ -79,8 +96,13 @@ def main():
             logging.info(f"Incoming response payload: {response.model_dump_json(indent=2)}")
             logging.info(f"Token usage: {response.usage}")
             
-            # Task 2: Print the response text
-            print(f"\nAssistant: {reply_content}\n")
+            # Parse and validate the response using the logic from structured_output.py
+            parsed_data, err = parse(reply_content)
+            
+            if parsed_data:
+                print(f"\nAssistant (JSON): {json.dumps(parsed_data, indent=2)}\n")
+            else:
+                print(f"\nAssistant (Raw, parsing failed - {err}): {reply_content}\n")
             
         except AuthenticationError:
             logging.error("Authentication Failed (401): Please check your API key. It may be invalid or expired.")

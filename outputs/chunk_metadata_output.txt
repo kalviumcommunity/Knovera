@@ -1,0 +1,52 @@
+=== KNOVERA CHUNK METADATA & SOURCE TRACKING EXECUTION OUTPUT ===
+
+Total Corpus Chunks Processed: 18
+Metadata Schema Consistent Across Corpus: True
+Standard Keys: ['source', 'chunk_index', 'char_start', 'char_end', 'char_length', 'file_type', 'doc_title', 'section_heading', 'page_number', 'effective_date']
+
+--- SAMPLE TAGGED CHUNKS ACROSS FORMATS ---
+Source: customer_policy.txt
+Metadata: {"source": "customer_policy.txt", "chunk_index": 0, "char_start": 0, "char_end": 99, "char_length": 99, "file_type": ".txt", "doc_title": "KNOVERA CUSTOMER SERVICE & REFUND POLICY", "section_heading": "General", "page_number": 1, "effective_date": "January 15, 2026"}
+Citation: [Source: customer_policy.txt | Section: 'General' | Chunk #0 | Page: 1 | Chars: 0-99]
+Text: KNOVERA CUSTOMER SERVICE & REFUND POLICY
+Document ID: POL-2026-089
+Effective Date: January 15, 2026...
+
+Source: customer_policy.txt
+Metadata: {"source": "customer_policy.txt", "chunk_index": 1, "char_start": 101, "char_end": 317, "char_length": 216, "file_type": ".txt", "doc_title": "KNOVERA CUSTOMER SERVICE & REFUND POLICY", "section_heading": "1. Overview", "page_number": 1, "effective_date": "January 15, 2026"}
+Citation: [Source: customer_policy.txt | Section: '1. Overview' | Chunk #1 | Page: 1 | Chars: 101-317]
+Text: 1. Overview
+Knovera is committed to delivering high-quality enterprise support and RAG solutions. This policy outlines o...
+
+Source: customer_policy.txt
+Metadata: {"source": "customer_policy.txt", "chunk_index": 2, "char_start": 319, "char_end": 571, "char_length": 252, "file_type": ".txt", "doc_title": "KNOVERA CUSTOMER SERVICE & REFUND POLICY", "section_heading": "2. Service Level Agreements (SLAs)", "page_number": 1, "effective_date": "January 15, 2026"}
+Citation: [Source: customer_policy.txt | Section: '2. Service Level Agreements (SLAs)' | Chunk #2 | Page: 1 | Chars: 319-571]
+Text: 2. Service Level Agreements (SLAs)
+- Tier 1 Technical Support: Initial response within 2 business hours.
+- Tier 2 Specia...
+
+Source: customer_policy.txt
+Metadata: {"source": "customer_policy.txt", "chunk_index": 3, "char_start": 573, "char_end": 992, "char_length": 419, "file_type": ".txt", "doc_title": "KNOVERA CUSTOMER SERVICE & REFUND POLICY", "section_heading": "3. Customer Refund & Cancellation Criteria", "page_number": 1, "effective_date": "January 15, 2026"}
+Citation: [Source: customer_policy.txt | Section: '3. Customer Refund & Cancellation Criteria' | Chunk #3 | Page: 1 | Chars: 573-992]
+Text: 3. Customer Refund & Cancellation Criteria
+- Customers are eligible for a 100% full refund within a 30-day window from t...
+
+--- SOURCE TRACEBACK AUDIT RESULTS ---
+Candidate #1 (customer_policy.txt):
+  Section: 1. Overview
+  Line Range: L5-L6 (101-317)
+  Exact Match: True
+  Citation: [Source: customer_policy.txt | Section: '1. Overview' | Chunk #1 | Page: 1 | Chars: 101-317]
+
+Candidate #2 (api_documentation.md):
+  Section: Knovera Vector RAG API Documentation
+  Line Range: L1-L1 (0-38)
+  Exact Match: True
+  Citation: [Source: api_documentation.md | Section: 'Knovera Vector RAG API Documentation' | Chunk #0 | Page: 1 | Chars: 0-38]
+
+Candidate #3 (release_notes.html):
+  Section: General
+  Line Range: L1-L1 (0-250)
+  Exact Match: True
+  Citation: [Source: release_notes.html | Section: 'General' | Chunk #0 | Page: 1 | Chars: 0-250]
+

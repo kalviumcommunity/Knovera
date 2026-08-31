@@ -1,0 +1,141 @@
+=====================================================================================
+          KNOVERA RAG ASSISTANT - TEXT EXTRACTION & CLEANING PIPELINE
+=====================================================================================
+Sprint 2 · Concept 11 · Document Processing (Assignment 3.20)
+
+-------------------------------------------------------------------------------------
+TASK 1 & TASK 2: GRANULAR STEP-BY-STEP CLEANING PIPELINE BREAKDOWN
+-------------------------------------------------------------------------------------
+RAW INPUT SAMPLE (With headers, footers, mojibake, split lines, whitespace):
+-------------------------------------------------------------------------------------
+KNOVERA CONFIDENTIAL - DO NOT DISTRIBUTE
+Home > Docs > Architecture > RAG Pipeline
+
+Page 1 of 3
+
+Weâ€™ve observed that â€œraw extracted textâ€  contains serious encoding arti-
+facts, including mojibake â€” such as broken smart quotes and dashes â€” which degrade per-
+formance across dis-
+tributed systems.
+
+Key Guidelines:       		
+  • Maintain state-of-the-art vector precision.
+  • Preserve numeric metrics (94.8% accuracy).
+
+
+[Back to Top]
+KNOVERA CONFIDENTIAL - DO NOT DISTRIBUTE
+Page 2 of 3
+© 2026 Knovera Technologies Inc.
+-------------------------------------------------------------------------------------
+
+[Stage 1] Line Ending Normalization (\r\n -> \n):
+  Result length: 529 chars (standardized Unix newlines)
+
+[Stage 2] Unicode NFKC & Mojibake Repair:
+  Fixed: 'Weâ€™ve' -> "We've", 'â€œraw extracted textâ€ ' -> '"raw extracted text"', 'â€”' -> '—'
+  Result length: 519 chars
+
+[Stage 3] Broken Line-Wrap Repair (De-hyphenation):
+  Repaired: 'arti-\nfacts' -> 'artifacts'
+  Repaired: 'per-\nformance' -> 'performance'
+  Repaired: 'dis-\ntributed' -> 'distributed'
+  Preserved: 'state-of-the-art' (intentional inline compound hyphen preserved!)
+  Result length: 513 chars
+
+[Stage 4] Boilerplate & Page Header/Footer Stripping:
+  Removed: 'KNOVERA CONFIDENTIAL - DO NOT DISTRIBUTE', 'Page 1 of 3', 'Page 2 of 3'
+  Removed: 'Home > Docs > Architecture > RAG Pipeline', '[Back to Top]', '© 2026 Knovera...'
+  Result length: 316 chars
+
+[Stage 5] Whitespace Normalization (Collapse tabs/spaces & runaway newlines):
+  Final cleaned text length: 305 chars
+-------------------------------------------------------------------------------------
+CLEANED OUTPUT STRING:
+We've observed that "raw extracted text" contains serious encoding artifacts, including mojibake — such as broken smart quotes and dashes — which degrade performance across distributed systems.
+
+Key Guidelines:
+  • Maintain state-of-the-art vector precision.
+  • Preserve numeric metrics (94.8% accuracy).
+-------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------
+TASK 3 & TASK 4: UNIFORM CORPUS-WIDE CLEANING & BEFORE/AFTER COMPARISON
+-------------------------------------------------------------------------------------
+Applying identical TextCleaner pipeline across all ingested corpus documents...
+
+Source Document                | Type   | Before     | After      | Removed   | % Reduction 
+-------------------------------------------------------------------------------------
+api_documentation.md           | .md    |    945 c   |    945 c   |     0 c   |   0.00%
+customer_policy.txt            | .txt   |    992 c   |    992 c   |     0 c   |   0.00%
+employee_handbook.pdf          | .pdf   |    558 c   |    558 c   |     0 c   |   0.00%
+noisy_document_sample.txt      | .txt   |   1694 c   |   1392 c   |   302 c   |  17.83%
+release_notes.html             | .html  |    493 c   |    493 c   |     0 c   |   0.00%
+-------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------
+TASK 4: DETAILED BEFORE VS. AFTER COMPARISON EVIDENCE
+-------------------------------------------------------------------------------------
+=== Document #1: api_documentation.md (.MD) ===
+Character Count Change: 945 chars -> 945 chars (0 chars removed, -0.0%)
+BEFORE (Raw Snippet)  : '# Knovera Vector RAG API Documentation  ## Overview The Knovera API enables seamless integration between internal document repositories and downstream Retrieval-Augmented Generation (RAG) models.  ### Authentication All '
+AFTER  (Clean Snippet): '# Knovera Vector RAG API Documentation  ## Overview The Knovera API enables seamless integration between internal document repositories and downstream Retrieval-Augmented Generation (RAG) models.  ### Authentication All '
+
+=== Document #2: customer_policy.txt (.TXT) ===
+Character Count Change: 992 chars -> 992 chars (0 chars removed, -0.0%)
+BEFORE (Raw Snippet)  : 'KNOVERA CUSTOMER SERVICE & REFUND POLICY Document ID: POL-2026-089 Effective Date: January 15, 2026  1. Overview Knovera is committed to delivering high-quality enterprise support and RAG solutions. This policy outlines '
+AFTER  (Clean Snippet): 'KNOVERA CUSTOMER SERVICE & REFUND POLICY Document ID: POL-2026-089 Effective Date: January 15, 2026  1. Overview Knovera is committed to delivering high-quality enterprise support and RAG solutions. This policy outlines '
+
+=== Document #3: employee_handbook.pdf (.PDF) ===
+Character Count Change: 558 chars -> 558 chars (0 chars removed, -0.0%)
+BEFORE (Raw Snippet)  : 'KNOVERA INTERNAL EMPLOYEE HANDBOOK Version 3.2 - 2026 Section 1: General Code of Conduct All Knovera team members are expected to uphold the highest standards of professional ethics, data privacy, and customer security. '
+AFTER  (Clean Snippet): 'KNOVERA INTERNAL EMPLOYEE HANDBOOK Version 3.2 - 2026 Section 1: General Code of Conduct All Knovera team members are expected to uphold the highest standards of professional ethics, data privacy, and customer security. '
+
+=== Document #4: noisy_document_sample.txt (.TXT) ===
+Character Count Change: 1694 chars -> 1392 chars (302 chars removed, -17.83%)
+BEFORE (Raw Snippet)  : 'KNOVERA CONFIDENTIAL - DO NOT DISTRIBUTE Home > Docs > Architecture > RAG Pipeline  KNOVERA VECTOR SEARCH ARCHITECTURE & CLEANING GUIDELINES Document ID: DOC-2026-ARC-01 Published: August 2026  Page 1 of 3  1. System Arc'
+AFTER  (Clean Snippet): 'KNOVERA VECTOR SEARCH ARCHITECTURE & CLEANING GUIDELINES Document ID: DOC-2026-ARC-01 Published: August 2026  1. System Architecture Overview The Knovera RAG platform integrates multi-format document intake with state-of'
+
+=== Document #5: release_notes.html (.HTML) ===
+Character Count Change: 493 chars -> 493 chars (0 chars removed, -0.0%)
+BEFORE (Raw Snippet)  : 'Knovera Platform Release Notes - v2.4.0 New Features & Improvements Multi-Format Intake Engine: Native support for PDFs, Markdown, HTML, and plain text document loading. Source Citation Tracking: Automatic metadata taggi'
+AFTER  (Clean Snippet): 'Knovera Platform Release Notes - v2.4.0 New Features & Improvements Multi-Format Intake Engine: Native support for PDFs, Markdown, HTML, and plain text document loading. Source Citation Tracking: Automatic metadata taggi'
+
+-------------------------------------------------------------------------------------
+EDGE CASE HANDLING: PRESERVING CODE, PUNCTUATION, & SEMANTICS (AVOIDING OVER-CLEANING)
+-------------------------------------------------------------------------------------
+Raw Edge Case Input (JSON & Formulas):
+# API Sample Request
+
+```json
+{
+  "threshold": 0.85,
+  "model": "text-embedding-3-small"
+}
+```
+
+Formula: cosine_similarity = (A · B) / (||A|| * ||B||)
+Rule 1: Never strip JSON symbols like braces {}, colons :, or quotation marks "".
+
+Cleaned Result (Punctuation, JSON formatting, math symbols preserved):
+# API Sample Request
+
+```json
+{
+  "threshold": 0.85,
+  "model": "text-embedding-3-small"
+}
+```
+
+Formula: cosine_similarity = (A · B) / (||A|| * ||B||)
+Rule 1: Never strip JSON symbols like braces {}, colons :, or quotation marks "".
+
+-------------------------------------------------------------------------------------
+CORPUS CLEANING SUMMARY STATISTICS
+-------------------------------------------------------------------------------------
+Total Ingested Documents Cleaned : 5
+Total Raw Corpus Volume          : 4682 characters
+Total Cleaned Corpus Volume      : 4380 characters
+Total Boilerplate & Noise Purged : 302 characters
+Corpus Compression / Cleaning %  : 6.45%
+=====================================================================================

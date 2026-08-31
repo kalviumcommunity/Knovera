@@ -1,0 +1,120 @@
+{
+  "metadata_schema": [
+    "source",
+    "chunk_index",
+    "char_start",
+    "char_end",
+    "char_length",
+    "file_type",
+    "doc_title",
+    "section_heading",
+    "page_number",
+    "effective_date"
+  ],
+  "total_corpus_chunks": 18,
+  "schema_consistency_verified": true,
+  "sample_tagged_chunks": [
+    {
+      "source": "customer_policy.txt",
+      "text": "KNOVERA CUSTOMER SERVICE & REFUND POLICY\nDocument ID: POL-2026-089\nEffective Date: January 15, 2026",
+      "metadata": {
+        "source": "customer_policy.txt",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 99,
+        "char_length": 99,
+        "file_type": ".txt",
+        "doc_title": "KNOVERA CUSTOMER SERVICE & REFUND POLICY",
+        "section_heading": "General",
+        "page_number": 1,
+        "effective_date": "January 15, 2026"
+      },
+      "citation": "[Source: customer_policy.txt | Section: 'General' | Chunk #0 | Page: 1 | Chars: 0-99]"
+    },
+    {
+      "source": "customer_policy.txt",
+      "text": "1. Overview\nKnovera is committed to delivering high-quality enterprise support and RAG solutions. This policy outlines our standard customer service response times, eligible refund windows, and escalation procedures.",
+      "metadata": {
+        "source": "customer_policy.txt",
+        "chunk_index": 1,
+        "char_start": 101,
+        "char_end": 317,
+        "char_length": 216,
+        "file_type": ".txt",
+        "doc_title": "KNOVERA CUSTOMER SERVICE & REFUND POLICY",
+        "section_heading": "1. Overview",
+        "page_number": 1,
+        "effective_date": "January 15, 2026"
+      },
+      "citation": "[Source: customer_policy.txt | Section: '1. Overview' | Chunk #1 | Page: 1 | Chars: 101-317]"
+    },
+    {
+      "source": "customer_policy.txt",
+      "text": "2. Service Level Agreements (SLAs)\n- Tier 1 Technical Support: Initial response within 2 business hours.\n- Tier 2 Specialized Engineering: Initial response within 6 business hours.\n- Emergency Outage Response: 24/7 dedicated response within 15 minutes.",
+      "metadata": {
+        "source": "customer_policy.txt",
+        "chunk_index": 2,
+        "char_start": 319,
+        "char_end": 571,
+        "char_length": 252,
+        "file_type": ".txt",
+        "doc_title": "KNOVERA CUSTOMER SERVICE & REFUND POLICY",
+        "section_heading": "2. Service Level Agreements (SLAs)",
+        "page_number": 1,
+        "effective_date": "January 15, 2026"
+      },
+      "citation": "[Source: customer_policy.txt | Section: '2. Service Level Agreements (SLAs)' | Chunk #2 | Page: 1 | Chars: 319-571]"
+    },
+    {
+      "source": "customer_policy.txt",
+      "text": "3. Customer Refund & Cancellation Criteria\n- Customers are eligible for a 100% full refund within a 30-day window from the initial subscription activation date.\n- Refund requests submitted after 30 days but before 60 days are subject to a pro-rated service fee calculation.\n- No refunds will be issued for billing cycles beyond 60 days, though accounts can be paused or cancelled at any time without additional penalty.",
+      "metadata": {
+        "source": "customer_policy.txt",
+        "chunk_index": 3,
+        "char_start": 573,
+        "char_end": 992,
+        "char_length": 419,
+        "file_type": ".txt",
+        "doc_title": "KNOVERA CUSTOMER SERVICE & REFUND POLICY",
+        "section_heading": "3. Customer Refund & Cancellation Criteria",
+        "page_number": 1,
+        "effective_date": "January 15, 2026"
+      },
+      "citation": "[Source: customer_policy.txt | Section: '3. Customer Refund & Cancellation Criteria' | Chunk #3 | Page: 1 | Chars: 573-992]"
+    },
+    {
+      "source": "api_documentation.md",
+      "text": "# Knovera Vector RAG API Documentation",
+      "metadata": {
+        "source": "api_documentation.md",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 38,
+        "char_length": 38,
+        "file_type": ".md",
+        "doc_title": "Knovera Vector RAG API Documentation",
+        "section_heading": "Knovera Vector RAG API Documentation",
+        "page_number": 1,
+        "effective_date": null
+      },
+      "citation": "[Source: api_documentation.md | Section: 'Knovera Vector RAG API Documentation' | Chunk #0 | Page: 1 | Chars: 0-38]"
+    },
+    {
+      "source": "api_documentation.md",
+      "text": "## Overview\nThe Knovera API enables seamless integration between internal document repositories and downstream Retrieval-Augmented Generation (RAG) models.",
+      "metadata": {
+        "source": "api_documentation.md",
+        "chunk_index": 1,
+        "char_start": 40,
+        "char_end": 195,
+        "char_length": 155,
+        "file_type": ".md",
+        "doc_title": "Knovera Vector RAG API Documentation",
+        "section_heading": "Overview",
+        "page_number": 1,
+        "effective_date": null
+      },
+      "citation": "[Source: api_documentation.md | Section: 'Overview' | Chunk #1 | Page: 1 | Chars: 40-195]"
+    }
+  ]
+}

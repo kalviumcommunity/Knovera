@@ -66,6 +66,15 @@ To run this project on a fresh machine, follow these steps:
 - **Technical Notes & Video Script**: Detailed guide on RAG noise hazards, vector retrieval degradation, over-cleaning avoidance, edge cases, and 3-5 min video script outline are available in [`prompts/text_cleaning_notes.md`](file:///d:/Project/Knovera/prompts/text_cleaning_notes.md).
 - **Output Results**: Execution report and before/after evidence saved to [`outputs/text_cleaning_output.txt`](file:///d:/Project/Knovera/outputs/text_cleaning_output.txt).
 
+## Chunk Metadata & Source Tracking (Assignment 3.22)
+
+- **Metadata Tagging Engine**: Implemented in [`src/chunk_tagger.py`](file:///d:/Project/Knovera/src/chunk_tagger.py), pairing raw text chunks with standardized 10-key metadata dictionaries (`source`, `chunk_index`, `char_start`, `char_end`, `char_length`, `file_type`, `doc_title`, `section_heading`, `page_number`, `effective_date`) across all document formats.
+- **Source Tracer & Citation Formatter**: Implemented in [`src/source_tracer.py`](file:///d:/Project/Knovera/src/source_tracer.py), providing exact reverse lookup (`char_start` to `char_end`), line-number calculation (`L5-L6`), string verification audit (`verified_exact_match: True`), standard RAG citation formatting, and metadata-based retrieval filtering.
+- **Interactive Demo**: Run `python chunk_metadata_demo.py` to tag multi-format corpus documents, verify metadata schema consistency, run source tracebacks, format citation strings, and filter chunks.
+- **Unit Test Suite**: Run `python -m unittest test_chunk_metadata.py` to execute automated test cases covering schema consistency, traceback integrity, citation styles, and retrieval filtering.
+- **Technical Notes & Video Script**: Comprehensive breakdown of why chunk metadata powers citations and retrieval filtering, task solutions, and 3-5 min video walkthrough script outline available in [`prompts/chunk_metadata_notes.md`](file:///d:/Project/Knovera/prompts/chunk_metadata_notes.md).
+- **Sample Outputs & Logs**: Tagged chunk samples exported to [`sample_tagged_chunks.json`](file:///d:/Project/Knovera/sample_tagged_chunks.json) and execution audit logs saved to [`outputs/chunk_metadata_output.txt`](file:///d:/Project/Knovera/outputs/chunk_metadata_output.txt).
+
 ## Clean-Run Proof
 
-The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.

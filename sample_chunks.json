@@ -1,0 +1,24 @@
+{
+  "fixed_size_strategy": {
+    "stats": {
+      "count": 7,
+      "avg_size": 184.71
+    },
+    "sample_chunks": [
+      "KNOVERA CUSTOMER SERVICE & REFUND POLICY\nDocument ID: POL-2026-089\nEffective Date: January 15, 2026\n\n1. Overview\nKnovera is committed to delivering high-quality enterprise support and RAG solutions. T",
+      "gh-quality enterprise support and RAG solutions. This policy outlines our standard customer service response times, eligible refund windows, and escalation procedures.\n\n2. Service Level Agreements (SL",
+      "ation procedures.\n\n2. Service Level Agreements (SLAs)\n- Tier 1 Technical Support: Initial response within 2 business hours.\n- Tier 2 Specialized Engineering: Initial response within 6 business hours.\n"
+    ]
+  },
+  "paragraph_strategy": {
+    "stats": {
+      "count": 4,
+      "avg_size": 246.5
+    },
+    "sample_chunks": [
+      "KNOVERA CUSTOMER SERVICE & REFUND POLICY\nDocument ID: POL-2026-089\nEffective Date: January 15, 2026",
+      "1. Overview\nKnovera is committed to delivering high-quality enterprise support and RAG solutions. This policy outlines our standard customer service response times, eligible refund windows, and escalation procedures.",
+      "2. Service Level Agreements (SLAs)\n- Tier 1 Technical Support: Initial response within 2 business hours.\n- Tier 2 Specialized Engineering: Initial response within 6 business hours.\n- Emergency Outage Response: 24/7 dedicated response within 15 minutes."
+    ]
+  }
+}

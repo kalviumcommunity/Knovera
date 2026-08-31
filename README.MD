@@ -31,7 +31,8 @@ To run this project on a fresh machine, follow these steps:
      - Core API client: `python rag_client.py`
      - Prompt comparison test suite: `python prompt_comparison.py`
      - Token counter & cost estimator: `python token_estimation.py`
-     - Document loading & multi-format intake demo: `python document_loading_demo.py`
+      - Document loading & multi-format intake demo: `python document_loading_demo.py`
+      - Text extraction & cleaning pipeline demo: `python text_cleaning_demo.py`
 
 ## Prompt Construction & Roles (Assignment 3.13)
 
@@ -52,6 +53,18 @@ To run this project on a fresh machine, follow these steps:
 - **Sample Corpus**: Includes valid multi-format files (`.pdf`, `.txt`, `.html`, `.md`) alongside intentionally corrupted (`corrupt_file.pdf`) and unsupported (`unsupported_file.xyz`) test files.
 - **Technical Notes & Video Script**: Comprehensive concepts breakdown, PDF vs text challenges, source identity tracking, error handling, and 3-5 min video script outline are available in [`prompts/document_loading_notes.md`](file:///d:/Project/Knovera/prompts/document_loading_notes.md).
 - **Output Results**: Full intake log and statistics saved to [`outputs/document_loading_output.txt`](file:///d:/Project/Knovera/outputs/document_loading_output.txt).
+
+## Text Extraction & Cleaning Pipeline (Assignment 3.20)
+
+- **Core Cleaning Engine**: Implemented in [`src/text_cleaner.py`](file:///d:/Project/Knovera/src/text_cleaner.py), providing a 5-stage transformation pipeline:
+  1. Line ending normalization (`\r\n`, `\r` $\rightarrow$ `\n`).
+  2. Unicode (NFKC) normalization & mojibake resolution (`â€™` $\rightarrow$ `'`, `â€œ`/`â€` $\rightarrow$ `"`, `â€”` $\rightarrow$ `—`, non-breaking spaces).
+  3. Broken mid-word line-wrap repair / de-hyphenation (`transfor-\nmation` $\rightarrow$ `transformation`), while preserving intentional inline compound hyphens (`state-of-the-art`).
+  4. Repetitive boilerplate, page numbering (`Page \d+ of \d+`), header/footer, and navigation breadcrumb stripping.
+  5. Whitespace collapsing and runaway newline reduction while preserving code indentation and list structure.
+- **Interactive Demo & Before/After Proof**: Run [`text_cleaning_demo.py`](file:///d:/Project/Knovera/text_cleaning_demo.py) to clean the document corpus uniformly, inspect side-by-side snippet diffs, and view character count compression metrics.
+- **Technical Notes & Video Script**: Detailed guide on RAG noise hazards, vector retrieval degradation, over-cleaning avoidance, edge cases, and 3-5 min video script outline are available in [`prompts/text_cleaning_notes.md`](file:///d:/Project/Knovera/prompts/text_cleaning_notes.md).
+- **Output Results**: Execution report and before/after evidence saved to [`outputs/text_cleaning_output.txt`](file:///d:/Project/Knovera/outputs/text_cleaning_output.txt).
 
 ## Clean-Run Proof
 

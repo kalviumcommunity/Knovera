@@ -1,0 +1,44 @@
+KNOVERA CONFIDENTIAL - DO NOT DISTRIBUTE
+Home > Docs > Architecture > RAG Pipeline
+
+KNOVERA VECTOR SEARCH ARCHITECTURE & CLEANING GUIDELINES
+Document ID: DOC-2026-ARC-01
+Published: August 2026
+
+Page 1 of 3
+
+1. System Architecture Overview
+The Knovera RAG platform integrates multi-format document intake with state-of-the-art vector 
+retrieval. When documents are ingested, high-quality text cleaning is crucial for down-
+stream semantic search perfor-
+mance. Without robust cleaning, vector models embed redundant noise rather than genuine domain facts.
+
+Weâ€™ve observed that â€œraw extracted textâ€ contains serious encoding artifacts, including mojibake â€” such 
+as broken smart quotes and dashes â€” which degrade embedding cosine similarity scores.
+
+KNOVERA CONFIDENTIAL - DO NOT DISTRIBUTE
+Page 2 of 3
+
+2. Scalable Ingestion Pipeline
+Our intake engine processes documents in parallel across dis-
+tributed worker nodes. Each worker normalizes line endings, strips page boilerplate, and performs 
+unicode NFKC canonical transfor-
+mation.
+
+Key Engineering Rules:
+  • Preserve code snippets and numeric figures intact.
+  • Never remove punctuation aggressively.
+  • Maintain section headers to assist semantic chunk boundary detection.
+
+[Back to Top]
+
+KNOVERA CONFIDENTIAL - DO NOT DISTRIBUTE
+Page 3 of 3
+
+3. Retrieval Quality Benchmarks
+During internal evaluations, queries executed against cleaned corpora achieved a 94.8% precision@5 
+compared to only 68.2% on uncleaned corpora. Cleaning eliminates false positive token overlaps 
+caused by repeated page headers like â€œKNOVERA CONFIDENTIALâ€ appearing across every single chunk.
+
+All Rights Reserved.
+© 2026 Knovera Technologies Inc.

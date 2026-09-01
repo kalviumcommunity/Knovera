@@ -10,6 +10,21 @@ from pathlib import Path
 from typing import Dict, List, Any, Tuple, Optional
 from src.chunk_tagger import ChunkTagger, extract_sections_and_metadata
 from src.source_tracer import SourceTracer
+from src.token_chunker import TokenChunker
+
+
+def token_chunks(text: str, size: int = 400, overlap: int = 60, encoding_name: str = "cl100k_base") -> List[str]:
+    """Token-aware chunking: splits text by token counts using tiktoken with controlled overlap."""
+    chunker = TokenChunker(encoding_name=encoding_name)
+    return chunker.token_chunks(text, size=size, overlap=overlap)
+
+
+def token_chunks_with_offsets(
+    text: str, size: int = 400, overlap: int = 60, encoding_name: str = "cl100k_base"
+) -> List[Dict[str, Any]]:
+    """Token-aware chunking with token offset and span tracking."""
+    chunker = TokenChunker(encoding_name=encoding_name)
+    return chunker.token_chunks_with_offsets(text, size=size, overlap=overlap)
 
 
 def fixed_size_chunking_with_offsets(text: str, chunk_size: int, overlap: int) -> List[Tuple[str, int, int]]:

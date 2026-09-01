@@ -75,6 +75,19 @@ To run this project on a fresh machine, follow these steps:
 - **Technical Notes & Video Script**: Comprehensive breakdown of why chunk metadata powers citations and retrieval filtering, task solutions, and 3-5 min video walkthrough script outline available in [`prompts/chunk_metadata_notes.md`](file:///d:/Project/Knovera/prompts/chunk_metadata_notes.md).
 - **Sample Outputs & Logs**: Tagged chunk samples exported to [`sample_tagged_chunks.json`](file:///d:/Project/Knovera/sample_tagged_chunks.json) and execution audit logs saved to [`outputs/chunk_metadata_output.txt`](file:///d:/Project/Knovera/outputs/chunk_metadata_output.txt).
 
+## Token-Aware Chunk Sizing & Overlap (Assignment 3.23)
+
+- **Core Token Chunker Engine**: Implemented in [`src/token_chunker.py`](file:///d:/Project/Knovera/src/token_chunker.py), sizing chunks strictly by token count using `tiktoken` (`cl100k_base`), implementing controlled sliding-window overlap (`step = size - overlap`), and tracking token spans and character lengths.
+- **Interactive Demo & Empirical Proof**: Run `python token_chunking_demo.py` to:
+  1. Compare token-based sizing vs character-based sizing across dense JSON vs standard prose.
+  2. Inspect sliding-window overlap spans across multi-chunk documents.
+  3. View live side-by-side evidence showing that **60-token overlap** preserves critical boundary facts that are cut in half by 0-overlap chunking.
+  4. Review context window budget math ($4 \times 400 = 1,600$ retrieved tokens) and cost vs context trade-off tables.
+  5. Process corpus documents and export sample chunks.
+- **Unit Test Suite**: Run `python -m unittest test_token_chunker.py` to verify token sizing enforcement, boundary preservation, overlap stepping, and metadata preservation.
+- **Technical Justification Report**: Full parameter justification, model budget calculations, cost-redundancy study, and 3–5 min video script are documented in [`TOKEN_CHUNKING_REPORT.md`](file:///d:/Project/Knovera/TOKEN_CHUNKING_REPORT.md).
+- **Sample Outputs & Logs**: Structured chunk exports saved to [`sample_token_chunks.json`](file:///d:/Project/Knovera/sample_token_chunks.json) and execution logs saved to [`outputs/token_chunking_output.txt`](file:///d:/Project/Knovera/outputs/token_chunking_output.txt).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.

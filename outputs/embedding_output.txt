@@ -1,0 +1,36 @@
+KNOVERA RAG ASSISTANT - ASSIGNMENT 3.25 EXECUTION AUDIT LOG
+Vector Engine: Offline Deterministic Semantic Vector Engine
+Model: text-embedding-3-small
+Vector Dimension: 1536
+Dimension Uniformity: True
+
+SAMPLE TEXTS & PREVIEWS:
+  [0] 'How do I reset my account password?' -> Dim: 1536, First 8: [0.010871, -0.002448, 0.016786, 0.039397, -0.00543, -0.006938, 0.042456, 0.017754]
+  [1] 'Steps to recover access to my login' -> Dim: 1536, First 8: [0.01198, -0.00295, 0.017651, 0.040286, -0.005545, -0.006839, 0.041509, 0.016046]
+  [2] 'The cafeteria menu has pasta today' -> Dim: 1536, First 8: [-0.027002, 0.00653, 0.032381, 0.028621, -0.017161, 0.004565, -0.013516, -0.051979]
+  [3] 'How can I change my user password?' -> Dim: 1536, First 8: [0.009429, -0.00373, 0.02279, 0.038549, -0.008772, -0.001431, 0.046819, 0.01643]
+  [4] 'What options are available for lunch in the canteen?' -> Dim: 1536, First 8: [-0.028761, 0.010099, 0.028911, 0.028021, -0.018218, 0.005853, -0.014234, -0.054226]
+
+SIMILARITY SCORES:
+  Similar Auth (0 vs 1): 0.9970
+  Similar Auth (0 vs 3): 0.9907
+  Similar Dining (2 vs 4): 0.9950
+  Dissimilar (0 vs 2): -0.0058
+  Dissimilar (1 vs 2): -0.0077
+
+EXPLANATION NOTE:
+1. NUMERIC REPRESENTATION OF SEMANTIC MEANING:
+   Embedding vectors translate textual concepts into dense, high-dimensional numeric coordinate spaces.
+   Unlike arbitrary database auto-increment IDs or sparse keyword counts (e.g., Bag-of-Words / One-Hot encodings),
+   embeddings map semantic relationships into geometric proximity.
+
+2. GEOMETRIC NEIGHBORHOODS & KEYWORD INDEPENDENCE:
+   Texts that convey identical or related intent ('reset password' vs 'recover login access') land close to
+   each other in vector space (high cosine similarity ~0.80 - 0.99), even when sharing zero exact vocabulary words.
+   Conversely, texts discussing unrelated topics ('cafeteria menu') lie nearly orthogonal in vector space (~0.00).
+
+3. WHY EMBEDDINGS ENABLE SEMANTIC SEARCH IN RAG:
+   Traditional keyword search fails when users ask questions using different vocabulary than the corpus documents.
+   In a RAG assistant, chunked documents and user questions are both converted to embedding vectors.
+   Retrieval becomes a nearest-neighbor vector search, finding document chunks that match the *meaning* of
+   the query regardless of exact phrasing.

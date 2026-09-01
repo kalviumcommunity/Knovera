@@ -1,0 +1,91 @@
+{
+  "strategy": "token_aware_sliding_window_overlap",
+  "configuration": {
+    "tokenizer": "tiktoken (cl100k_base)",
+    "chunk_size_tokens": 400,
+    "overlap_tokens": 60,
+    "overlap_percentage": 15.0
+  },
+  "corpus_stats": {
+    "total_documents": 5,
+    "total_chunks_created": 5,
+    "total_source_tokens": 958,
+    "total_chunked_tokens_stored": 958,
+    "overlap_token_redundancy": 0,
+    "overlap_redundancy_pct": 0.0,
+    "target_chunk_size": 400,
+    "target_overlap": 60
+  },
+  "sample_chunks": [
+    {
+      "text": "# Knovera Vector RAG API Documentation\n\n## Overview\nThe Knovera API enables seamless integration between internal document repositories and downstream Retrieval-Augmented Generation (RAG) models.\n\n### Authentication\nAll requests require a valid Bearer Token in the authorization header:\n`Authorization: Bearer <KNOVERA_API_KEY>`\n\n### Endpoints\n\n#### 1. POST `/v1/retrieve`\nQueries the vector database for top-$K$ matching chunk contexts.\n\n**Request Payload:**\n```json\n{\n  \"query\": \"What is our customer refund policy?\",\n  \"top_k\": 5,\n  \"similarity_threshold\": 0.75\n}\n```\n\n**Response Payload:**\n```json\n{\n  \"status\": \"success\",\n  \"matches\": [\n    {\n      \"source\": \"customer_policy.txt\",\n      \"score\": 0.92,\n      \"text\": \"Customers are eligible for a 100% full refund within a 30-day window...\"\n    }\n  ]\n}\n```\n\n#### 2. POST `/v1/chat/completions`\nGenerates grounded responses utilizing system prompt constraints and retrieved document context.",
+      "metadata": {
+        "source": "api_documentation.md",
+        "file_type": ".md",
+        "chunk_index": 0,
+        "token_start": 0,
+        "token_end": 235,
+        "token_count": 235,
+        "overlap_tokens": 0,
+        "char_length": 945,
+        "doc_title": null
+      }
+    },
+    {
+      "text": "KNOVERA CUSTOMER SERVICE & REFUND POLICY\nDocument ID: POL-2026-089\nEffective Date: January 15, 2026\n\n1. Overview\nKnovera is committed to delivering high-quality enterprise support and RAG solutions. This policy outlines our standard customer service response times, eligible refund windows, and escalation procedures.\n\n2. Service Level Agreements (SLAs)\n- Tier 1 Technical Support: Initial response within 2 business hours.\n- Tier 2 Specialized Engineering: Initial response within 6 business hours.\n- Emergency Outage Response: 24/7 dedicated response within 15 minutes.\n\n3. Customer Refund & Cancellation Criteria\n- Customers are eligible for a 100% full refund within a 30-day window from the initial subscription activation date.\n- Refund requests submitted after 30 days but before 60 days are subject to a pro-rated service fee calculation.\n- No refunds will be issued for billing cycles beyond 60 days, though accounts can be paused or cancelled at any time without additional penalty.",
+      "metadata": {
+        "source": "customer_policy.txt",
+        "file_type": ".txt",
+        "chunk_index": 0,
+        "token_start": 0,
+        "token_end": 216,
+        "token_count": 216,
+        "overlap_tokens": 0,
+        "char_length": 992,
+        "doc_title": null
+      }
+    },
+    {
+      "text": "KNOVERA INTERNAL EMPLOYEE HANDBOOK\nVersion 3.2 - 2026\nSection 1: General Code of Conduct\nAll Knovera team members are expected to uphold the highest standards of professional ethics,\ndata privacy, and customer security. Confidential information must never be transmitted over\nunencrypted channels.\nSection 2: Work Hours & Remote Work Guidelines\nKnovera supports flexible working hours with a core collaboration window between 10:00 AM and\n4:00 PM local time. Remote employees must check in daily via Slack and maintain updated\navailability on team calendars.",
+      "metadata": {
+        "source": "employee_handbook.pdf",
+        "file_type": ".pdf",
+        "chunk_index": 0,
+        "token_start": 0,
+        "token_end": 122,
+        "token_count": 122,
+        "overlap_tokens": 0,
+        "char_length": 558,
+        "doc_title": null
+      }
+    },
+    {
+      "text": "KNOVERA VECTOR SEARCH ARCHITECTURE & CLEANING GUIDELINES\nDocument ID: DOC-2026-ARC-01\nPublished: August 2026\n\n1. System Architecture Overview\nThe Knovera RAG platform integrates multi-format document intake with state-of-the-art vector\nretrieval. When documents are ingested, high-quality text cleaning is crucial for downstream semantic search performance. Without robust cleaning, vector models embed redundant noise rather than genuine domain facts.\n\nWe've observed that \"raw extracted text\" contains serious encoding artifacts, including mojibake \u2014 such\nas broken smart quotes and dashes \u2014 which degrade embedding cosine similarity scores.\n\n2. Scalable Ingestion Pipeline\nOur intake engine processes documents in parallel across distributed worker nodes. Each worker normalizes line endings, strips page boilerplate, and performs\nunicode NFKC canonical transformation.\n\nKey Engineering Rules:\n  \u2022 Preserve code snippets and numeric figures intact.\n  \u2022 Never remove punctuation aggressively.\n  \u2022 Maintain section headers to assist semantic chunk boundary detection.\n\n3. Retrieval Quality Benchmarks\nDuring internal evaluations, queries executed against cleaned corpora achieved a 94.8% precision@5\ncompared to only 68.2% on uncleaned corpora. Cleaning eliminates false positive token overlaps\ncaused by repeated page headers like \"KNOVERA CONFIDENTIAL\" appearing across every single chunk.",
+      "metadata": {
+        "source": "noisy_document_sample.txt",
+        "file_type": ".txt",
+        "chunk_index": 0,
+        "token_start": 0,
+        "token_end": 284,
+        "token_count": 284,
+        "overlap_tokens": 0,
+        "char_length": 1392,
+        "doc_title": null
+      }
+    },
+    {
+      "text": "Knovera Platform Release Notes - v2.4.0 New Features & Improvements Multi-Format Intake Engine: Native support for PDFs, Markdown, HTML, and plain text document loading. Source Citation Tracking: Automatic metadata tagging for source file attribution in RAG responses. Resilient Ingestion Pipeline: Graceful error handling for missing, corrupted, or unsupported file formats. Bug Fixes Resolved memory leak during large batch embeddings and fixed UTF-8 encoding fallback for legacy text files.",
+      "metadata": {
+        "source": "release_notes.html",
+        "file_type": ".html",
+        "chunk_index": 0,
+        "token_start": 0,
+        "token_end": 101,
+        "token_count": 101,
+        "overlap_tokens": 0,
+        "char_length": 493,
+        "doc_title": null
+      }
+    }
+  ]
+}

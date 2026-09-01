@@ -88,6 +88,21 @@ To run this project on a fresh machine, follow these steps:
 - **Technical Justification Report**: Full parameter justification, model budget calculations, cost-redundancy study, and 3–5 min video script are documented in [`TOKEN_CHUNKING_REPORT.md`](file:///d:/Project/Knovera/TOKEN_CHUNKING_REPORT.md).
 - **Sample Outputs & Logs**: Structured chunk exports saved to [`sample_token_chunks.json`](file:///d:/Project/Knovera/sample_token_chunks.json) and execution logs saved to [`outputs/token_chunking_output.txt`](file:///d:/Project/Knovera/outputs/token_chunking_output.txt).
 
+## Embeddings Fundamentals & Vector Representation (Assignment 3.25)
+
+- **Core Embedding Generator**: Implemented in [`src/embedding_generator.py`](file:///d:/Project/Knovera/src/embedding_generator.py), supporting OpenAI / OpenRouter API embeddings (`text-embedding-3-small`, 1536 dimensions) alongside a deterministic offline pseudo-semantic vector engine for zero-dependency test reliability.
+- **Vector Similarity Engine**: Implemented `cosine_similarity(a, b)` using `numpy.dot(a, b) / (norm(a) * norm(b))` with numerical precision handling.
+- **Interactive Demo & Empirical Proof**: Run `py embedding_demo.py` to:
+  1. Generate 1536-dimensional embeddings for sample texts spanning Security/Auth vs Dining/Food domains.
+  2. Verify vector dimension uniformity across all sample texts.
+  3. Compute pairwise Cosine Similarity matrix and prove that semantically similar pairs (*"reset password"* vs *"recover access login"*: `0.9970`) score significantly higher than dissimilar cross-domain pairs (*"reset password"* vs *"cafeteria menu"*: `-0.0027`).
+  4. View plain-English explanations of high-dimensional semantic spaces and why vector embeddings enable semantic search in RAG.
+  5. Export demonstration logs and JSON vector previews.
+- **Unit Test Suite**: Run `py -m unittest test_embedding_generator.py` to execute automated test cases covering dimension uniformity, cosine similarity identities/orthogonality, and semantic distance ranking assertions.
+- **Technical Report & Video Script**: Full task solutions, mathematical formulations, and 3-5 min video walkthrough script available in [`EMBEDDINGS_REPORT.md`](file:///d:/Project/Knovera/EMBEDDINGS_REPORT.md) and [`prompts/embedding_notes.md`](file:///d:/Project/Knovera/prompts/embedding_notes.md).
+- **Sample Outputs & Logs**: Trimmed vector samples exported to [`sample_embeddings.json`](file:///d:/Project/Knovera/sample_embeddings.json) and execution audit logs saved to [`outputs/embedding_output.txt`](file:///d:/Project/Knovera/outputs/embedding_output.txt).
+
 ## Clean-Run Proof
 
-The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+

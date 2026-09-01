@@ -1,0 +1,129 @@
+{
+  "assignment": "3.25 Embeddings Fundamentals & Vector Representation",
+  "engine_mode": "Offline Deterministic Semantic Vector Engine",
+  "model_name": "text-embedding-3-small",
+  "vector_dimension": 1536,
+  "is_dimension_uniform": true,
+  "sample_texts": [
+    "How do I reset my account password?",
+    "Steps to recover access to my login",
+    "The cafeteria menu has pasta today",
+    "How can I change my user password?",
+    "What options are available for lunch in the canteen?"
+  ],
+  "trimmed_vectors": {
+    "text_0": {
+      "text": "How do I reset my account password?",
+      "vector_dimension": 1536,
+      "first_8_values": [
+        0.010871,
+        -0.002448,
+        0.016786,
+        0.039397,
+        -0.00543,
+        -0.006938,
+        0.042456,
+        0.017754
+      ]
+    },
+    "text_1": {
+      "text": "Steps to recover access to my login",
+      "vector_dimension": 1536,
+      "first_8_values": [
+        0.01198,
+        -0.00295,
+        0.017651,
+        0.040286,
+        -0.005545,
+        -0.006839,
+        0.041509,
+        0.016046
+      ]
+    },
+    "text_2": {
+      "text": "The cafeteria menu has pasta today",
+      "vector_dimension": 1536,
+      "first_8_values": [
+        -0.027002,
+        0.00653,
+        0.032381,
+        0.028621,
+        -0.017161,
+        0.004565,
+        -0.013516,
+        -0.051979
+      ]
+    },
+    "text_3": {
+      "text": "How can I change my user password?",
+      "vector_dimension": 1536,
+      "first_8_values": [
+        0.009429,
+        -0.00373,
+        0.02279,
+        0.038549,
+        -0.008772,
+        -0.001431,
+        0.046819,
+        0.01643
+      ]
+    },
+    "text_4": {
+      "text": "What options are available for lunch in the canteen?",
+      "vector_dimension": 1536,
+      "first_8_values": [
+        -0.028761,
+        0.010099,
+        0.028911,
+        0.028021,
+        -0.018218,
+        0.005853,
+        -0.014234,
+        -0.054226
+      ]
+    }
+  },
+  "similarity_results": {
+    "similar_pair_auth_1": {
+      "pair": [
+        "How do I reset my account password?",
+        "Steps to recover access to my login"
+      ],
+      "cosine_similarity": 0.997,
+      "relationship": "similar"
+    },
+    "similar_pair_auth_2": {
+      "pair": [
+        "How do I reset my account password?",
+        "How can I change my user password?"
+      ],
+      "cosine_similarity": 0.9907,
+      "relationship": "similar"
+    },
+    "similar_pair_dining": {
+      "pair": [
+        "The cafeteria menu has pasta today",
+        "What options are available for lunch in the canteen?"
+      ],
+      "cosine_similarity": 0.995,
+      "relationship": "similar"
+    },
+    "dissimilar_pair_1": {
+      "pair": [
+        "How do I reset my account password?",
+        "The cafeteria menu has pasta today"
+      ],
+      "cosine_similarity": -0.0058,
+      "relationship": "dissimilar"
+    },
+    "dissimilar_pair_2": {
+      "pair": [
+        "Steps to recover access to my login",
+        "The cafeteria menu has pasta today"
+      ],
+      "cosine_similarity": -0.0077,
+      "relationship": "dissimilar"
+    }
+  },
+  "explanation_note": "1. NUMERIC REPRESENTATION OF SEMANTIC MEANING:\n   Embedding vectors translate textual concepts into dense, high-dimensional numeric coordinate spaces.\n   Unlike arbitrary database auto-increment IDs or sparse keyword counts (e.g., Bag-of-Words / One-Hot encodings),\n   embeddings map semantic relationships into geometric proximity.\n\n2. GEOMETRIC NEIGHBORHOODS & KEYWORD INDEPENDENCE:\n   Texts that convey identical or related intent ('reset password' vs 'recover login access') land close to\n   each other in vector space (high cosine similarity ~0.80 - 0.99), even when sharing zero exact vocabulary words.\n   Conversely, texts discussing unrelated topics ('cafeteria menu') lie nearly orthogonal in vector space (~0.00).\n\n3. WHY EMBEDDINGS ENABLE SEMANTIC SEARCH IN RAG:\n   Traditional keyword search fails when users ask questions using different vocabulary than the corpus documents.\n   In a RAG assistant, chunked documents and user questions are both converted to embedding vectors.\n   Retrieval becomes a nearest-neighbor vector search, finding document chunks that match the *meaning* of\n   the query regardless of exact phrasing."
+}

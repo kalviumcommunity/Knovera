@@ -1,0 +1,56 @@
+{
+  "summary": {
+    "total_source_files": 8,
+    "successfully_ingested": 5,
+    "skipped_docs": 3,
+    "total_chunks_created": 26,
+    "validation_passed": true
+  },
+  "sample_chunks": [
+    {
+      "text": "# Knovera Vector RAG API Documentation",
+      "metadata": {
+        "source": "api_documentation.md",
+        "chunk_index": 0,
+        "char_start": 0,
+        "char_end": 38,
+        "char_length": 38,
+        "file_type": ".md",
+        "doc_title": "Knovera Vector RAG API Documentation",
+        "section_heading": "Knovera Vector RAG API Documentation",
+        "page_number": 1,
+        "effective_date": null
+      }
+    },
+    {
+      "text": "## Overview\nThe Knovera API enables seamless integration between internal document repositories and downstream Retrieval-Augmented Generation (RAG) models.",
+      "metadata": {
+        "source": "api_documentation.md",
+        "chunk_index": 1,
+        "char_start": 40,
+        "char_end": 195,
+        "char_length": 155,
+        "file_type": ".md",
+        "doc_title": "Knovera Vector RAG API Documentation",
+        "section_heading": "Overview",
+        "page_number": 1,
+        "effective_date": null
+      }
+    },
+    {
+      "text": "### Authentication\nAll requests require a valid Bearer Token in the authorization header:\n`Authorization: Bearer <KNOVERA_API_KEY>`",
+      "metadata": {
+        "source": "api_documentation.md",
+        "chunk_index": 2,
+        "char_start": 197,
+        "char_end": 328,
+        "char_length": 131,
+        "file_type": ".md",
+        "doc_title": "Knovera Vector RAG API Documentation",
+        "section_heading": "Authentication",
+        "page_number": 1,
+        "effective_date": null
+      }
+    }
+  ]
+}

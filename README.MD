@@ -102,7 +102,26 @@ To run this project on a fresh machine, follow these steps:
 - **Technical Report & Video Script**: Full task solutions, mathematical formulations, and 3-5 min video walkthrough script available in [`EMBEDDINGS_REPORT.md`](file:///d:/Project/Knovera/EMBEDDINGS_REPORT.md) and [`prompts/embedding_notes.md`](file:///d:/Project/Knovera/prompts/embedding_notes.md).
 - **Sample Outputs & Logs**: Trimmed vector samples exported to [`sample_embeddings.json`](file:///d:/Project/Knovera/sample_embeddings.json) and execution audit logs saved to [`outputs/embedding_output.txt`](file:///d:/Project/Knovera/outputs/embedding_output.txt).
 
+## Embedding Similarity & Distance Metrics (Assignment 3.27)
+
+- **Multi-Metric Vector Engine**: Implemented in [`src/embedding_generator.py`](file:///d:/Project/Knovera/src/embedding_generator.py), providing vector similarity & distance calculation routines:
+  - `cosine_similarity(a, b)`: Cosine similarity score bounded in `[-1.0, 1.0]`.
+  - `cosine_distance(a, b)`: Cosine distance `1.0 - cosine_similarity(a, b)` in `[0.0, 2.0]`.
+  - `dot_product(a, b)`: Inner product $\mathbf{a} \cdot \mathbf{b}$ (identical to Cosine Similarity for $L_2$-normalized unit vectors).
+  - `euclidean_distance(a, b)`: $L_2$ Euclidean distance $\|\mathbf{a} - \mathbf{b}\|_2$.
+  - `manhattan_distance(a, b)`: $L_1$ Manhattan distance $\|\mathbf{a} - \mathbf{b}\|_1$.
+- **Chunk Ranking Pipeline**: Added `EmbeddingGenerator.rank_chunks()` and `rank_chunks()`, scoring and sorting chunk embeddings against user queries (descending for similarity, ascending for distance), assigning 1-indexed ranks, and returning structured payloads with `most_similar` (Rank #1) and `least_similar` (Rank #N) chunks.
+- **Interactive Demonstration**: Run `py similarity_ranking_demo.py` to:
+  1. Compare pairwise metrics across sample text embeddings.
+  2. Embed sample query (*"How can a learner reset their password?"*) and compare against 5 corpus chunks across 4 domains.
+  3. Display top result (Rank #1: `account-guide.md`, score `0.9967`) and bottom result (Rank #5: `rag-architecture.md`, score `-0.0376`).
+  4. Verify cross-metric ranking consistency across Cosine, Dot Product, Cosine Distance, and Euclidean distance.
+  5. Export audit logs to [`outputs/similarity_ranking_output.txt`](file:///d:/Project/Knovera/outputs/similarity_ranking_output.txt) and JSON payload to [`sample_similarity_rankings.json`](file:///d:/Project/Knovera/sample_similarity_rankings.json).
+- **Automated Unit Test Suite**: Run `py -m unittest test_similarity_ranking.py` to verify metric formulas, mathematical identities, chunk sorting order, top/bottom extraction, cross-metric rank equivalency, and edge case handling.
+- **Technical Justification Report**: Full task solutions, metric mathematical justification, high similarity score guarantees vs non-guarantees, and 3-5 min video script outline available in [`SIMILARITY_RANKING_REPORT.md`](file:///d:/Project/Knovera/SIMILARITY_RANKING_REPORT.md) and [`prompts/similarity_ranking_notes.md`](file:///d:/Project/Knovera/prompts/similarity_ranking_notes.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+
 

@@ -1,0 +1,171 @@
+{
+  "assignment": "3.26 Generating Embeddings via API",
+  "model": "text-embedding-3-small",
+  "engine": "OpenAI / OpenRouter Compatible API",
+  "total_records": 6,
+  "vector_dimension": 1536,
+  "records": [
+    {
+      "id": "account-guide.md#chunk_0",
+      "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.",
+      "metadata": {
+        "source": "account-guide.md",
+        "chunk_index": 0,
+        "doc_title": "Knovera Learner Account Administration",
+        "section": "Password Recovery",
+        "page": 1,
+        "category": "Authentication"
+      },
+      "vector_length": 1536,
+      "first_5_values": [
+        0.015096,
+        -0.003025,
+        0.017202,
+        0.039166,
+        -0.003522
+      ],
+      "last_5_values": [
+        -0.044156,
+        0.009835,
+        -0.002547,
+        -0.011183,
+        -0.04009
+      ]
+    },
+    {
+      "id": "account-guide.md#chunk_1",
+      "text": "Learners can recover access using their registered email. A one-time secure verification link is dispatched, which remains valid for 15 minutes.",
+      "metadata": {
+        "source": "account-guide.md",
+        "chunk_index": 1,
+        "doc_title": "Knovera Learner Account Administration",
+        "section": "Email Verification & Tokens",
+        "page": 1,
+        "category": "Authentication"
+      },
+      "vector_length": 1536,
+      "first_5_values": [
+        0.018142,
+        0.002081,
+        0.019686,
+        0.039282,
+        -0.000647
+      ],
+      "last_5_values": [
+        -0.040762,
+        0.006071,
+        -0.008013,
+        -0.012969,
+        -0.041846
+      ]
+    },
+    {
+      "id": "account-guide.md#chunk_2",
+      "text": "Two-factor authentication (2FA) is mandatory for enterprise admin consoles. Admins must register an authenticator app (TOTP) or hardware security key.",
+      "metadata": {
+        "source": "account-guide.md",
+        "chunk_index": 2,
+        "doc_title": "Knovera Learner Account Administration",
+        "section": "Multi-Factor Security",
+        "page": 2,
+        "category": "Authentication"
+      },
+      "vector_length": 1536,
+      "first_5_values": [
+        -0.004999,
+        0.014157,
+        -0.007197,
+        -0.005119,
+        0.018051
+      ],
+      "last_5_values": [
+        0.008293,
+        -0.005679,
+        0.000293,
+        -0.008297,
+        -0.006211
+      ]
+    },
+    {
+      "id": "customer-policy.md#chunk_0",
+      "text": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning.",
+      "metadata": {
+        "source": "customer-policy.md",
+        "chunk_index": 0,
+        "doc_title": "Customer Service & Refund Policy",
+        "section": "Refund Eligibility",
+        "page": 1,
+        "category": "Policy"
+      },
+      "vector_length": 1536,
+      "first_5_values": [
+        0.027652,
+        -0.015801,
+        -0.014761,
+        -0.049685,
+        0.004087
+      ],
+      "last_5_values": [
+        -0.021591,
+        -0.044895,
+        0.028641,
+        0.001144,
+        -0.012234
+      ]
+    },
+    {
+      "id": "customer-policy.md#chunk_1",
+      "text": "Service Level Agreements (SLAs): Tier 1 Technical Support ensures an initial response within 2 business hours. Emergency outage response guarantees 24/7 coverage within 15 minutes.",
+      "metadata": {
+        "source": "customer-policy.md",
+        "chunk_index": 1,
+        "doc_title": "Customer Service & Refund Policy",
+        "section": "Support Tiers & Response SLA",
+        "page": 2,
+        "category": "Policy"
+      },
+      "vector_length": 1536,
+      "first_5_values": [
+        0.03478,
+        -0.033938,
+        -0.002453,
+        -0.010054,
+        -0.025264
+      ],
+      "last_5_values": [
+        -0.019649,
+        0.011001,
+        0.027291,
+        -0.011531,
+        -0.017606
+      ]
+    },
+    {
+      "id": "campus-handbook.md#chunk_0",
+      "text": "Campus cafeteria lunch hours run from 11:30 AM to 2:30 PM daily. A rotating menu of Mediterranean pasta, salads, and hot entrees is served at the main dining hall.",
+      "metadata": {
+        "source": "campus-handbook.md",
+        "chunk_index": 0,
+        "doc_title": "Campus Life & Facilities Guide",
+        "section": "Dining Services",
+        "page": 4,
+        "category": "Facilities"
+      },
+      "vector_length": 1536,
+      "first_5_values": [
+        -0.02484,
+        0.010275,
+        0.032708,
+        0.036485,
+        -0.015999
+      ],
+      "last_5_values": [
+        0.019489,
+        -0.026655,
+        -0.023997,
+        -0.048993,
+        0.011424
+      ]
+    }
+  ]
+}

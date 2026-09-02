@@ -1,0 +1,89 @@
+{
+  "assignment": "3.27 Embedding Similarity & Distance Metrics",
+  "query": "How can a learner reset their password?",
+  "model": "text-embedding-3-small",
+  "vector_dimension": 1536,
+  "total_chunks_ranked": 5,
+  "most_similar_chunk": {
+    "rank": 1,
+    "score": 0.996463,
+    "source": "account-guide.md",
+    "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the portal.",
+    "metadata": {
+      "source": "account-guide.md",
+      "chunk_index": 0,
+      "section": "Password Recovery",
+      "category": "Authentication"
+    }
+  },
+  "least_similar_chunk": {
+    "rank": 5,
+    "score": -0.025488,
+    "source": "rag-architecture.md",
+    "text": "Python token chunking uses tiktoken cl100k_base encoding with sliding window overlap to preserve semantic context.",
+    "metadata": {
+      "source": "rag-architecture.md",
+      "chunk_index": 5,
+      "section": "Token Chunking",
+      "category": "Engineering"
+    }
+  },
+  "ranked_chunks": [
+    {
+      "rank": 1,
+      "score": 0.996463,
+      "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the portal.",
+      "metadata": {
+        "source": "account-guide.md",
+        "chunk_index": 0,
+        "section": "Password Recovery",
+        "category": "Authentication"
+      }
+    },
+    {
+      "rank": 2,
+      "score": 0.991099,
+      "text": "Learners can recover access using their registered email. A secure link valid for 15 minutes is dispatched immediately.",
+      "metadata": {
+        "source": "account-guide.md",
+        "chunk_index": 1,
+        "section": "Email Verification",
+        "category": "Authentication"
+      }
+    },
+    {
+      "rank": 3,
+      "score": 0.967997,
+      "text": "Tier 1 Technical Support responds within 2 business hours for critical authentication and account lockout requests.",
+      "metadata": {
+        "source": "sla-policy.md",
+        "chunk_index": 2,
+        "section": "Service Levels",
+        "category": "Support SLA"
+      }
+    },
+    {
+      "rank": 4,
+      "score": -0.004134,
+      "text": "The cafeteria menu changes every Friday, offering hot pasta dishes, vegan salads, and fresh fruits.",
+      "metadata": {
+        "source": "campus-guide.md",
+        "chunk_index": 3,
+        "section": "Dining Options",
+        "category": "Campus Life"
+      }
+    },
+    {
+      "rank": 5,
+      "score": -0.025488,
+      "text": "Python token chunking uses tiktoken cl100k_base encoding with sliding window overlap to preserve semantic context.",
+      "metadata": {
+        "source": "rag-architecture.md",
+        "chunk_index": 5,
+        "section": "Token Chunking",
+        "category": "Engineering"
+      }
+    }
+  ],
+  "metric_justification": "1. Directional Invariance: Cosine similarity measures the angle theta between vectors, evaluating semantic direction rather than vector magnitude (length).\n2. Length Independence: In NLP embeddings, longer texts or frequent token repetitions can inflate vector norms without changing semantic intent. Cosine similarity normalizes vector lengths to 1.0, preventing length bias in chunk ranking.\n3. Mathematical Bound: Bounded cleanly in [-1.0, 1.0], making similarity thresholds intuitive.\n4. Identity with Dot Product: For L2-normalized embedding vectors (such as OpenAI text-embedding-3-small), Cosine Similarity equals the Dot Product (a . b), enabling hyper-fast vector database dot-product search."
+}

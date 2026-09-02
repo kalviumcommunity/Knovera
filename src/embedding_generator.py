@@ -52,6 +52,73 @@ def cosine_similarity(a: Union[List[float], np.ndarray], b: Union[List[float], n
     return float(np.clip(similarity, -1.0, 1.0))
 
 
+def cosine_distance(a: Union[List[float], np.ndarray], b: Union[List[float], np.ndarray]) -> float:
+    """
+    Computes Cosine Distance between two numeric vectors.
+    Formula: Distance = 1.0 - Cosine Similarity(a, b)
+    Score range: [0.0, 2.0], lower is closer.
+    """
+    return float(np.clip(1.0 - cosine_similarity(a, b), 0.0, 2.0))
+
+
+def dot_product(a: Union[List[float], np.ndarray], b: Union[List[float], np.ndarray]) -> float:
+    """
+    Computes the dot product (inner product) between two numeric vectors.
+    Formula: dot(a, b) = sum(a_i * b_i)
+    Equivalent to Cosine Similarity when vectors are L2-normalized.
+    """
+    vec_a = np.asarray(a, dtype=np.float64)
+    vec_b = np.asarray(b, dtype=np.float64)
+    return float(np.dot(vec_a, vec_b))
+
+
+def euclidean_distance(a: Union[List[float], np.ndarray], b: Union[List[float], np.ndarray]) -> float:
+    """
+    Computes L2 Euclidean Distance between two numeric vectors.
+    Formula: ||a - b||_2 = sqrt(sum((a_i - b_i)^2))
+    Score range: [0.0, inf), lower is closer.
+    """
+    vec_a = np.asarray(a, dtype=np.float64)
+    vec_b = np.asarray(b, dtype=np.float64)
+    return float(np.linalg.norm(vec_a - vec_b))
+
+
+def manhattan_distance(a: Union[List[float], np.ndarray], b: Union[List[float], np.ndarray]) -> float:
+    """
+    Computes L1 Manhattan Distance between two numeric vectors.
+    Formula: ||a - b||_1 = sum(|a_i - b_i|)
+    Score range: [0.0, inf), lower is closer.
+    """
+    vec_a = np.asarray(a, dtype=np.float64)
+    vec_b = np.asarray(b, dtype=np.float64)
+    return float(np.sum(np.abs(vec_a - vec_b)))
+
+
+def calculate_metric(
+    a: Union[List[float], np.ndarray],
+    b: Union[List[float], np.ndarray],
+    metric: str = "cosine"
+) -> float:
+    """
+    Calculates a specified similarity or distance metric between two vectors.
+    Supported metrics: 'cosine', 'cosine_distance', 'dot', 'dot_product', 'euclidean', 'manhattan'.
+    """
+    m = metric.lower().replace("-", "_")
+    if m in ("cosine", "cosine_similarity"):
+        return cosine_similarity(a, b)
+    elif m in ("cosine_distance", "cos_dist"):
+        return cosine_distance(a, b)
+    elif m in ("dot", "dot_product", "inner_product"):
+        return dot_product(a, b)
+    elif m in ("euclidean", "euclidean_distance", "l2"):
+        return euclidean_distance(a, b)
+    elif m in ("manhattan", "manhattan_distance", "l1"):
+        return manhattan_distance(a, b)
+    else:
+        raise ValueError(f"Unsupported metric '{metric}'. Choose from: cosine, cosine_distance, dot_product, euclidean, manhattan.")
+
+
+
 class EmbeddingGenerator:
     """
     Generates text embeddings using OpenAI API (text-embedding-3-small) or
@@ -339,4 +406,99 @@ class EmbeddingGenerator:
         # Sort descending by similarity score
         scored_records.sort(key=lambda x: x["similarity"], reverse=True)
         return scored_records[:top_k]
+
+    def rank_chunks(
+        self,
+        query: Union[str, List[float], np.ndarray],
+        stored_records: List[Dict[str, Any]],
+        metric: str = "cosine",
+        top_k: int = None
+    ) -> Dict[str, Any]:
+        """
+        Ranks chunk embeddings against a query using a specified similarity or distance metric.
+        
+        Args:
+            query: Query string or pre-computed embedding vector.
+            stored_records: List of chunk records containing 'embedding', 'text', 'metadata'.
+            metric: Calculation metric ('cosine', 'cosine_distance', 'dot_product', 'euclidean', 'manhattan').
+            top_k: Optional integer limit on the number of top-ranked results to return.
+            
+        Returns:
+            Dict[str, Any]: Structured payload containing:
+                - 'query': Query string or preview.
+                - 'metric': Metric used for calculation.
+                - 'ranked_chunks': Full list of ranked records (with rank, score, text, metadata).
+                - 'most_similar': Top-1 ranked record.
+                - 'least_similar': Bottom-1 ranked record.
+        """
+        if not stored_records:
+            return {
+                "query": query if isinstance(query, str) else "Vector Query",
+                "metric": metric,
+                "ranked_chunks": [],
+                "most_similar": None,
+                "least_similar": None
+            }
+
+        # Resolve query embedding vector
+        if isinstance(query, str):
+            query_str = query
+            query_vec = self.embed([query])[0]
+        else:
+            query_str = "Pre-computed Query Vector"
+            query_vec = list(query)
+
+        scored_records = []
+        metric_clean = metric.lower().replace("-", "_")
+        
+        # Distance metrics where lower score indicates higher similarity
+        is_distance_metric = metric_clean in (
+            "cosine_distance", "cos_dist", "euclidean", "euclidean_distance", "l2", "manhattan", "manhattan_distance", "l1"
+        )
+
+        for record in stored_records:
+            doc_vec = record.get("embedding", [])
+            if not doc_vec:
+                continue
+            score = calculate_metric(query_vec, doc_vec, metric=metric)
+            scored_records.append({
+                "id": record.get("id"),
+                "text": record.get("text", ""),
+                "metadata": dict(record.get("metadata", {})),
+                "score": round(score, 6),
+                "metric": metric,
+                "embedding": doc_vec,
+                "model": record.get("model", self.model_name)
+            })
+
+        # Sort: descending for similarity metrics (higher is better), ascending for distance metrics (lower is better)
+        scored_records.sort(key=lambda x: x["score"], reverse=not is_distance_metric)
+
+        # Assign 1-indexed rank
+        for idx, item in enumerate(scored_records, start=1):
+            item["rank"] = idx
+
+        ranked = scored_records[:top_k] if top_k else scored_records
+
+        return {
+            "query": query_str,
+            "metric": metric,
+            "ranked_chunks": ranked,
+            "most_similar": scored_records[0] if scored_records else None,
+            "least_similar": scored_records[-1] if scored_records else None
+        }
+
+
+def rank_chunks(
+    query_vector: Union[List[float], np.ndarray],
+    stored_records: List[Dict[str, Any]],
+    metric: str = "cosine",
+    top_k: int = None
+) -> Dict[str, Any]:
+    """
+    Module-level helper to rank stored chunk records against a pre-computed query vector.
+    """
+    gen = EmbeddingGenerator()
+    return gen.rank_chunks(query=query_vector, stored_records=stored_records, metric=metric, top_k=top_k)
+
 

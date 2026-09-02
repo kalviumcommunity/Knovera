@@ -1,0 +1,34 @@
+KNOVERA RAG ASSISTANT - ASSIGNMENT 3.27 EXECUTION AUDIT LOG
+=========================================================
+
+Active Model: text-embedding-3-small
+Vector Dimension: 1536
+Query: "How can a learner reset their password?"
+
+TASK 1 & 3: RANKING RESULTS SUMMARY (COSINE SIMILARITY)
+-------------------------------------------------------
+Most Similar Chunk (Rank #1):
+  Score: 0.9965
+  Text: Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the portal.
+  Metadata: {"source": "account-guide.md", "chunk_index": 0, "section": "Password Recovery", "category": "Authentication"}
+
+Least Similar Chunk (Rank #5):
+  Score: -0.0255
+  Text: Python token chunking uses tiktoken cl100k_base encoding with sliding window overlap to preserve semantic context.
+  Metadata: {"source": "rag-architecture.md", "chunk_index": 5, "section": "Token Chunking", "category": "Engineering"}
+
+FULL RETRIEVAL RANKING TABLE:
+Rank  | Score    | Source             | Text Snippet                            
+---------------------------------------------------------------------------
+#1    | 0.9965   | account-guide.md   | Password reset instructions for learne..
+#2    | 0.9911   | account-guide.md   | Learners can recover access using thei..
+#3    | 0.9680   | sla-policy.md      | Tier 1 Technical Support responds with..
+#4    | -0.0041  | campus-guide.md    | The cafeteria menu changes every Frida..
+#5    | -0.0255  | rag-architecture.md | Python token chunking uses tiktoken cl..
+
+TASK 4: METRIC JUSTIFICATION
+-----------------------------
+1. Directional Invariance: Cosine similarity measures the angle theta between vectors, evaluating semantic direction rather than vector magnitude (length).
+2. Length Independence: In NLP embeddings, longer texts or frequent token repetitions can inflate vector norms without changing semantic intent. Cosine similarity normalizes vector lengths to 1.0, preventing length bias in chunk ranking.
+3. Mathematical Bound: Bounded cleanly in [-1.0, 1.0], making similarity thresholds intuitive.
+4. Identity with Dot Product: For L2-normalized embedding vectors (such as OpenAI text-embedding-3-small), Cosine Similarity equals the Dot Product (a . b), enabling hyper-fast vector database dot-product search.

@@ -71,10 +71,11 @@ The pipeline was executed via [`api_embedding_demo.py`](file:///c:/Users/K%20Jay
 --------------------------------------------------------------------------------
  TASK 3: ENVIRONMENT CONFIGURATION
 --------------------------------------------------------------------------------
-  [CONFIG] API Key Source: FOUND (sk-o...aeaa)
-  [CONFIG] Base URL:       Default API Endpoint
-  [CONFIG] Embedding Model:text-embedding-3-small
-  [INIT] Active Vector Engine: OpenAI / OpenRouter Compatible API
+  [CONFIG] Provider:       OpenRouter
+  [CONFIG] API Key:        FOUND (sk-o...aeaa)
+  [CONFIG] Base URL:       https://openrouter.ai/api/v1
+  [CONFIG] Embedding Model:openai/text-embedding-3-small
+  [INIT] Active Vector Engine: OpenRouter Compatible API
 
 --------------------------------------------------------------------------------
  TASK 1 & 2: GENERATE EMBEDDINGS & STORE VECTORS WITH SOURCE CHUNKS
@@ -88,17 +89,17 @@ Prepared Corpus Size: 6 chunks across 3 source documents.
   Chunk [4] [customer-policy.md | Support Tiers & Response SLA]: "Service Level Agreements (SLAs): Tier 1 Technical Support ensures an i..."
   Chunk [5] [campus-handbook.md | Dining Services]: "Campus cafeteria lunch hours run from 11:30 AM to 2:30 PM daily. A rot..."
 
-Sending batch request to embeddings API (model: 'text-embedding-3-small')...
+Sending batch request to embeddings API (model: 'openai/text-embedding-3-small')...
 Successfully generated and stored 6 vector records.
 
 --------------------------------------------------------------------------------
  TASK 4: VERIFICATION OUTPUT (MODEL, RECORD COUNT, VECTOR LENGTH, SAMPLE VALUES)
 --------------------------------------------------------------------------------
-  model:         text-embedding-3-small
+  model:         openai/text-embedding-3-small
   records:       6
   vector length: 1536
   uniform check: PASSED (All 6 vectors have identical dimension 1536)
-  sample values (Record 0, first 5): [0.015096, -0.003025, 0.017202, 0.039166, -0.003522]
+  sample values (Record 0, first 5): [0.027267, 0.005779, 0.01358, -0.021561, 0.012383]
 ```
 
 ### Stored Record Audit Table

@@ -68,14 +68,24 @@ class EmbeddingGenerator:
         dimension: int = 1536
     ):
         load_dotenv()
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY") or os.getenv("OPENROUTER_API_KEY")
-        self.base_url = base_url or os.getenv("OPENAI_BASE_URL") or os.getenv("OPENROUTER_BASE_URL")
+        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
+        self.base_url = base_url or os.getenv("OPENROUTER_BASE_URL") or os.getenv("OPENAI_BASE_URL")
+        
+        # Auto-detect OpenRouter API key and set standard OpenRouter base URL if not explicitly provided
+        if not self.base_url and self.api_key and (self.api_key.startswith("sk-or-") or os.getenv("OPENROUTER_API_KEY")):
+            self.base_url = "https://openrouter.ai/api/v1"
+
         self.model_name = (
             model_name 
             or os.getenv("EMBEDDING_MODEL") 
             or os.getenv("EMBED_MODEL") 
+            or os.getenv("OPENROUTER_MODEL")
             or "text-embedding-3-small"
         )
+        # If openrouter model is a chat model like "openrouter/free" or "openai/gpt-4o", default embedding model to standard embedding model
+        if "free" in self.model_name.lower() or "gpt" in self.model_name.lower() or "chat" in self.model_name.lower():
+            self.model_name = os.getenv("EMBEDDING_MODEL") or os.getenv("EMBED_MODEL") or "openai/text-embedding-3-small"
+
         self.dimension = dimension
         
         self.client = None
@@ -85,7 +95,7 @@ class EmbeddingGenerator:
                     self.client = OpenAI(api_key=self.api_key, base_url=self.base_url)
                 else:
                     self.client = OpenAI(api_key=self.api_key)
-                logger.info(f"Initialized OpenAI API client with model: {self.model_name}")
+                logger.info(f"Initialized OpenAI/OpenRouter API client with model: {self.model_name}")
             except Exception as e:
                 logger.warning(f"Failed to initialize OpenAI client ({e}). Using offline fallback engine.")
                 self.client = None

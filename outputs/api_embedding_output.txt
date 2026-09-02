@@ -1,39 +1,39 @@
 KNOVERA RAG ASSISTANT - ASSIGNMENT 3.26: GENERATING EMBEDDINGS VIA API
 ================================================================================
 
-Model:           text-embedding-3-small
-Engine:          OpenAI / OpenRouter Compatible API
+Model:           openai/text-embedding-3-small
+Engine:          OpenRouter Compatible API
 Records Count:   6
 Vector Length:   1536
 Uniformity:      True
 
 SAMPLE VECTOR VALUES (First 5 coordinates per record):
-  Record [0] [account-guide.md#chunk_0] -> Dim: 1536, Sample: [0.015096, -0.003025, 0.017202, 0.039166, -0.003522]
+  Record [0] [account-guide.md#chunk_0] -> Dim: 1536, Sample: [0.027267, 0.005779, 0.01358, -0.021561, 0.012383]
     Source: account-guide.md | Section: Password Recovery
     Text: Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.
 
-  Record [1] [account-guide.md#chunk_1] -> Dim: 1536, Sample: [0.018142, 0.002081, 0.019686, 0.039282, -0.000647]
+  Record [1] [account-guide.md#chunk_1] -> Dim: 1536, Sample: [-0.002823, 0.023178, -0.00499, -0.004505, 0.040283]
     Source: account-guide.md | Section: Email Verification & Tokens
     Text: Learners can recover access using their registered email. A one-time secure verification link is dispatched, which remains valid for 15 minutes.
 
-  Record [2] [account-guide.md#chunk_2] -> Dim: 1536, Sample: [-0.004999, 0.014157, -0.007197, -0.005119, 0.018051]
+  Record [2] [account-guide.md#chunk_2] -> Dim: 1536, Sample: [-0.017517, 0.044556, 0.053436, -0.002207, 0.033508]
     Source: account-guide.md | Section: Multi-Factor Security
     Text: Two-factor authentication (2FA) is mandatory for enterprise admin consoles. Admins must register an authenticator app (TOTP) or hardware security key.
 
-  Record [3] [customer-policy.md#chunk_0] -> Dim: 1536, Sample: [0.027652, -0.015801, -0.014761, -0.049685, 0.004087]
+  Record [3] [customer-policy.md#chunk_0] -> Dim: 1536, Sample: [-0.038055, 0.051208, 0.030182, 0.002579, -0.009666]
     Source: customer-policy.md | Section: Refund Eligibility
     Text: Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning.
 
-  Record [4] [customer-policy.md#chunk_1] -> Dim: 1536, Sample: [0.03478, -0.033938, -0.002453, -0.010054, -0.025264]
+  Record [4] [customer-policy.md#chunk_1] -> Dim: 1536, Sample: [-0.071106, 0.043945, 0.059845, -0.007042, 0.001722]
     Source: customer-policy.md | Section: Support Tiers & Response SLA
     Text: Service Level Agreements (SLAs): Tier 1 Technical Support ensures an initial response within 2 business hours. Emergency outage response guarantees 24/7 coverage within 15 minutes.
 
-  Record [5] [campus-handbook.md#chunk_0] -> Dim: 1536, Sample: [-0.02484, 0.010275, 0.032708, 0.036485, -0.015999]
+  Record [5] [campus-handbook.md#chunk_0] -> Dim: 1536, Sample: [-0.037537, -0.030991, 0.107727, -0.042328, -0.013313]
     Source: campus-handbook.md | Section: Dining Services
     Text: Campus cafeteria lunch hours run from 11:30 AM to 2:30 PM daily. A rotating menu of Mediterranean pasta, salads, and hot entrees is served at the main dining hall.
 
 SAMPLE RETRIEVAL QUERY RESULTS:
 Query: "How can a learner reset lost login credentials?"
-  Rank #1 [Sim: 0.9976] - account-guide.md#chunk_0: Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.
-  Rank #2 [Sim: 0.9898] - account-guide.md#chunk_1: Learners can recover access using their registered email. A one-time secure verification link is dispatched, which remains valid for 15 minutes.
-  Rank #3 [Sim: 0.0179] - account-guide.md#chunk_2: Two-factor authentication (2FA) is mandatory for enterprise admin consoles. Admins must register an authenticator app (TOTP) or hardware security key.
+  Rank #1 [Sim: 0.7136] - account-guide.md#chunk_0: Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.
+  Rank #2 [Sim: 0.5886] - account-guide.md#chunk_1: Learners can recover access using their registered email. A one-time secure verification link is dispatched, which remains valid for 15 minutes.
+  Rank #3 [Sim: 0.2613] - account-guide.md#chunk_2: Two-factor authentication (2FA) is mandatory for enterprise admin consoles. Admins must register an authenticator app (TOTP) or hardware security key.

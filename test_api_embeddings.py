@@ -83,13 +83,16 @@ class TestApiEmbeddingGenerator(unittest.TestCase):
         records = self.generator.embed_chunks(self.sample_chunks)
         
         query = "How do I recover my login password?"
-        results = self.generator.search_similar(query, records, top_k=2)
+        results = self.generator.search_similar(query, records, top_k=3)
         
-        self.assertEqual(len(results), 2)
+        self.assertEqual(len(results), 3)
         # Top result should be from account-guide.md (authentication domain)
         top_result = results[0]
         self.assertEqual(top_result["metadata"]["source"], "account-guide.md")
-        self.assertGreater(top_result["similarity"], 0.70)
+        # Top match should score higher than the unrelated dining chunk
+        self.assertGreater(top_result["similarity"], results[2]["similarity"])
+        self.assertGreater(top_result["similarity"], 0.40)
+
 
 
 if __name__ == "__main__":

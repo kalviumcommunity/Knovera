@@ -110,24 +110,27 @@ def main():
     # Task 3 - Read Configuration from Environment
     # ---------------------------------------------------------
     load_dotenv()
-    api_key = os.getenv("OPENAI_API_KEY") or os.getenv("OPENROUTER_API_KEY")
-    base_url = os.getenv("OPENAI_BASE_URL") or os.getenv("OPENROUTER_BASE_URL")
-    model_name = os.getenv("EMBEDDING_MODEL") or os.getenv("EMBED_MODEL") or "text-embedding-3-small"
+    api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
+    base_url = os.getenv("OPENROUTER_BASE_URL") or os.getenv("OPENAI_BASE_URL")
+    model_name = os.getenv("EMBEDDING_MODEL") or os.getenv("EMBED_MODEL")
 
-    print("\n" + "-" * 80)
-    print(" TASK 3: ENVIRONMENT CONFIGURATION")
-    print("-" * 80)
-    print(f"  [CONFIG] API Key Source: {'FOUND (' + mask_secret(api_key) + ')' if api_key else 'NOT SET (Fallback Active)'}")
-    print(f"  [CONFIG] Base URL:       {base_url if base_url else 'Default API Endpoint'}")
-    print(f"  [CONFIG] Embedding Model:{model_name}")
-
-    # Initialize Embedding Generator Client
+    # Initialize Embedding Generator Client (handles fallback and base_url auto-resolution)
     generator = EmbeddingGenerator(
         api_key=api_key,
         base_url=base_url,
         model_name=model_name
     )
-    engine_type = "OpenAI / OpenRouter Compatible API" if generator.client else "Deterministic Semantic Fallback Engine"
+
+    provider_name = "OpenRouter" if (generator.api_key and generator.api_key.startswith("sk-or-")) else "OpenAI"
+    print("\n" + "-" * 80)
+    print(" TASK 3: ENVIRONMENT CONFIGURATION")
+    print("-" * 80)
+    print(f"  [CONFIG] Provider:       {provider_name}")
+    print(f"  [CONFIG] API Key:        {'FOUND (' + mask_secret(generator.api_key) + ')' if generator.api_key else 'NOT SET'}")
+    print(f"  [CONFIG] Base URL:       {generator.base_url if generator.base_url else 'Default API Endpoint'}")
+    print(f"  [CONFIG] Embedding Model:{generator.model_name}")
+
+    engine_type = f"{provider_name} Compatible API" if generator.client else "Deterministic Semantic Fallback Engine"
     print(f"  [INIT] Active Vector Engine: {engine_type}")
 
     # ---------------------------------------------------------

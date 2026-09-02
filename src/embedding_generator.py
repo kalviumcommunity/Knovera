@@ -64,15 +64,29 @@ class EmbeddingGenerator:
         self,
         api_key: str = None,
         base_url: str = None,
-        model_name: str = "text-embedding-3-small",
+        model_name: str = None,
         dimension: int = 1536
     ):
         load_dotenv()
-        self.model_name = model_name
-        self.dimension = dimension
-        
         self.api_key = api_key or os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
         self.base_url = base_url or os.getenv("OPENROUTER_BASE_URL") or os.getenv("OPENAI_BASE_URL")
+        
+        # Auto-detect OpenRouter API key and set standard OpenRouter base URL if not explicitly provided
+        if not self.base_url and self.api_key and (self.api_key.startswith("sk-or-") or os.getenv("OPENROUTER_API_KEY")):
+            self.base_url = "https://openrouter.ai/api/v1"
+
+        self.model_name = (
+            model_name 
+            or os.getenv("EMBEDDING_MODEL") 
+            or os.getenv("EMBED_MODEL") 
+            or os.getenv("OPENROUTER_MODEL")
+            or "text-embedding-3-small"
+        )
+        # If openrouter model is a chat model like "openrouter/free" or "openai/gpt-4o", default embedding model to standard embedding model
+        if "free" in self.model_name.lower() or "gpt" in self.model_name.lower() or "chat" in self.model_name.lower():
+            self.model_name = os.getenv("EMBEDDING_MODEL") or os.getenv("EMBED_MODEL") or "openai/text-embedding-3-small"
+
+        self.dimension = dimension
         
         self.client = None
         if HAS_OPENAI and self.api_key:
@@ -81,12 +95,60 @@ class EmbeddingGenerator:
                     self.client = OpenAI(api_key=self.api_key, base_url=self.base_url)
                 else:
                     self.client = OpenAI(api_key=self.api_key)
-                logger.info(f"Initialized OpenAI API client with model: {self.model_name}")
+                logger.info(f"Initialized OpenAI/OpenRouter API client with model: {self.model_name}")
             except Exception as e:
                 logger.warning(f"Failed to initialize OpenAI client ({e}). Using offline fallback engine.")
                 self.client = None
         else:
             logger.info("No API key found or OpenAI module missing. Operating in offline semantic fallback mode.")
+
+    def embed_chunks(
+        self,
+        chunks: List[Dict[str, Any]],
+        batch_size: int = 32
+    ) -> List[Dict[str, Any]]:
+        """
+        Processes prepared text chunks in batches, sends them to the embeddings API,
+        and binds each embedding vector directly with its source text and metadata.
+        
+        Args:
+            chunks: List of chunk dictionaries containing 'text' and optional 'metadata'.
+            batch_size: Number of chunks sent per API batch request.
+            
+        Returns:
+            List[Dict[str, Any]]: List of stored records containing text, metadata,
+                                  embedding vector, vector length, and model name.
+        """
+        if not chunks:
+            return []
+
+        stored_records = []
+        total_chunks = len(chunks)
+
+        for i in range(0, total_chunks, batch_size):
+            batch = chunks[i:i + batch_size]
+            batch_texts = [c.get("text", "") for c in batch]
+            
+            # Generate embeddings for batch
+            batch_embeddings = self.embed(batch_texts)
+
+            for idx, (chunk, embedding) in enumerate(zip(batch, batch_embeddings)):
+                metadata = dict(chunk.get("metadata", {}))
+                source_doc = metadata.get("source", metadata.get("doc_title", "corpus_doc"))
+                chunk_idx = metadata.get("chunk_index", i + idx)
+                
+                record_id = chunk.get("id") or f"{source_doc}#chunk_{chunk_idx}"
+                
+                stored_records.append({
+                    "id": record_id,
+                    "text": chunk.get("text", ""),
+                    "metadata": metadata,
+                    "embedding": embedding,
+                    "vector_length": len(embedding),
+                    "model": self.model_name
+                })
+
+        return stored_records
 
     def embed(self, texts: List[str]) -> List[List[float]]:
         """
@@ -236,3 +298,45 @@ class EmbeddingGenerator:
                     "similarity": round(score, 4)
                 })
         return results
+
+    def search_similar(
+        self,
+        query: str,
+        stored_records: List[Dict[str, Any]],
+        top_k: int = 3
+    ) -> List[Dict[str, Any]]:
+        """
+        Retrieves the most semantically relevant chunks for a query by generating
+        the query vector with the same embedding model and calculating cosine similarity
+        against all stored record vectors.
+        
+        Args:
+            query: User question / query string.
+            stored_records: List of stored chunk records containing 'embedding', 'text', 'metadata'.
+            top_k: Number of top results to return.
+            
+        Returns:
+            List[Dict[str, Any]]: Ranked list of matching records with similarity scores.
+        """
+        if not query or not stored_records:
+            return []
+
+        # Embed query using identical model
+        query_vec = self.embed([query])[0]
+
+        scored_records = []
+        for record in stored_records:
+            doc_vec = record.get("embedding", [])
+            sim = cosine_similarity(query_vec, doc_vec)
+            scored_records.append({
+                "id": record.get("id"),
+                "text": record.get("text"),
+                "metadata": record.get("metadata", {}),
+                "similarity": round(sim, 4),
+                "model": record.get("model", self.model_name)
+            })
+
+        # Sort descending by similarity score
+        scored_records.sort(key=lambda x: x["similarity"], reverse=True)
+        return scored_records[:top_k]
+

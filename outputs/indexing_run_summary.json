@@ -1,0 +1,84 @@
+{
+  "assignment": "3.31 Indexing Embeddings & Metadata Storage",
+  "collection_name": "knovera_knowledge_base",
+  "database": "ChromaDB (v0.5.23)",
+  "model": "openai/text-embedding-3-small",
+  "vector_dimension": 1536,
+  "metrics": {
+    "collection_name": "knovera_knowledge_base",
+    "expected_chunks": 10,
+    "inserted_this_run": 10,
+    "initial_count": 0,
+    "final_indexed_count": 10,
+    "count_matches": true,
+    "batch_size": 4,
+    "total_batches": 3,
+    "failures": [],
+    "duration_seconds": 0.1608,
+    "throughput_records_per_sec": 62.19,
+    "status": "SUCCESS"
+  },
+  "spot_checks": [
+    {
+      "id": "account-guide.md:0",
+      "found": true,
+      "passed": true,
+      "vector_length": 1536,
+      "expected_vector_length": 1536,
+      "source": "account-guide.md",
+      "chunk_index": 0,
+      "section": "Password Recovery",
+      "text_preview": "Password reset instructions for learner accounts: Users can recover access by cl...",
+      "checks": {
+        "id_match": true,
+        "vector_length_match": true,
+        "text_match": true,
+        "source_match": true,
+        "chunk_index_match": true
+      }
+    },
+    {
+      "id": "service-policy.md:1",
+      "found": true,
+      "passed": true,
+      "vector_length": 1536,
+      "expected_vector_length": 1536,
+      "source": "service-policy.md",
+      "chunk_index": 1,
+      "section": "Refund Processing SLA",
+      "text_preview": "Refund processing requires an approved ticket from the billing department. Once ...",
+      "checks": {
+        "id_match": true,
+        "vector_length_match": true,
+        "text_match": true,
+        "source_match": true,
+        "chunk_index_match": true
+      }
+    },
+    {
+      "id": "dev-guide.md:1",
+      "found": true,
+      "passed": true,
+      "vector_length": 1536,
+      "expected_vector_length": 1536,
+      "source": "dev-guide.md",
+      "chunk_index": 1,
+      "section": "Chunking Endpoints",
+      "text_preview": "Semantic chunking API endpoints allow developers to pass raw markdown and receiv...",
+      "checks": {
+        "id_match": true,
+        "vector_length_match": true,
+        "text_match": true,
+        "source_match": true,
+        "chunk_index_match": true
+      }
+    }
+  ],
+  "incremental_reindex_demonstration": {
+    "document_source": "campus-guide.md",
+    "evicted_stale_chunks": 2,
+    "inserted_new_chunks": 1,
+    "collection_total_count": 9,
+    "status": "INCREMENTAL_REINDEX_SUCCESS"
+  }
+}

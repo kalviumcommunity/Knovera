@@ -1,0 +1,26 @@
+KNOVERA RAG ASSISTANT - ASSIGNMENT 3.31: INDEXING EMBEDDINGS & METADATA STORAGE
+=====================================================================================
+
+Collection Name:     knovera_knowledge_base
+Embedding Model:     openai/text-embedding-3-small
+Vector Dimension:    1536
+Expected Chunks:     10
+Inserted Records:    10
+Final Count in DB:   10
+Count Matches:       True
+Duration:            0.1608s
+Throughput:          62.19 records/sec
+
+SPOT CHECK INTEGRITY AUDIT:
+  ID: account-guide.md:0 | Dim: 1536 | Passed: True
+    Source: account-guide.md | Section: Password Recovery
+    Text: Password reset instructions for learner accounts: Users can recover access by cl...
+
+  ID: service-policy.md:1 | Dim: 1536 | Passed: True
+    Source: service-policy.md | Section: Refund Processing SLA
+    Text: Refund processing requires an approved ticket from the billing department. Once ...
+
+  ID: dev-guide.md:1 | Dim: 1536 | Passed: True
+    Source: dev-guide.md | Section: Chunking Endpoints
+    Text: Semantic chunking API endpoints allow developers to pass raw markdown and receiv...
+

@@ -489,6 +489,28 @@ class EmbeddingGenerator:
         }
 
 
+
+    def embed_with_retry(
+        self,
+        texts: List[str],
+        max_attempts: int = 5,
+        initial_delay: float = 1.0,
+        backoff_factor: float = 2.0
+    ) -> List[List[float]]:
+        """
+        Embeds a list of texts with automatic exponential backoff retry.
+        """
+        from src.batch_embedding_pipeline import BatchEmbeddingPipeline
+        pipeline = BatchEmbeddingPipeline(
+            generator=self,
+            max_retries=max_attempts,
+            initial_delay=initial_delay,
+            backoff_factor=backoff_factor
+        )
+        embeddings, _ = pipeline.embed_with_retry(texts)
+        return embeddings
+
+
 def rank_chunks(
     query_vector: Union[List[float], np.ndarray],
     stored_records: List[Dict[str, Any]],
@@ -500,5 +522,6 @@ def rank_chunks(
     """
     gen = EmbeddingGenerator()
     return gen.rank_chunks(query=query_vector, stored_records=stored_records, metric=metric, top_k=top_k)
+
 
 

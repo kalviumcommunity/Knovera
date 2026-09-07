@@ -1,0 +1,78 @@
+KNOVERA RAG ASSISTANT - ASSIGNMENT 3.28: BATCH EMBEDDING & RATE/COST MANAGEMENT
+================================================================================
+
+1. FRESH BATCH RUN AUDIT:
++------------------------------------+------------------------------------+
+| Metric                             | Value                              |
++------------------------------------+------------------------------------+
+| Pipeline Status                    | SUCCESS                            |
+| Embedding Model                    | openai/text-embedding-3-small      |
+| Batch Size                         | 4                                  |
+| Total Input Chunks                 | 10                                 |
+| Previously Existing Chunks         | 0                                  |
+| Skipped Chunks (Already Embedded)  | 0                                  |
+| Pending Chunks Embedded            | 10                                 |
+| Failed Chunks                      | 0                                  |
+| Total Batches Processed            | 3                                  |
+| Failed Batches                     | 0                                  |
+| Retries Attempted (Backoff)        | 0                                  |
+| Input Tokens Processed             | 298                                |
+| Price per 1K Tokens                | $0.000020 USD/1k            |
+| Estimated Run Cost                 | $0.000006 USD               |
+| Duration (seconds)                 | 2.6562s                          |
+| Throughput (chunks/sec)            | 3.76 chunks/sec                |
+| Throughput (tokens/sec)            | 112.19 tokens/sec                |
++------------------------------------+------------------------------------+
+
+2. RETRY WITH EXPONENTIAL BACKOFF AUDIT:
+  Simulated Failures: 2
+  Retries Recovered: 2
+  Backoff Duration: 2.103s
+
+3. RE-RUN IDEMPOTENCY AUDIT (SKIPPED CHUNKS):
++------------------------------------+------------------------------------+
+| Metric                             | Value                              |
++------------------------------------+------------------------------------+
+| Pipeline Status                    | ALL_CHUNKS_ALREADY_EMBEDDED        |
+| Embedding Model                    | openai/text-embedding-3-small      |
+| Batch Size                         | 4                                  |
+| Total Input Chunks                 | 10                                 |
+| Previously Existing Chunks         | 10                                 |
+| Skipped Chunks (Already Embedded)  | 10                                 |
+| Pending Chunks Embedded            | 0                                  |
+| Failed Chunks                      | 0                                  |
+| Total Batches Processed            | 0                                  |
+| Failed Batches                     | 0                                  |
+| Retries Attempted (Backoff)        | 0                                  |
+| Input Tokens Processed             | 0                                  |
+| Price per 1K Tokens                | $0.000020 USD/1k            |
+| Estimated Run Cost                 | $0.000000 USD               |
+| Duration (seconds)                 | 0.0000s                          |
+| Throughput (chunks/sec)            | 0.00 chunks/sec                |
+| Throughput (tokens/sec)            | 0.00 tokens/sec                |
++------------------------------------+------------------------------------+
+
+4. PARTIAL RESUME WITH NEW CHUNKS AUDIT:
++------------------------------------+------------------------------------+
+| Metric                             | Value                              |
++------------------------------------+------------------------------------+
+| Pipeline Status                    | SUCCESS                            |
+| Embedding Model                    | openai/text-embedding-3-small      |
+| Batch Size                         | 4                                  |
+| Total Input Chunks                 | 12                                 |
+| Previously Existing Chunks         | 10                                 |
+| Skipped Chunks (Already Embedded)  | 10                                 |
+| Pending Chunks Embedded            | 2                                  |
+| Failed Chunks                      | 0                                  |
+| Total Batches Processed            | 1                                  |
+| Failed Batches                     | 0                                  |
+| Retries Attempted (Backoff)        | 0                                  |
+| Input Tokens Processed             | 48                                 |
+| Price per 1K Tokens                | $0.000020 USD/1k            |
+| Estimated Run Cost                 | $0.000001 USD               |
+| Duration (seconds)                 | 0.9276s                          |
+| Throughput (chunks/sec)            | 2.16 chunks/sec                |
+| Throughput (tokens/sec)            | 51.75 tokens/sec                |
++------------------------------------+------------------------------------+
+
+5. TOTAL PERSISTED RECORDS IN STORAGE: 12

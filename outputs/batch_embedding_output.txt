@@ -19,15 +19,15 @@ KNOVERA RAG ASSISTANT - ASSIGNMENT 3.28: BATCH EMBEDDING & RATE/COST MANAGEMENT
 | Input Tokens Processed             | 298                                |
 | Price per 1K Tokens                | $0.000020 USD/1k            |
 | Estimated Run Cost                 | $0.000006 USD               |
-| Duration (seconds)                 | 2.6562s                          |
-| Throughput (chunks/sec)            | 3.76 chunks/sec                |
-| Throughput (tokens/sec)            | 112.19 tokens/sec                |
+| Duration (seconds)                 | 2.5630s                          |
+| Throughput (chunks/sec)            | 3.90 chunks/sec                |
+| Throughput (tokens/sec)            | 116.27 tokens/sec                |
 +------------------------------------+------------------------------------+
 
 2. RETRY WITH EXPONENTIAL BACKOFF AUDIT:
   Simulated Failures: 2
   Retries Recovered: 2
-  Backoff Duration: 2.103s
+  Backoff Duration: 2.207s
 
 3. RE-RUN IDEMPOTENCY AUDIT (SKIPPED CHUNKS):
 +------------------------------------+------------------------------------+
@@ -70,9 +70,9 @@ KNOVERA RAG ASSISTANT - ASSIGNMENT 3.28: BATCH EMBEDDING & RATE/COST MANAGEMENT
 | Input Tokens Processed             | 48                                 |
 | Price per 1K Tokens                | $0.000020 USD/1k            |
 | Estimated Run Cost                 | $0.000001 USD               |
-| Duration (seconds)                 | 0.9276s                          |
-| Throughput (chunks/sec)            | 2.16 chunks/sec                |
-| Throughput (tokens/sec)            | 51.75 tokens/sec                |
+| Duration (seconds)                 | 0.5431s                          |
+| Throughput (chunks/sec)            | 3.68 chunks/sec                |
+| Throughput (tokens/sec)            | 88.38 tokens/sec                |
 +------------------------------------+------------------------------------+
 
 5. TOTAL PERSISTED RECORDS IN STORAGE: 12

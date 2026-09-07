@@ -1,0 +1,497 @@
+{
+  "timestamp": "2026-09-07T08:01:07Z",
+  "collection": "knovera_hybrid_knowledge_base",
+  "total_corpus_chunks": 8,
+  "tasks": {
+    "task_1_and_2": {
+      "query": "What are the password reset steps?",
+      "metadata_filter": {
+        "section": "Account access"
+      },
+      "unfiltered_results": [
+        {
+          "id": "account-guide.md#chunk_0",
+          "score": 0.6094,
+          "distance": 0.3906,
+          "source": "account-guide.md",
+          "section": "Account access",
+          "category": "Authentication",
+          "metadata": {
+            "category": "Authentication",
+            "chunk_index": 0,
+            "doc_title": "account-guide.md",
+            "doc_type": "guide",
+            "section": "Account access",
+            "source": "account-guide.md",
+            "user_role": "Learner"
+          },
+          "text": "Password reset instructions: Navigate to the /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+          "rank": 1
+        },
+        {
+          "id": "account-guide.md#chunk_1",
+          "score": 0.5042,
+          "distance": 0.4958,
+          "source": "account-guide.md",
+          "section": "Account access",
+          "category": "Authentication",
+          "metadata": {
+            "category": "Authentication",
+            "chunk_index": 1,
+            "doc_title": "account-guide.md",
+            "doc_type": "guide",
+            "section": "Account access",
+            "source": "account-guide.md",
+            "user_role": "Learner"
+          },
+          "text": "Troubleshooting account access: If the password reset OTP expires or fails with error code ERR-AUTH-902, request a new verification token from the login screen.",
+          "rank": 2
+        },
+        {
+          "id": "campus-it-policy.md#chunk_0",
+          "score": 0.382,
+          "distance": 0.618,
+          "source": "campus-it-policy.md",
+          "section": "IT Security",
+          "category": "IT Policy",
+          "metadata": {
+            "category": "IT Policy",
+            "chunk_index": 0,
+            "doc_title": "campus-it-policy.md",
+            "doc_type": "policy",
+            "section": "IT Security",
+            "source": "campus-it-policy.md",
+            "user_role": "Staff"
+          },
+          "text": "Campus IT security policy SEC-POL-101: Passwords must contain a minimum of 12 characters, include upper and lower case letters, and be rotated every 90 days across all staff accounts.",
+          "rank": 3
+        }
+      ],
+      "filtered_results": [
+        {
+          "id": "account-guide.md#chunk_0",
+          "score": 0.6094,
+          "distance": 0.3906,
+          "source": "account-guide.md",
+          "section": "Account access",
+          "category": "Authentication",
+          "metadata": {
+            "category": "Authentication",
+            "chunk_index": 0,
+            "doc_title": "account-guide.md",
+            "doc_type": "guide",
+            "section": "Account access",
+            "source": "account-guide.md",
+            "user_role": "Learner"
+          },
+          "text": "Password reset instructions: Navigate to the /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+          "rank": 1
+        },
+        {
+          "id": "account-guide.md#chunk_1",
+          "score": 0.5042,
+          "distance": 0.4958,
+          "source": "account-guide.md",
+          "section": "Account access",
+          "category": "Authentication",
+          "metadata": {
+            "category": "Authentication",
+            "chunk_index": 1,
+            "doc_title": "account-guide.md",
+            "doc_type": "guide",
+            "section": "Account access",
+            "source": "account-guide.md",
+            "user_role": "Learner"
+          },
+          "text": "Troubleshooting account access: If the password reset OTP expires or fails with error code ERR-AUTH-902, request a new verification token from the login screen.",
+          "rank": 2
+        }
+      ],
+      "unfiltered_precision": 0.6667,
+      "filtered_precision": 1.0,
+      "precision_delta": 0.3333
+    },
+    "task_3": {
+      "query": "How do I resolve ERR-AUTH-902 token error in API?",
+      "keywords": [
+        "ERR-AUTH-902",
+        "API"
+      ],
+      "vector_weight": 0.7,
+      "keyword_weight": 0.3,
+      "pure_vector_results": [
+        {
+          "id": "developer-api.md#chunk_0",
+          "score": 0.6916,
+          "distance": 0.3084,
+          "source": "developer-api.md",
+          "section": "API Errors",
+          "category": "Developer Tools",
+          "metadata": {
+            "category": "Developer Tools",
+            "chunk_index": 0,
+            "doc_title": "developer-api.md",
+            "doc_type": "reference",
+            "section": "API Errors",
+            "source": "developer-api.md",
+            "user_role": "Developer"
+          },
+          "text": "Developer API Error Codes: ERR-AUTH-902 denotes an invalid or expired authentication bearer token. Regenerate your client secret and API key in the Knovera Developer Console.",
+          "rank": 1
+        },
+        {
+          "id": "account-guide.md#chunk_1",
+          "score": 0.6225,
+          "distance": 0.3775,
+          "source": "account-guide.md",
+          "section": "Account access",
+          "category": "Authentication",
+          "metadata": {
+            "category": "Authentication",
+            "chunk_index": 1,
+            "doc_title": "account-guide.md",
+            "doc_type": "guide",
+            "section": "Account access",
+            "source": "account-guide.md",
+            "user_role": "Learner"
+          },
+          "text": "Troubleshooting account access: If the password reset OTP expires or fails with error code ERR-AUTH-902, request a new verification token from the login screen.",
+          "rank": 2
+        },
+        {
+          "id": "account-guide.md#chunk_0",
+          "score": 0.3209,
+          "distance": 0.6791,
+          "source": "account-guide.md",
+          "section": "Account access",
+          "category": "Authentication",
+          "metadata": {
+            "category": "Authentication",
+            "chunk_index": 0,
+            "doc_title": "account-guide.md",
+            "doc_type": "guide",
+            "section": "Account access",
+            "source": "account-guide.md",
+            "user_role": "Learner"
+          },
+          "text": "Password reset instructions: Navigate to the /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+          "rank": 3
+        }
+      ],
+      "hybrid_results": [
+        {
+          "id": "developer-api.md#chunk_0",
+          "score": 0.6915,
+          "distance": 0.3085,
+          "source": "developer-api.md",
+          "section": "API Errors",
+          "category": "Developer Tools",
+          "metadata": {
+            "category": "Developer Tools",
+            "chunk_index": 0,
+            "doc_title": "developer-api.md",
+            "doc_type": "reference",
+            "section": "API Errors",
+            "source": "developer-api.md",
+            "user_role": "Developer"
+          },
+          "text": "Developer API Error Codes: ERR-AUTH-902 denotes an invalid or expired authentication bearer token. Regenerate your client secret and API key in the Knovera Developer Console.",
+          "rank": 1,
+          "vector_score": 0.6915,
+          "keyword_score": 0.875,
+          "keyword_matches_count": 3,
+          "hybrid_score": 0.7466
+        },
+        {
+          "id": "account-guide.md#chunk_1",
+          "score": 0.6224,
+          "distance": 0.3776,
+          "source": "account-guide.md",
+          "section": "Account access",
+          "category": "Authentication",
+          "metadata": {
+            "category": "Authentication",
+            "chunk_index": 1,
+            "doc_title": "account-guide.md",
+            "doc_type": "guide",
+            "section": "Account access",
+            "source": "account-guide.md",
+            "user_role": "Learner"
+          },
+          "text": "Troubleshooting account access: If the password reset OTP expires or fails with error code ERR-AUTH-902, request a new verification token from the login screen.",
+          "rank": 2,
+          "vector_score": 0.6224,
+          "keyword_score": 0.375,
+          "keyword_matches_count": 1,
+          "hybrid_score": 0.5482
+        },
+        {
+          "id": "account-guide.md#chunk_0",
+          "score": 0.3209,
+          "distance": 0.6791,
+          "source": "account-guide.md",
+          "section": "Account access",
+          "category": "Authentication",
+          "metadata": {
+            "category": "Authentication",
+            "chunk_index": 0,
+            "doc_title": "account-guide.md",
+            "doc_type": "guide",
+            "section": "Account access",
+            "source": "account-guide.md",
+            "user_role": "Learner"
+          },
+          "text": "Password reset instructions: Navigate to the /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+          "rank": 3,
+          "vector_score": 0.3209,
+          "keyword_score": 0.0,
+          "keyword_matches_count": 0,
+          "hybrid_score": 0.2246
+        }
+      ]
+    },
+    "task_4": {
+      "query": "How do I troubleshoot password reset OTP expiration or invalid tokens?",
+      "metadata_filter": {
+        "category": "Authentication"
+      },
+      "keywords": [
+        "password",
+        "reset",
+        "OTP",
+        "ERR-AUTH-902"
+      ],
+      "top_k": 3,
+      "target_criteria": {
+        "category": "Authentication"
+      },
+      "results": {
+        "unfiltered_vector": [
+          {
+            "id": "account-guide.md#chunk_1",
+            "score": 0.7476,
+            "distance": 0.2524,
+            "source": "account-guide.md",
+            "section": "Account access",
+            "category": "Authentication",
+            "metadata": {
+              "category": "Authentication",
+              "chunk_index": 1,
+              "doc_title": "account-guide.md",
+              "doc_type": "guide",
+              "section": "Account access",
+              "source": "account-guide.md",
+              "user_role": "Learner"
+            },
+            "text": "Troubleshooting account access: If the password reset OTP expires or fails with error code ERR-AUTH-902, request a new verification token from the login screen.",
+            "rank": 1
+          },
+          {
+            "id": "account-guide.md#chunk_0",
+            "score": 0.5687,
+            "distance": 0.4313,
+            "source": "account-guide.md",
+            "section": "Account access",
+            "category": "Authentication",
+            "metadata": {
+              "category": "Authentication",
+              "chunk_index": 0,
+              "doc_title": "account-guide.md",
+              "doc_type": "guide",
+              "section": "Account access",
+              "source": "account-guide.md",
+              "user_role": "Learner"
+            },
+            "text": "Password reset instructions: Navigate to the /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+            "rank": 2
+          },
+          {
+            "id": "developer-api.md#chunk_0",
+            "score": 0.4452,
+            "distance": 0.5548,
+            "source": "developer-api.md",
+            "section": "API Errors",
+            "category": "Developer Tools",
+            "metadata": {
+              "category": "Developer Tools",
+              "chunk_index": 0,
+              "doc_title": "developer-api.md",
+              "doc_type": "reference",
+              "section": "API Errors",
+              "source": "developer-api.md",
+              "user_role": "Developer"
+            },
+            "text": "Developer API Error Codes: ERR-AUTH-902 denotes an invalid or expired authentication bearer token. Regenerate your client secret and API key in the Knovera Developer Console.",
+            "rank": 3
+          }
+        ],
+        "filtered_vector": [
+          {
+            "id": "account-guide.md#chunk_1",
+            "score": 0.7476,
+            "distance": 0.2524,
+            "source": "account-guide.md",
+            "section": "Account access",
+            "category": "Authentication",
+            "metadata": {
+              "category": "Authentication",
+              "chunk_index": 1,
+              "doc_title": "account-guide.md",
+              "doc_type": "guide",
+              "section": "Account access",
+              "source": "account-guide.md",
+              "user_role": "Learner"
+            },
+            "text": "Troubleshooting account access: If the password reset OTP expires or fails with error code ERR-AUTH-902, request a new verification token from the login screen.",
+            "rank": 1
+          },
+          {
+            "id": "account-guide.md#chunk_0",
+            "score": 0.5687,
+            "distance": 0.4313,
+            "source": "account-guide.md",
+            "section": "Account access",
+            "category": "Authentication",
+            "metadata": {
+              "category": "Authentication",
+              "chunk_index": 0,
+              "doc_title": "account-guide.md",
+              "doc_type": "guide",
+              "section": "Account access",
+              "source": "account-guide.md",
+              "user_role": "Learner"
+            },
+            "text": "Password reset instructions: Navigate to the /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+            "rank": 2
+          }
+        ],
+        "unfiltered_hybrid": [
+          {
+            "id": "account-guide.md#chunk_1",
+            "score": 0.7476,
+            "distance": 0.2524,
+            "source": "account-guide.md",
+            "section": "Account access",
+            "category": "Authentication",
+            "metadata": {
+              "category": "Authentication",
+              "chunk_index": 1,
+              "doc_title": "account-guide.md",
+              "doc_type": "guide",
+              "section": "Account access",
+              "source": "account-guide.md",
+              "user_role": "Learner"
+            },
+            "text": "Troubleshooting account access: If the password reset OTP expires or fails with error code ERR-AUTH-902, request a new verification token from the login screen.",
+            "rank": 1,
+            "vector_score": 0.7476,
+            "keyword_score": 0.75,
+            "keyword_matches_count": 4,
+            "hybrid_score": 0.7483
+          },
+          {
+            "id": "account-guide.md#chunk_0",
+            "score": 0.5687,
+            "distance": 0.4313,
+            "source": "account-guide.md",
+            "section": "Account access",
+            "category": "Authentication",
+            "metadata": {
+              "category": "Authentication",
+              "chunk_index": 0,
+              "doc_title": "account-guide.md",
+              "doc_type": "guide",
+              "section": "Account access",
+              "source": "account-guide.md",
+              "user_role": "Learner"
+            },
+            "text": "Password reset instructions: Navigate to the /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+            "rank": 2,
+            "vector_score": 0.5687,
+            "keyword_score": 0.75,
+            "keyword_matches_count": 6,
+            "hybrid_score": 0.6231
+          },
+          {
+            "id": "developer-api.md#chunk_0",
+            "score": 0.4452,
+            "distance": 0.5548,
+            "source": "developer-api.md",
+            "section": "API Errors",
+            "category": "Developer Tools",
+            "metadata": {
+              "category": "Developer Tools",
+              "chunk_index": 0,
+              "doc_title": "developer-api.md",
+              "doc_type": "reference",
+              "section": "API Errors",
+              "source": "developer-api.md",
+              "user_role": "Developer"
+            },
+            "text": "Developer API Error Codes: ERR-AUTH-902 denotes an invalid or expired authentication bearer token. Regenerate your client secret and API key in the Knovera Developer Console.",
+            "rank": 3,
+            "vector_score": 0.4452,
+            "keyword_score": 0.1875,
+            "keyword_matches_count": 1,
+            "hybrid_score": 0.3679
+          }
+        ],
+        "filtered_hybrid": [
+          {
+            "id": "account-guide.md#chunk_1",
+            "score": 0.7476,
+            "distance": 0.2524,
+            "source": "account-guide.md",
+            "section": "Account access",
+            "category": "Authentication",
+            "metadata": {
+              "category": "Authentication",
+              "chunk_index": 1,
+              "doc_title": "account-guide.md",
+              "doc_type": "guide",
+              "section": "Account access",
+              "source": "account-guide.md",
+              "user_role": "Learner"
+            },
+            "text": "Troubleshooting account access: If the password reset OTP expires or fails with error code ERR-AUTH-902, request a new verification token from the login screen.",
+            "rank": 1,
+            "vector_score": 0.7476,
+            "keyword_score": 0.75,
+            "keyword_matches_count": 4,
+            "hybrid_score": 0.7483
+          },
+          {
+            "id": "account-guide.md#chunk_0",
+            "score": 0.5687,
+            "distance": 0.4313,
+            "source": "account-guide.md",
+            "section": "Account access",
+            "category": "Authentication",
+            "metadata": {
+              "category": "Authentication",
+              "chunk_index": 0,
+              "doc_title": "account-guide.md",
+              "doc_type": "guide",
+              "section": "Account access",
+              "source": "account-guide.md",
+              "user_role": "Learner"
+            },
+            "text": "Password reset instructions: Navigate to the /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+            "rank": 2,
+            "vector_score": 0.5687,
+            "keyword_score": 0.75,
+            "keyword_matches_count": 6,
+            "hybrid_score": 0.6231
+          }
+        ]
+      },
+      "precision_metrics": {
+        "unfiltered_vector_precision": 0.6667,
+        "filtered_vector_precision": 1.0,
+        "unfiltered_hybrid_precision": 0.6667,
+        "filtered_hybrid_precision": 1.0,
+        "precision_improvement": 0.3333
+      }
+    }
+  }
+}

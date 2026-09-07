@@ -1,0 +1,325 @@
+{
+  "assignment": "3.29 Embedding Quality Checks & Sanity Tests",
+  "model": "openai/text-embedding-3-small",
+  "dimension": 1536,
+  "corpus_chunks_count": 10,
+  "relevance_suite": {
+    "suite": "Embedding Retrieval Sanity Suite",
+    "model": "openai/text-embedding-3-small",
+    "total_tests": 5,
+    "passed": 5,
+    "failed": 0,
+    "hit_at_1_rate": 100.0,
+    "mrr": 1.0,
+    "avg_positive_margin": 0.2235,
+    "status": "PASSED",
+    "results": [
+      {
+        "query": "How can a learner reset their account password?",
+        "category": "Authentication",
+        "expected_source": "account-guide.md",
+        "expected_id": null,
+        "top_id": "account-guide#chunk_0",
+        "top_source": "account-guide.md",
+        "top_score": 0.7681,
+        "target_rank": 1,
+        "target_score": 0.7681,
+        "passed": true,
+        "reciprocal_rank": 1.0,
+        "margin_vs_distractor": 0.1749,
+        "top_k_matches": [
+          {
+            "rank": 1,
+            "id": "account-guide#chunk_0",
+            "source": "account-guide.md",
+            "section": "Password Recovery",
+            "score": 0.7681,
+            "preview": "Password reset instructions for learner accounts: Users can recover access ..."
+          },
+          {
+            "rank": 2,
+            "id": "account-guide#chunk_1",
+            "source": "account-guide.md",
+            "section": "Email Verification",
+            "score": 0.5932,
+            "preview": "Learners can recover access using their registered email. A one-time secure..."
+          },
+          {
+            "rank": 3,
+            "id": "service-policy#chunk_0",
+            "source": "service-policy.md",
+            "section": "Refund Eligibility",
+            "score": 0.2843,
+            "preview": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible f..."
+          }
+        ],
+        "note": "User password recovery query should retrieve account administration guide.",
+        "id": "TC-01"
+      },
+      {
+        "query": "When does the campus cafeteria open and what is on the lunch menu?",
+        "category": "Campus Life",
+        "expected_source": "campus-guide.md",
+        "expected_id": null,
+        "top_id": "campus-guide#chunk_0",
+        "top_source": "campus-guide.md",
+        "top_score": 0.7293,
+        "target_rank": 1,
+        "target_score": 0.7293,
+        "passed": true,
+        "reciprocal_rank": 1.0,
+        "margin_vs_distractor": 0.2251,
+        "top_k_matches": [
+          {
+            "rank": 1,
+            "id": "campus-guide#chunk_0",
+            "source": "campus-guide.md",
+            "section": "Dining Hours",
+            "score": 0.7293,
+            "preview": "Campus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM..."
+          },
+          {
+            "rank": 2,
+            "id": "campus-guide#chunk_1",
+            "source": "campus-guide.md",
+            "section": "Payment Methods",
+            "score": 0.5042,
+            "preview": "Campus dining cards can be recharged via the student portal or mobile app. ..."
+          },
+          {
+            "rank": 3,
+            "id": "service-policy#chunk_0",
+            "source": "service-policy.md",
+            "section": "Refund Eligibility",
+            "score": 0.1547,
+            "preview": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible f..."
+          }
+        ],
+        "note": "Dining hours query should retrieve campus cafeteria guide.",
+        "id": "TC-02"
+      },
+      {
+        "query": "What is the policy and time window for receiving a subscription refund?",
+        "category": "Billing",
+        "expected_source": "service-policy.md",
+        "expected_id": null,
+        "top_id": "service-policy#chunk_0",
+        "top_source": "service-policy.md",
+        "top_score": 0.5885,
+        "target_rank": 1,
+        "target_score": 0.5885,
+        "passed": true,
+        "reciprocal_rank": 1.0,
+        "margin_vs_distractor": 0.0676,
+        "top_k_matches": [
+          {
+            "rank": 1,
+            "id": "service-policy#chunk_0",
+            "source": "service-policy.md",
+            "section": "Refund Eligibility",
+            "score": 0.5885,
+            "preview": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible f..."
+          },
+          {
+            "rank": 2,
+            "id": "service-policy#chunk_1",
+            "source": "service-policy.md",
+            "section": "Refund Processing SLA",
+            "score": 0.5209,
+            "preview": "Refund processing requires an approved ticket from the billing department. ..."
+          },
+          {
+            "rank": 3,
+            "id": "account-guide#chunk_1",
+            "source": "account-guide.md",
+            "section": "Email Verification",
+            "score": 0.2699,
+            "preview": "Learners can recover access using their registered email. A one-time secure..."
+          }
+        ],
+        "note": "Refund policy query should retrieve billing service policy guide.",
+        "id": "TC-03"
+      },
+      {
+        "query": "How do developers install the Python SDK and configure their API key?",
+        "category": "Developer",
+        "expected_source": "dev-guide.md",
+        "expected_id": null,
+        "top_id": "dev-guide#chunk_0",
+        "top_source": "dev-guide.md",
+        "top_score": 0.5916,
+        "target_rank": 1,
+        "target_score": 0.5916,
+        "passed": true,
+        "reciprocal_rank": 1.0,
+        "margin_vs_distractor": 0.3678,
+        "top_k_matches": [
+          {
+            "rank": 1,
+            "id": "dev-guide#chunk_0",
+            "source": "dev-guide.md",
+            "section": "SDK Installation",
+            "score": 0.5916,
+            "preview": "Knovera Python SDK Quickstart: Install knovera-sdk via pip and configure KN..."
+          },
+          {
+            "rank": 2,
+            "id": "account-guide#chunk_2",
+            "source": "account-guide.md",
+            "section": "Multi-Factor Security",
+            "score": 0.2238,
+            "preview": "Two-factor authentication (2FA) is mandatory for enterprise admin consoles...."
+          },
+          {
+            "rank": 3,
+            "id": "account-guide#chunk_0",
+            "source": "account-guide.md",
+            "section": "Password Recovery",
+            "score": 0.2008,
+            "preview": "Password reset instructions for learner accounts: Users can recover access ..."
+          }
+        ],
+        "note": "Developer setup query should retrieve developer SDK guide.",
+        "id": "TC-04"
+      },
+      {
+        "query": "What uptime guarantee is provided in the enterprise SLA?",
+        "category": "Infrastructure",
+        "expected_source": "service-policy.md",
+        "expected_id": null,
+        "top_id": "service-policy#chunk_2",
+        "top_source": "service-policy.md",
+        "top_score": 0.6635,
+        "target_rank": 1,
+        "target_score": 0.6635,
+        "passed": true,
+        "reciprocal_rank": 1.0,
+        "margin_vs_distractor": 0.2822,
+        "top_k_matches": [
+          {
+            "rank": 1,
+            "id": "service-policy#chunk_2",
+            "source": "service-policy.md",
+            "section": "Uptime SLA",
+            "score": 0.6635,
+            "preview": "Enterprise Service Level Agreement (SLA): Knovera guarantees 99.9% uptime f..."
+          },
+          {
+            "rank": 2,
+            "id": "service-policy#chunk_0",
+            "source": "service-policy.md",
+            "section": "Refund Eligibility",
+            "score": 0.3813,
+            "preview": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible f..."
+          },
+          {
+            "rank": 3,
+            "id": "account-guide#chunk_2",
+            "source": "account-guide.md",
+            "section": "Multi-Factor Security",
+            "score": 0.2566,
+            "preview": "Two-factor authentication (2FA) is mandatory for enterprise admin consoles...."
+          }
+        ],
+        "note": "Uptime SLA query should retrieve infrastructure policy chunk.",
+        "id": "TC-05"
+      }
+    ]
+  },
+  "edge_case_diagnostics": {
+    "brevity_ambiguity_case": {
+      "query": "How do I pay?",
+      "category": "Polysemy / High Brevity",
+      "expected_source": "campus-guide.md",
+      "expected_id": null,
+      "top_id": "campus-guide#chunk_1",
+      "top_source": "campus-guide.md",
+      "top_score": 0.3423,
+      "target_rank": 1,
+      "target_score": 0.3423,
+      "passed": true,
+      "reciprocal_rank": 1.0,
+      "margin_vs_distractor": 0.0641,
+      "top_k_matches": [
+        {
+          "rank": 1,
+          "id": "campus-guide#chunk_1",
+          "source": "campus-guide.md",
+          "section": "Payment Methods",
+          "score": 0.3423,
+          "preview": "Campus dining cards can be recharged via the student portal or mobile app. ..."
+        },
+        {
+          "rank": 2,
+          "id": "service-policy#chunk_1",
+          "source": "service-policy.md",
+          "section": "Refund Processing SLA",
+          "score": 0.2782,
+          "preview": "Refund processing requires an approved ticket from the billing department. ..."
+        },
+        {
+          "rank": 3,
+          "id": "account-guide#chunk_0",
+          "source": "account-guide.md",
+          "section": "Password Recovery",
+          "score": 0.2105,
+          "preview": "Password reset instructions for learner accounts: Users can recover access ..."
+        }
+      ],
+      "note": "Ambiguous 4-word query where payment could match campus dining cards OR subscription billing."
+    },
+    "negation_case": {
+      "query": "I do NOT want to install Python, how do I reset my password?",
+      "category": "Negation Blindspot",
+      "expected_source": "account-guide.md",
+      "expected_id": null,
+      "top_id": "account-guide#chunk_0",
+      "top_source": "account-guide.md",
+      "top_score": 0.4421,
+      "target_rank": 1,
+      "target_score": 0.4421,
+      "passed": true,
+      "reciprocal_rank": 1.0,
+      "margin_vs_distractor": 0.1419,
+      "top_k_matches": [
+        {
+          "rank": 1,
+          "id": "account-guide#chunk_0",
+          "source": "account-guide.md",
+          "section": "Password Recovery",
+          "score": 0.4421,
+          "preview": "Password reset instructions for learner accounts: Users can recover access ..."
+        },
+        {
+          "rank": 2,
+          "id": "dev-guide#chunk_0",
+          "source": "dev-guide.md",
+          "section": "SDK Installation",
+          "score": 0.3002,
+          "preview": "Knovera Python SDK Quickstart: Install knovera-sdk via pip and configure KN..."
+        },
+        {
+          "rank": 3,
+          "id": "account-guide#chunk_1",
+          "source": "account-guide.md",
+          "section": "Email Verification",
+          "score": 0.2155,
+          "preview": "Learners can recover access using their registered email. A one-time secure..."
+        }
+      ],
+      "note": "Query containing negative distractor ('do NOT want to install Python') testing dense vector attention."
+    },
+    "mismatched_model_simulation": {
+      "query": "How can a learner reset their account password?",
+      "expected_source": "account-guide.md",
+      "correct_model": "openai/text-embedding-3-small",
+      "correct_top_source": "account-guide.md",
+      "correct_top_score": 0.7681,
+      "correct_passed": true,
+      "mismatched_top_source": "dev-guide.md",
+      "mismatched_top_score": 0.0364,
+      "mismatched_passed": false,
+      "diagnosis": "Mismatched model embeddings project texts into non-aligned geometric coordinates, destroying semantic cosine proximity."
+    }
+  }
+}

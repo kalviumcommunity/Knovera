@@ -1,0 +1,24 @@
+KNOVERA RAG ASSISTANT - ASSIGNMENT 3.29: EMBEDDING QUALITY CHECKS & SANITY TESTS
+=====================================================================================
+
+Model:           openai/text-embedding-3-small
+Vector Length:   1536
+Total Tests:     5
+Hit@1 Rate:      100.0%
+MRR:             1.0000
+
+RELEVANCE TEST SUITE RESULTS:
++-------+------------------------------------------------------+--------------------+--------------------+-------+--------+--------+
+| ID    | Query Preview                                        | Expected Source    | Top Ranked Source  | Rank  | Score  | Result |
++-------+------------------------------------------------------+--------------------+--------------------+-------+--------+--------+
+| TC-01 | How can a learner reset their account password?      | account-guide.md   | account-guide.md   | 1     | 0.7681 | PASS   |
+| TC-02 | When does the campus cafeteria open and what is on.. | campus-guide.md    | campus-guide.md    | 1     | 0.7293 | PASS   |
+| TC-03 | What is the policy and time window for receiving a.. | service-policy.md  | service-policy.md  | 1     | 0.5885 | PASS   |
+| TC-04 | How do developers install the Python SDK and confi.. | dev-guide.md       | dev-guide.md       | 1     | 0.5916 | PASS   |
+| TC-05 | What uptime guarantee is provided in the enterpris.. | service-policy.md  | service-policy.md  | 1     | 0.6635 | PASS   |
++-------+------------------------------------------------------+--------------------+--------------------+-------+--------+--------+
+
+SURPRISING / FAILING CASE ANALYSIS:
+1. Brevity Collision: Query 'How do I pay?' yielded top score 0.3423 for campus-guide.md.
+2. Negation Blindspot: Query 'I do NOT want to install Python, how do I reset my password?' retrieved account-guide.md (Rank: 1).
+3. Model Mismatch Corruption: Consistent Model -> account-guide.md (Score: 0.7681), Mismatched -> dev-guide.md (Score: 0.0364).

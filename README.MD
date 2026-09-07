@@ -133,8 +133,27 @@ To run this project on a fresh machine, follow these steps:
 - **Automated Pytest Suite**: Run `pytest test_retrieval_relevance_tuning.py -v` to verify dataclass serialization, single/multi setting evaluations, score filtering, hit rate calculations, and best setting selection logic.
 - **Comprehensive Technical Report**: Full report, pipeline architecture flowchart, empirical comparison tables, setting selection justification, impact analysis, and video script outline available in [`RETRIEVAL_RELEVANCE_TUNING_REPORT.md`](file:///d:/Project/Knovera/RETRIEVAL_RELEVANCE_TUNING_REPORT.md).
 
+## Retrieval Evaluation & Recall Testing (Assignment 3.36)
+
+- **Enterprise Evaluator Engine**: Implemented in [`src/retrieval_evaluator.py`](file:///d:/Project/Knovera/src/retrieval_evaluator.py), managing labelled query benchmark sets (`LabelledQuery`), computing exact **Recall@k**, **Precision@k**, **F1-Score**, **Mean Reciprocal Rank (MRR)**, and **Hit Rate@k**, and performing automated failure cause inspection (`inspect_failures`).
+- **Benchmark Labelled Dataset**: Defined in [`sample_labelled_queries.json`](file:///d:/Project/Knovera/sample_labelled_queries.json), mapping representative user queries to explicit sets of ground-truth relevant chunk IDs across 6 domain categories.
+- **Multi-K Trade-Off Analysis**: Evaluates retrieval quality across varying top-$k$ values ($k=1, 3, 5, 10$) to demonstrate coverage expansion vs precision noise trade-offs:
+  - $k=1$: Recall@1 = `75.0%`, Precision@1 = `83.3%`, Passed = `4/6`
+  - $k=3$: Recall@3 = `91.7%`, Precision@3 = `38.9%`, Passed = `5/6`
+  - $k=5$: Recall@5 = `100.0%`, Precision@5 = `26.7%`, Passed = `6/6` (Optimal Recall)
+  - $k=10$: Recall@10 = `100.0%`, Precision@10 = `13.3%`, Passed = `6/6`
+- **Interactive Demonstration**: Run `py retrieval_evaluation_demo.py` to:
+  1. Index benchmark corpus into ChromaDB vector store.
+  2. Evaluate single and batch labelled queries.
+  3. Perform multi-k evaluation ($k=1, 3, 5, 10$) and display summary tables.
+  4. Inspect low-recall queries ($k=1$), diagnose root causes (`TOO_SMALL_K`, `ZERO_HITS_EMBEDDING_MISMATCH`), and output actionable recall optimization roadmaps.
+  5. Export JSON metrics to [`outputs/retrieval_evaluation_results.json`](file:///d:/Project/Knovera/outputs/retrieval_evaluation_results.json) and plain-text audit log to [`outputs/retrieval_evaluation_audit.log`](file:///d:/Project/Knovera/outputs/retrieval_evaluation_audit.log).
+- **Automated Pytest Suite**: Run `pytest test_retrieval_evaluator.py -v` to verify dataclass serialization, recall/precision metric formulas, multi-k analysis, failure diagnostics, and export functionality.
+- **Comprehensive Technical Report**: Full architectural flowcharts, metric equations, empirical result tables, failure diagnostics, and recall optimization roadmap available in [`RETRIEVAL_EVALUATION_RECALL_TESTING_REPORT.md`](file:///d:/Project/Knovera/RETRIEVAL_EVALUATION_RECALL_TESTING_REPORT.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+
 
 

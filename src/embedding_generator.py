@@ -138,18 +138,18 @@ class EmbeddingGenerator:
         self.api_key = api_key or os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
         self.base_url = base_url or os.getenv("OPENROUTER_BASE_URL") or os.getenv("OPENAI_BASE_URL")
         
-        # Auto-detect OpenRouter API key and set standard OpenRouter base URL if not explicitly provided
-        if not self.base_url and self.api_key and (self.api_key.startswith("sk-or-") or os.getenv("OPENROUTER_API_KEY")):
-            self.base_url = "https://openrouter.ai/api/v1"
+        # Auto-detect OpenRouter API key and set standard OpenRouter base URL
+        if not self.base_url:
+            if (self.api_key and self.api_key.startswith("sk-or-")) or os.getenv("OPENROUTER_API_KEY"):
+                self.base_url = "https://openrouter.ai/api/v1"
 
         self.model_name = (
             model_name 
             or os.getenv("EMBEDDING_MODEL") 
             or os.getenv("EMBED_MODEL") 
-            or os.getenv("OPENROUTER_MODEL")
-            or "text-embedding-3-small"
+            or "openai/text-embedding-3-small"
         )
-        # If openrouter model is a chat model like "openrouter/free" or "openai/gpt-4o", default embedding model to standard embedding model
+        # If model is a chat model like "openrouter/free" or "openai/gpt-4o", default embedding model to standard embedding model
         if "free" in self.model_name.lower() or "gpt" in self.model_name.lower() or "chat" in self.model_name.lower():
             self.model_name = os.getenv("EMBEDDING_MODEL") or os.getenv("EMBED_MODEL") or "openai/text-embedding-3-small"
 
@@ -158,16 +158,24 @@ class EmbeddingGenerator:
         self.client = None
         if HAS_OPENAI and self.api_key:
             try:
+                headers = {
+                    "HTTP-Referer": "https://knovera.ai",
+                    "X-Title": "Knovera RAG Assistant"
+                }
                 if self.base_url:
-                    self.client = OpenAI(api_key=self.api_key, base_url=self.base_url)
+                    self.client = OpenAI(
+                        api_key=self.api_key,
+                        base_url=self.base_url,
+                        default_headers=headers
+                    )
                 else:
-                    self.client = OpenAI(api_key=self.api_key)
-                logger.info(f"Initialized OpenAI/OpenRouter API client with model: {self.model_name}")
+                    self.client = OpenAI(api_key=self.api_key, default_headers=headers)
+                logger.info(f"Initialized OpenRouter/API client (Base URL: {self.base_url or 'OpenAI Default'}) with model: {self.model_name}")
             except Exception as e:
-                logger.warning(f"Failed to initialize OpenAI client ({e}). Using offline fallback engine.")
+                logger.warning(f"Failed to initialize OpenRouter client ({e}). Using offline fallback engine.")
                 self.client = None
         else:
-            logger.info("No API key found or OpenAI module missing. Operating in offline semantic fallback mode.")
+            logger.info("No OpenRouter API key found or client module missing. Operating in offline semantic fallback mode.")
 
     def embed_chunks(
         self,
@@ -489,6 +497,28 @@ class EmbeddingGenerator:
         }
 
 
+
+    def embed_with_retry(
+        self,
+        texts: List[str],
+        max_attempts: int = 5,
+        initial_delay: float = 1.0,
+        backoff_factor: float = 2.0
+    ) -> List[List[float]]:
+        """
+        Embeds a list of texts with automatic exponential backoff retry.
+        """
+        from src.batch_embedding_pipeline import BatchEmbeddingPipeline
+        pipeline = BatchEmbeddingPipeline(
+            generator=self,
+            max_retries=max_attempts,
+            initial_delay=initial_delay,
+            backoff_factor=backoff_factor
+        )
+        embeddings, _ = pipeline.embed_with_retry(texts)
+        return embeddings
+
+
 def rank_chunks(
     query_vector: Union[List[float], np.ndarray],
     stored_records: List[Dict[str, Any]],
@@ -500,5 +530,6 @@ def rank_chunks(
     """
     gen = EmbeddingGenerator()
     return gen.rank_chunks(query=query_vector, stored_records=stored_records, metric=metric, top_k=top_k)
+
 
 

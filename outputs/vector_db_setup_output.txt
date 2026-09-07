@@ -1,0 +1,20 @@
+KNOVERA RAG ASSISTANT - ASSIGNMENT 3.30: VECTOR DATABASE SETUP & COLLECTION DESIGN
+=====================================================================================
+
+Database:        ChromaDB (v0.5.23)
+Storage Mode:    Persistent Storage (C:\Users\K Jayanth\OneDrive\Desktop\Mini-Projects\Knovera\data\chroma_db)
+Collection Name: rag_chunks
+Dimension:       1536
+Metric:          cosine
+Total Records:   1
+
+INSERTED & READBACK TEST RECORD:
+  ID:            account-guide.md:0
+  Vector Dim:    1536
+  Sample Values: [0.027298, 0.005802, 0.013603, -0.021561, 0.012413]
+  Text:          "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address."
+  Metadata:      {"category": "Authentication", "chunk_index": 0, "doc_title": "Knovera Learner Account Administration Guide", "section": "Password Recovery & Account Access", "source": "account-guide.md"}
+
+NEAREST-NEIGHBOR RETRIEVAL VALIDATION:
+  Query: "How do users reset forgotten passwords?"
+  Retrieved ID: account-guide.md:0 | Cosine Sim: 0.6493

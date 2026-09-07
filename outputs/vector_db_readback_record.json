@@ -1,0 +1,38 @@
+{
+  "assignment": "3.30 Vector Database Setup & Collection Design",
+  "database": "ChromaDB",
+  "version": "0.5.23",
+  "storage_mode": "Persistent Storage (C:\\Users\\K Jayanth\\OneDrive\\Desktop\\Mini-Projects\\Knovera\\data\\chroma_db)",
+  "collection": {
+    "name": "rag_chunks",
+    "dimension": 1536,
+    "metric": "cosine",
+    "count": 1
+  },
+  "readback_record": {
+    "id": "account-guide.md:0",
+    "vector_length": 1536,
+    "first_5_values": [
+      0.027298,
+      0.005802,
+      0.013603,
+      -0.021561,
+      0.012413
+    ],
+    "last_5_values": [
+      -0.00321,
+      -0.020477,
+      0.004959,
+      0.004383,
+      -0.003332
+    ],
+    "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.",
+    "metadata": {
+      "category": "Authentication",
+      "chunk_index": 0,
+      "doc_title": "Knovera Learner Account Administration Guide",
+      "section": "Password Recovery & Account Access",
+      "source": "account-guide.md"
+    }
+  }
+}

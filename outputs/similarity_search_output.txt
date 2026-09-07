@@ -1,0 +1,42 @@
+================================================================================
+KNOVERA RAG ASSISTANT - ASSIGNMENT 3.32 SIMILARITY SEARCH & TOP-K RETRIEVAL LOG
+================================================================================
+
+Timestamp: 2026-09-07 13:47:40
+Embedding Model: openai/text-embedding-3-small
+Vector Dimension: 1536
+Collection Record Count: 10
+
+--- TASK 1-3: PRIMARY RETRIEVAL RESULTS (Query: 'How can a learner reset their password?', k=3) ---
+rank: 1 | score: 0.9967 | distance: 0.0033
+source: account-guide.md | chunk_index: 0 | category: Authentication
+text: Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.
+
+rank: 2 | score: 0.9901 | distance: 0.0099
+source: account-guide.md | chunk_index: 1 | category: Authentication
+text: Learners can recover access using their registered email. A one-time secure verification link is dispatched, which remains valid for 15 minutes.
+
+rank: 3 | score: 0.0268 | distance: 0.9732
+source: service-policy.md | chunk_index: 1 | category: Billing
+text: Refund processing requires an approved ticket from the billing department. Once authorized, funds will appear on the original payment method in 3-5 business days.
+
+--- TASK 4: MULTI-K DEMONSTRATION (k=1, k=3, k=5) ---
+
+k = 1
+0.9967 {'source': 'account-guide.md', 'chunk_index': 0, 'section': 'Password Recovery', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Passw
+
+k = 3
+0.9967 {'source': 'account-guide.md', 'chunk_index': 0, 'section': 'Password Recovery', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Passw
+0.9901 {'source': 'account-guide.md', 'chunk_index': 1, 'section': 'Email Verification', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Learners can recover access using their registered email. A one-time secure verification link is dis
+0.0268 {'source': 'service-policy.md', 'chunk_index': 1, 'section': 'Refund Processing SLA', 'doc_title': 'Service Policy Guide', 'category': 'Billing'} Refund processing requires an approved ticket from the billing department. Once authorized, funds wi
+
+k = 5
+0.9967 {'source': 'account-guide.md', 'chunk_index': 0, 'section': 'Password Recovery', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Passw
+0.9901 {'source': 'account-guide.md', 'chunk_index': 1, 'section': 'Email Verification', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Learners can recover access using their registered email. A one-time secure verification link is dis
+0.0268 {'source': 'service-policy.md', 'chunk_index': 1, 'section': 'Refund Processing SLA', 'doc_title': 'Service Policy Guide', 'category': 'Billing'} Refund processing requires an approved ticket from the billing department. Once authorized, funds wi
+-0.0019 {'source': 'account-guide.md', 'chunk_index': 2, 'section': 'Multi-Factor Security', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Two-factor authentication (2FA) is mandatory for enterprise admin consoles. Admins must register an 
+-0.0050 {'source': 'service-policy.md', 'chunk_index': 0, 'section': 'Refund Eligibility', 'doc_title': 'Service Policy Guide', 'category': 'Billing'} Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refu
+
+================================================================================
+AUDIT VERIFICATION COMPLETED SUCCESSFULLY
+================================================================================

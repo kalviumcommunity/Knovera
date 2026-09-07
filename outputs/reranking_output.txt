@@ -1,0 +1,49 @@
+Query 1: "What evidence is required for project submission?"
+Stage 1 Initial Candidate Pool: K_initial = 10
+Stage 2 Re-Ranked Final Context: K_final = 3
+
+>>> INITIAL ORDER (Stage 1 Vector Bi-Encoder Search - Top 3 of 10):
+  +------+------------+------------+--------+------------------------+--------------------------------------------+
+  | Rank | Vector Sim | ReRank Sc. | Delta  | Source Document        | Content Snippet Preview                    |
+  +------+------------+------------+--------+------------------------+--------------------------------------------+
+  |  1   |   0.7176   |    0.00    |   =    | submission-policy.md   | Mandatory Submission Evidence & Verifica... |
+  |  2   |   0.4379   |    0.00    |   =    | rubric.md              | Grading Rubric Breakdown: Final project ... |
+  |  3   |   0.4067   |    0.00    |   =    | project-overview.md    | Project Overview and Milestones: All cap... |
+  +------+------------+------------+--------+------------------------+--------------------------------------------+
+
+>>> RE-RANKED ORDER (Stage 2 Cross-Encoder Evaluation - Final Top 3 Context):
+  +------+------------+------------+--------+------------------------+--------------------------------------------+
+  | Rank | Vector Sim | ReRank Sc. | Delta  | Source Document        | Content Snippet Preview                    |
+  +------+------------+------------+--------+------------------------+--------------------------------------------+
+  |  1   |   0.7176   |   10.00    |   =    | submission-policy.md   | Mandatory Submission Evidence & Verifica... |
+  |  2   |   0.4067   |    6.50    |   +1   | project-overview.md    | Project Overview and Milestones: All cap... |
+  |  3   |   0.4379   |    4.00    |   -1   | rubric.md              | Grading Rubric Breakdown: Final project ... |
+  +------+------------+------------+--------+------------------------+--------------------------------------------+
+
+Top Result Quality Comparison:
+  - Initial Top 1 Vector Result:  [submission-policy.md] (Score: 0.7176)
+  - Re-Ranked Top 1 Cross Result: [submission-policy.md] (Score: 10.00/10.0)
+  - Direct Grounded Evidence:     "Mandatory Submission Evidence & Verification: Every project submission must include two mandatory items: 1. A public GitHub PR URL showing m..."
+Query 2: "What are the exact grade weight percentages for unit tests and architecture?"
+
+>>> BEFORE RE-RANKING (Stage 1 Vector Search):
+  Rank #1 | Vec Sim: 0.6643 | Source: rubric.md | Text: Grading Rubric Breakdown: Final project grades are weighted 40% on unit and inte...
+  Rank #2 | Vec Sim: 0.3422 | Source: submission-policy.md | Text: Mandatory Submission Evidence & Verification: Every project submission must incl...
+  Rank #3 | Vec Sim: 0.2672 | Source: project-overview.md | Text: Project Overview and Milestones: All capstone projects must adhere to weekly agi...
+
+>>> AFTER RE-RANKING (Stage 2 Cross-Encoder):
+  Rank #1 (Delta: 0) | ReRank Score: 7.00/10.0 | Source: rubric.md | Text: Grading Rubric Breakdown: Final project grades are weighted 40% on unit and inte...
+  Rank #2 (Delta: 0) | ReRank Score: 0.00/10.0 | Source: submission-policy.md | Text: Mandatory Submission Evidence & Verification: Every project submission must incl...
+  Rank #3 (Delta: 0) | ReRank Score: 0.00/10.0 | Source: project-overview.md | Text: Project Overview and Milestones: All capstone projects must adhere to weekly agi...
+Candidate Set Size Scored:        10 chunks
+Stage 1 Vector Retrieval Latency: 496.16 ms
+Stage 2 Re-Ranking Latency:       10501.57 ms
+Total Pipeline End-to-End:        10997.73 ms
+Estimated Tokens Processed:       1500 tokens
+Estimated Re-Ranking Cost:        $0.000225 USD
+
+Conclusion: Two-stage retrieval gives high precision with negligible token overhead.
+
+================================================================================
+END OF RE-RANKING DEMONSTRATION LOG
+================================================================================

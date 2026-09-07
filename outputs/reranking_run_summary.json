@@ -1,0 +1,1065 @@
+{
+  "timestamp": "2026-09-07T08:11:14Z",
+  "collection": "knovera_rerank_knowledge_base",
+  "total_corpus_size": 10,
+  "scenario_1_submission_evidence": {
+    "query": "What evidence is required for project submission?",
+    "initial_k": 10,
+    "final_k": 3,
+    "metadata_filter": null,
+    "candidates_count": 10,
+    "stage_1_initial_top_k": [
+      {
+        "id": "submission-policy.md#chunk_0",
+        "score": 0.7176,
+        "distance": 0.2824,
+        "text": "Mandatory Submission Evidence & Verification: Every project submission must include two mandatory items: 1. A public GitHub PR URL showing meaningful commits and test passes, and 2. A 3-5 minute video screen recording walkthrough hosted on Google Drive with public view access explaining the architecture and answering rubric questions.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 0,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Submission Evidence",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Submission Evidence",
+        "rank": 1
+      },
+      {
+        "id": "rubric.md#chunk_0",
+        "score": 0.4379,
+        "distance": 0.5621,
+        "text": "Grading Rubric Breakdown: Final project grades are weighted 40% on unit and integration test coverage, 30% on architectural design cleanliness, and 30% on code quality and documentation standards.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "rubric.md",
+          "doc_type": "rubric",
+          "section": "Grading Weights",
+          "source": "rubric.md"
+        },
+        "source": "rubric.md",
+        "section": "Grading Weights",
+        "rank": 2
+      },
+      {
+        "id": "project-overview.md#chunk_0",
+        "score": 0.4067,
+        "distance": 0.5933,
+        "text": "Project Overview and Milestones: All capstone projects must adhere to weekly agile sprint deadlines, attend standup check-ins, and deliver milestone deliverables according to the academic calendar.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "project-overview.md",
+          "doc_type": "overview",
+          "section": "Project Milestones",
+          "source": "project-overview.md"
+        },
+        "source": "project-overview.md",
+        "section": "Project Milestones",
+        "rank": 3
+      }
+    ],
+    "stage_1_all_candidates": [
+      {
+        "id": "submission-policy.md#chunk_0",
+        "score": 0.7176,
+        "distance": 0.2824,
+        "text": "Mandatory Submission Evidence & Verification: Every project submission must include two mandatory items: 1. A public GitHub PR URL showing meaningful commits and test passes, and 2. A 3-5 minute video screen recording walkthrough hosted on Google Drive with public view access explaining the architecture and answering rubric questions.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 0,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Submission Evidence",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Submission Evidence",
+        "rank": 1
+      },
+      {
+        "id": "rubric.md#chunk_0",
+        "score": 0.4379,
+        "distance": 0.5621,
+        "text": "Grading Rubric Breakdown: Final project grades are weighted 40% on unit and integration test coverage, 30% on architectural design cleanliness, and 30% on code quality and documentation standards.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "rubric.md",
+          "doc_type": "rubric",
+          "section": "Grading Weights",
+          "source": "rubric.md"
+        },
+        "source": "rubric.md",
+        "section": "Grading Weights",
+        "rank": 2
+      },
+      {
+        "id": "project-overview.md#chunk_0",
+        "score": 0.4067,
+        "distance": 0.5933,
+        "text": "Project Overview and Milestones: All capstone projects must adhere to weekly agile sprint deadlines, attend standup check-ins, and deliver milestone deliverables according to the academic calendar.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "project-overview.md",
+          "doc_type": "overview",
+          "section": "Project Milestones",
+          "source": "project-overview.md"
+        },
+        "source": "project-overview.md",
+        "section": "Project Milestones",
+        "rank": 3
+      },
+      {
+        "id": "submission-policy.md#chunk_1",
+        "score": 0.3605,
+        "distance": 0.6395,
+        "text": "Late Submissions and Extensions: Submissions received after the 11:59 PM deadline without prior approved medical exemption incur a 10% daily grade deduction for up to 3 days.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 1,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Late Policy",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Late Policy",
+        "rank": 4
+      },
+      {
+        "id": "team-guide.md#chunk_0",
+        "score": 0.2242,
+        "distance": 0.7758,
+        "text": "Team collaboration etiquette: Keep branch names descriptive, write clean commit messages, create feature pull requests, and review teammate pull requests promptly before merging.",
+        "metadata": {
+          "category": "Engineering",
+          "chunk_index": 0,
+          "doc_title": "team-guide.md",
+          "doc_type": "guide",
+          "section": "Git Workflow",
+          "source": "team-guide.md"
+        },
+        "source": "team-guide.md",
+        "section": "Git Workflow",
+        "rank": 5
+      },
+      {
+        "id": "wifi.md#chunk_0",
+        "score": 0.1784,
+        "distance": 0.8216,
+        "text": "Campus WiFi setup: Connect your laptop to 'Knovera-Secure' SSID using your student ID credentials and accept the enterprise TLS security certificate.",
+        "metadata": {
+          "category": "Campus IT",
+          "chunk_index": 0,
+          "doc_title": "wifi.md",
+          "doc_type": "guide",
+          "section": "Network Access",
+          "source": "wifi.md"
+        },
+        "source": "wifi.md",
+        "section": "Network Access",
+        "rank": 6
+      },
+      {
+        "id": "dev-api.md#chunk_0",
+        "score": 0.1347,
+        "distance": 0.8653,
+        "text": "Developer API client configuration: Initialize the Knovera SDK client with base_url and API key environment variables to invoke batch embedding and retrieval endpoints.",
+        "metadata": {
+          "category": "Developer Tools",
+          "chunk_index": 0,
+          "doc_title": "dev-api.md",
+          "doc_type": "reference",
+          "section": "API Reference",
+          "source": "dev-api.md"
+        },
+        "source": "dev-api.md",
+        "section": "API Reference",
+        "rank": 7
+      },
+      {
+        "id": "billing.md#chunk_0",
+        "score": 0.1326,
+        "distance": 0.8674,
+        "text": "Subscription billing and refund SLA: Refund requests submitted within 14 days of purchase will be automatically credited back to the original payment method within 3 to 5 business days.",
+        "metadata": {
+          "category": "Billing",
+          "chunk_index": 0,
+          "doc_title": "billing.md",
+          "doc_type": "policy",
+          "section": "Refunds",
+          "source": "billing.md"
+        },
+        "source": "billing.md",
+        "section": "Refunds",
+        "rank": 8
+      },
+      {
+        "id": "account.md#chunk_0",
+        "score": 0.1005,
+        "distance": 0.8995,
+        "text": "Password reset instructions: Navigate to /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+        "metadata": {
+          "category": "Security",
+          "chunk_index": 0,
+          "doc_title": "account.md",
+          "doc_type": "guide",
+          "section": "Authentication",
+          "source": "account.md"
+        },
+        "source": "account.md",
+        "section": "Authentication",
+        "rank": 9
+      },
+      {
+        "id": "campus-guide.md#chunk_0",
+        "score": 0.0264,
+        "distance": 0.9736,
+        "text": "Campus dining options: The campus cafeteria serves breakfast from 7:30 AM to 10:00 AM, lunch from 12:00 PM to 2:30 PM, and offers daily vegetarian and vegan meal options.",
+        "metadata": {
+          "category": "Campus Life",
+          "chunk_index": 0,
+          "doc_title": "campus-guide.md",
+          "doc_type": "guide",
+          "section": "Dining Facilities",
+          "source": "campus-guide.md"
+        },
+        "source": "campus-guide.md",
+        "section": "Dining Facilities",
+        "rank": 10
+      }
+    ],
+    "stage_2_final_selected": [
+      {
+        "id": "submission-policy.md#chunk_0",
+        "score": 0.7176,
+        "distance": 0.2824,
+        "text": "Mandatory Submission Evidence & Verification: Every project submission must include two mandatory items: 1. A public GitHub PR URL showing meaningful commits and test passes, and 2. A 3-5 minute video screen recording walkthrough hosted on Google Drive with public view access explaining the architecture and answering rubric questions.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 0,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Submission Evidence",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Submission Evidence",
+        "rank": 1,
+        "initial_rank": 1,
+        "vector_score": 0.7176,
+        "rerank_score": 10.0,
+        "rerank_rank": 1,
+        "rank_delta": 0
+      },
+      {
+        "id": "project-overview.md#chunk_0",
+        "score": 0.4067,
+        "distance": 0.5933,
+        "text": "Project Overview and Milestones: All capstone projects must adhere to weekly agile sprint deadlines, attend standup check-ins, and deliver milestone deliverables according to the academic calendar.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "project-overview.md",
+          "doc_type": "overview",
+          "section": "Project Milestones",
+          "source": "project-overview.md"
+        },
+        "source": "project-overview.md",
+        "section": "Project Milestones",
+        "rank": 3,
+        "initial_rank": 3,
+        "vector_score": 0.4067,
+        "rerank_score": 6.5,
+        "rerank_rank": 2,
+        "rank_delta": 1
+      },
+      {
+        "id": "rubric.md#chunk_0",
+        "score": 0.4379,
+        "distance": 0.5621,
+        "text": "Grading Rubric Breakdown: Final project grades are weighted 40% on unit and integration test coverage, 30% on architectural design cleanliness, and 30% on code quality and documentation standards.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "rubric.md",
+          "doc_type": "rubric",
+          "section": "Grading Weights",
+          "source": "rubric.md"
+        },
+        "source": "rubric.md",
+        "section": "Grading Weights",
+        "rank": 2,
+        "initial_rank": 2,
+        "vector_score": 0.4379,
+        "rerank_score": 4.0,
+        "rerank_rank": 3,
+        "rank_delta": -1
+      }
+    ],
+    "stage_2_all_reranked": [
+      {
+        "id": "submission-policy.md#chunk_0",
+        "score": 0.7176,
+        "distance": 0.2824,
+        "text": "Mandatory Submission Evidence & Verification: Every project submission must include two mandatory items: 1. A public GitHub PR URL showing meaningful commits and test passes, and 2. A 3-5 minute video screen recording walkthrough hosted on Google Drive with public view access explaining the architecture and answering rubric questions.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 0,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Submission Evidence",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Submission Evidence",
+        "rank": 1,
+        "initial_rank": 1,
+        "vector_score": 0.7176,
+        "rerank_score": 10.0,
+        "rerank_rank": 1,
+        "rank_delta": 0
+      },
+      {
+        "id": "project-overview.md#chunk_0",
+        "score": 0.4067,
+        "distance": 0.5933,
+        "text": "Project Overview and Milestones: All capstone projects must adhere to weekly agile sprint deadlines, attend standup check-ins, and deliver milestone deliverables according to the academic calendar.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "project-overview.md",
+          "doc_type": "overview",
+          "section": "Project Milestones",
+          "source": "project-overview.md"
+        },
+        "source": "project-overview.md",
+        "section": "Project Milestones",
+        "rank": 3,
+        "initial_rank": 3,
+        "vector_score": 0.4067,
+        "rerank_score": 6.5,
+        "rerank_rank": 2,
+        "rank_delta": 1
+      },
+      {
+        "id": "rubric.md#chunk_0",
+        "score": 0.4379,
+        "distance": 0.5621,
+        "text": "Grading Rubric Breakdown: Final project grades are weighted 40% on unit and integration test coverage, 30% on architectural design cleanliness, and 30% on code quality and documentation standards.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "rubric.md",
+          "doc_type": "rubric",
+          "section": "Grading Weights",
+          "source": "rubric.md"
+        },
+        "source": "rubric.md",
+        "section": "Grading Weights",
+        "rank": 2,
+        "initial_rank": 2,
+        "vector_score": 0.4379,
+        "rerank_score": 4.0,
+        "rerank_rank": 3,
+        "rank_delta": -1
+      },
+      {
+        "id": "submission-policy.md#chunk_1",
+        "score": 0.3605,
+        "distance": 0.6395,
+        "text": "Late Submissions and Extensions: Submissions received after the 11:59 PM deadline without prior approved medical exemption incur a 10% daily grade deduction for up to 3 days.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 1,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Late Policy",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Late Policy",
+        "rank": 4,
+        "initial_rank": 4,
+        "vector_score": 0.3605,
+        "rerank_score": 2.0,
+        "rerank_rank": 4,
+        "rank_delta": 0
+      },
+      {
+        "id": "team-guide.md#chunk_0",
+        "score": 0.2242,
+        "distance": 0.7758,
+        "text": "Team collaboration etiquette: Keep branch names descriptive, write clean commit messages, create feature pull requests, and review teammate pull requests promptly before merging.",
+        "metadata": {
+          "category": "Engineering",
+          "chunk_index": 0,
+          "doc_title": "team-guide.md",
+          "doc_type": "guide",
+          "section": "Git Workflow",
+          "source": "team-guide.md"
+        },
+        "source": "team-guide.md",
+        "section": "Git Workflow",
+        "rank": 5,
+        "initial_rank": 5,
+        "vector_score": 0.2242,
+        "rerank_score": 2.0,
+        "rerank_rank": 5,
+        "rank_delta": 0
+      },
+      {
+        "id": "dev-api.md#chunk_0",
+        "score": 0.1347,
+        "distance": 0.8653,
+        "text": "Developer API client configuration: Initialize the Knovera SDK client with base_url and API key environment variables to invoke batch embedding and retrieval endpoints.",
+        "metadata": {
+          "category": "Developer Tools",
+          "chunk_index": 0,
+          "doc_title": "dev-api.md",
+          "doc_type": "reference",
+          "section": "API Reference",
+          "source": "dev-api.md"
+        },
+        "source": "dev-api.md",
+        "section": "API Reference",
+        "rank": 7,
+        "initial_rank": 7,
+        "vector_score": 0.1347,
+        "rerank_score": 2.0,
+        "rerank_rank": 6,
+        "rank_delta": 1
+      },
+      {
+        "id": "billing.md#chunk_0",
+        "score": 0.1326,
+        "distance": 0.8674,
+        "text": "Subscription billing and refund SLA: Refund requests submitted within 14 days of purchase will be automatically credited back to the original payment method within 3 to 5 business days.",
+        "metadata": {
+          "category": "Billing",
+          "chunk_index": 0,
+          "doc_title": "billing.md",
+          "doc_type": "policy",
+          "section": "Refunds",
+          "source": "billing.md"
+        },
+        "source": "billing.md",
+        "section": "Refunds",
+        "rank": 8,
+        "initial_rank": 8,
+        "vector_score": 0.1326,
+        "rerank_score": 2.0,
+        "rerank_rank": 7,
+        "rank_delta": 1
+      },
+      {
+        "id": "wifi.md#chunk_0",
+        "score": 0.1784,
+        "distance": 0.8216,
+        "text": "Campus WiFi setup: Connect your laptop to 'Knovera-Secure' SSID using your student ID credentials and accept the enterprise TLS security certificate.",
+        "metadata": {
+          "category": "Campus IT",
+          "chunk_index": 0,
+          "doc_title": "wifi.md",
+          "doc_type": "guide",
+          "section": "Network Access",
+          "source": "wifi.md"
+        },
+        "source": "wifi.md",
+        "section": "Network Access",
+        "rank": 6,
+        "initial_rank": 6,
+        "vector_score": 0.1784,
+        "rerank_score": 0.0,
+        "rerank_rank": 8,
+        "rank_delta": -2
+      },
+      {
+        "id": "account.md#chunk_0",
+        "score": 0.1005,
+        "distance": 0.8995,
+        "text": "Password reset instructions: Navigate to /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+        "metadata": {
+          "category": "Security",
+          "chunk_index": 0,
+          "doc_title": "account.md",
+          "doc_type": "guide",
+          "section": "Authentication",
+          "source": "account.md"
+        },
+        "source": "account.md",
+        "section": "Authentication",
+        "rank": 9,
+        "initial_rank": 9,
+        "vector_score": 0.1005,
+        "rerank_score": 0.0,
+        "rerank_rank": 9,
+        "rank_delta": 0
+      },
+      {
+        "id": "campus-guide.md#chunk_0",
+        "score": 0.0264,
+        "distance": 0.9736,
+        "text": "Campus dining options: The campus cafeteria serves breakfast from 7:30 AM to 10:00 AM, lunch from 12:00 PM to 2:30 PM, and offers daily vegetarian and vegan meal options.",
+        "metadata": {
+          "category": "Campus Life",
+          "chunk_index": 0,
+          "doc_title": "campus-guide.md",
+          "doc_type": "guide",
+          "section": "Dining Facilities",
+          "source": "campus-guide.md"
+        },
+        "source": "campus-guide.md",
+        "section": "Dining Facilities",
+        "rank": 10,
+        "initial_rank": 10,
+        "vector_score": 0.0264,
+        "rerank_score": 0.0,
+        "rerank_rank": 10,
+        "rank_delta": 0
+      }
+    ],
+    "metrics": {
+      "stage_1_retrieval_latency_ms": 496.16,
+      "stage_2_rerank_latency_ms": 10501.57,
+      "total_pipeline_latency_ms": 10997.73,
+      "candidates_scored": 10,
+      "estimated_tokens_processed": 1500,
+      "estimated_cost_usd": 0.000225
+    }
+  },
+  "scenario_2_rubric_weights": {
+    "query": "What are the exact grade weight percentages for unit tests and architecture?",
+    "initial_k": 10,
+    "final_k": 3,
+    "metadata_filter": null,
+    "candidates_count": 10,
+    "stage_1_initial_top_k": [
+      {
+        "id": "rubric.md#chunk_0",
+        "score": 0.6643,
+        "distance": 0.3357,
+        "text": "Grading Rubric Breakdown: Final project grades are weighted 40% on unit and integration test coverage, 30% on architectural design cleanliness, and 30% on code quality and documentation standards.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "rubric.md",
+          "doc_type": "rubric",
+          "section": "Grading Weights",
+          "source": "rubric.md"
+        },
+        "source": "rubric.md",
+        "section": "Grading Weights",
+        "rank": 1
+      },
+      {
+        "id": "submission-policy.md#chunk_0",
+        "score": 0.3422,
+        "distance": 0.6578,
+        "text": "Mandatory Submission Evidence & Verification: Every project submission must include two mandatory items: 1. A public GitHub PR URL showing meaningful commits and test passes, and 2. A 3-5 minute video screen recording walkthrough hosted on Google Drive with public view access explaining the architecture and answering rubric questions.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 0,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Submission Evidence",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Submission Evidence",
+        "rank": 2
+      },
+      {
+        "id": "project-overview.md#chunk_0",
+        "score": 0.2672,
+        "distance": 0.7328,
+        "text": "Project Overview and Milestones: All capstone projects must adhere to weekly agile sprint deadlines, attend standup check-ins, and deliver milestone deliverables according to the academic calendar.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "project-overview.md",
+          "doc_type": "overview",
+          "section": "Project Milestones",
+          "source": "project-overview.md"
+        },
+        "source": "project-overview.md",
+        "section": "Project Milestones",
+        "rank": 3
+      }
+    ],
+    "stage_1_all_candidates": [
+      {
+        "id": "rubric.md#chunk_0",
+        "score": 0.6643,
+        "distance": 0.3357,
+        "text": "Grading Rubric Breakdown: Final project grades are weighted 40% on unit and integration test coverage, 30% on architectural design cleanliness, and 30% on code quality and documentation standards.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "rubric.md",
+          "doc_type": "rubric",
+          "section": "Grading Weights",
+          "source": "rubric.md"
+        },
+        "source": "rubric.md",
+        "section": "Grading Weights",
+        "rank": 1
+      },
+      {
+        "id": "submission-policy.md#chunk_0",
+        "score": 0.3422,
+        "distance": 0.6578,
+        "text": "Mandatory Submission Evidence & Verification: Every project submission must include two mandatory items: 1. A public GitHub PR URL showing meaningful commits and test passes, and 2. A 3-5 minute video screen recording walkthrough hosted on Google Drive with public view access explaining the architecture and answering rubric questions.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 0,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Submission Evidence",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Submission Evidence",
+        "rank": 2
+      },
+      {
+        "id": "project-overview.md#chunk_0",
+        "score": 0.2672,
+        "distance": 0.7328,
+        "text": "Project Overview and Milestones: All capstone projects must adhere to weekly agile sprint deadlines, attend standup check-ins, and deliver milestone deliverables according to the academic calendar.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "project-overview.md",
+          "doc_type": "overview",
+          "section": "Project Milestones",
+          "source": "project-overview.md"
+        },
+        "source": "project-overview.md",
+        "section": "Project Milestones",
+        "rank": 3
+      },
+      {
+        "id": "submission-policy.md#chunk_1",
+        "score": 0.2501,
+        "distance": 0.7499,
+        "text": "Late Submissions and Extensions: Submissions received after the 11:59 PM deadline without prior approved medical exemption incur a 10% daily grade deduction for up to 3 days.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 1,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Late Policy",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Late Policy",
+        "rank": 4
+      },
+      {
+        "id": "team-guide.md#chunk_0",
+        "score": 0.1565,
+        "distance": 0.8435,
+        "text": "Team collaboration etiquette: Keep branch names descriptive, write clean commit messages, create feature pull requests, and review teammate pull requests promptly before merging.",
+        "metadata": {
+          "category": "Engineering",
+          "chunk_index": 0,
+          "doc_title": "team-guide.md",
+          "doc_type": "guide",
+          "section": "Git Workflow",
+          "source": "team-guide.md"
+        },
+        "source": "team-guide.md",
+        "section": "Git Workflow",
+        "rank": 5
+      },
+      {
+        "id": "wifi.md#chunk_0",
+        "score": 0.1527,
+        "distance": 0.8473,
+        "text": "Campus WiFi setup: Connect your laptop to 'Knovera-Secure' SSID using your student ID credentials and accept the enterprise TLS security certificate.",
+        "metadata": {
+          "category": "Campus IT",
+          "chunk_index": 0,
+          "doc_title": "wifi.md",
+          "doc_type": "guide",
+          "section": "Network Access",
+          "source": "wifi.md"
+        },
+        "source": "wifi.md",
+        "section": "Network Access",
+        "rank": 6
+      },
+      {
+        "id": "campus-guide.md#chunk_0",
+        "score": 0.1206,
+        "distance": 0.8794,
+        "text": "Campus dining options: The campus cafeteria serves breakfast from 7:30 AM to 10:00 AM, lunch from 12:00 PM to 2:30 PM, and offers daily vegetarian and vegan meal options.",
+        "metadata": {
+          "category": "Campus Life",
+          "chunk_index": 0,
+          "doc_title": "campus-guide.md",
+          "doc_type": "guide",
+          "section": "Dining Facilities",
+          "source": "campus-guide.md"
+        },
+        "source": "campus-guide.md",
+        "section": "Dining Facilities",
+        "rank": 7
+      },
+      {
+        "id": "dev-api.md#chunk_0",
+        "score": 0.1022,
+        "distance": 0.8978,
+        "text": "Developer API client configuration: Initialize the Knovera SDK client with base_url and API key environment variables to invoke batch embedding and retrieval endpoints.",
+        "metadata": {
+          "category": "Developer Tools",
+          "chunk_index": 0,
+          "doc_title": "dev-api.md",
+          "doc_type": "reference",
+          "section": "API Reference",
+          "source": "dev-api.md"
+        },
+        "source": "dev-api.md",
+        "section": "API Reference",
+        "rank": 8
+      },
+      {
+        "id": "billing.md#chunk_0",
+        "score": 0.0921,
+        "distance": 0.9079,
+        "text": "Subscription billing and refund SLA: Refund requests submitted within 14 days of purchase will be automatically credited back to the original payment method within 3 to 5 business days.",
+        "metadata": {
+          "category": "Billing",
+          "chunk_index": 0,
+          "doc_title": "billing.md",
+          "doc_type": "policy",
+          "section": "Refunds",
+          "source": "billing.md"
+        },
+        "source": "billing.md",
+        "section": "Refunds",
+        "rank": 9
+      },
+      {
+        "id": "account.md#chunk_0",
+        "score": 0.047,
+        "distance": 0.953,
+        "text": "Password reset instructions: Navigate to /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+        "metadata": {
+          "category": "Security",
+          "chunk_index": 0,
+          "doc_title": "account.md",
+          "doc_type": "guide",
+          "section": "Authentication",
+          "source": "account.md"
+        },
+        "source": "account.md",
+        "section": "Authentication",
+        "rank": 10
+      }
+    ],
+    "stage_2_final_selected": [
+      {
+        "id": "rubric.md#chunk_0",
+        "score": 0.6643,
+        "distance": 0.3357,
+        "text": "Grading Rubric Breakdown: Final project grades are weighted 40% on unit and integration test coverage, 30% on architectural design cleanliness, and 30% on code quality and documentation standards.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "rubric.md",
+          "doc_type": "rubric",
+          "section": "Grading Weights",
+          "source": "rubric.md"
+        },
+        "source": "rubric.md",
+        "section": "Grading Weights",
+        "rank": 1,
+        "initial_rank": 1,
+        "vector_score": 0.6643,
+        "rerank_score": 7.0,
+        "rerank_rank": 1,
+        "rank_delta": 0
+      },
+      {
+        "id": "submission-policy.md#chunk_0",
+        "score": 0.3422,
+        "distance": 0.6578,
+        "text": "Mandatory Submission Evidence & Verification: Every project submission must include two mandatory items: 1. A public GitHub PR URL showing meaningful commits and test passes, and 2. A 3-5 minute video screen recording walkthrough hosted on Google Drive with public view access explaining the architecture and answering rubric questions.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 0,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Submission Evidence",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Submission Evidence",
+        "rank": 2,
+        "initial_rank": 2,
+        "vector_score": 0.3422,
+        "rerank_score": 0.0,
+        "rerank_rank": 2,
+        "rank_delta": 0
+      },
+      {
+        "id": "project-overview.md#chunk_0",
+        "score": 0.2672,
+        "distance": 0.7328,
+        "text": "Project Overview and Milestones: All capstone projects must adhere to weekly agile sprint deadlines, attend standup check-ins, and deliver milestone deliverables according to the academic calendar.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "project-overview.md",
+          "doc_type": "overview",
+          "section": "Project Milestones",
+          "source": "project-overview.md"
+        },
+        "source": "project-overview.md",
+        "section": "Project Milestones",
+        "rank": 3,
+        "initial_rank": 3,
+        "vector_score": 0.2672,
+        "rerank_score": 0.0,
+        "rerank_rank": 3,
+        "rank_delta": 0
+      }
+    ],
+    "stage_2_all_reranked": [
+      {
+        "id": "rubric.md#chunk_0",
+        "score": 0.6643,
+        "distance": 0.3357,
+        "text": "Grading Rubric Breakdown: Final project grades are weighted 40% on unit and integration test coverage, 30% on architectural design cleanliness, and 30% on code quality and documentation standards.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "rubric.md",
+          "doc_type": "rubric",
+          "section": "Grading Weights",
+          "source": "rubric.md"
+        },
+        "source": "rubric.md",
+        "section": "Grading Weights",
+        "rank": 1,
+        "initial_rank": 1,
+        "vector_score": 0.6643,
+        "rerank_score": 7.0,
+        "rerank_rank": 1,
+        "rank_delta": 0
+      },
+      {
+        "id": "submission-policy.md#chunk_0",
+        "score": 0.3422,
+        "distance": 0.6578,
+        "text": "Mandatory Submission Evidence & Verification: Every project submission must include two mandatory items: 1. A public GitHub PR URL showing meaningful commits and test passes, and 2. A 3-5 minute video screen recording walkthrough hosted on Google Drive with public view access explaining the architecture and answering rubric questions.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 0,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Submission Evidence",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Submission Evidence",
+        "rank": 2,
+        "initial_rank": 2,
+        "vector_score": 0.3422,
+        "rerank_score": 0.0,
+        "rerank_rank": 2,
+        "rank_delta": 0
+      },
+      {
+        "id": "project-overview.md#chunk_0",
+        "score": 0.2672,
+        "distance": 0.7328,
+        "text": "Project Overview and Milestones: All capstone projects must adhere to weekly agile sprint deadlines, attend standup check-ins, and deliver milestone deliverables according to the academic calendar.",
+        "metadata": {
+          "category": "Curriculum",
+          "chunk_index": 0,
+          "doc_title": "project-overview.md",
+          "doc_type": "overview",
+          "section": "Project Milestones",
+          "source": "project-overview.md"
+        },
+        "source": "project-overview.md",
+        "section": "Project Milestones",
+        "rank": 3,
+        "initial_rank": 3,
+        "vector_score": 0.2672,
+        "rerank_score": 0.0,
+        "rerank_rank": 3,
+        "rank_delta": 0
+      },
+      {
+        "id": "submission-policy.md#chunk_1",
+        "score": 0.2501,
+        "distance": 0.7499,
+        "text": "Late Submissions and Extensions: Submissions received after the 11:59 PM deadline without prior approved medical exemption incur a 10% daily grade deduction for up to 3 days.",
+        "metadata": {
+          "category": "Policy",
+          "chunk_index": 1,
+          "doc_title": "submission-policy.md",
+          "doc_type": "policy",
+          "section": "Late Policy",
+          "source": "submission-policy.md"
+        },
+        "source": "submission-policy.md",
+        "section": "Late Policy",
+        "rank": 4,
+        "initial_rank": 4,
+        "vector_score": 0.2501,
+        "rerank_score": 0.0,
+        "rerank_rank": 4,
+        "rank_delta": 0
+      },
+      {
+        "id": "team-guide.md#chunk_0",
+        "score": 0.1565,
+        "distance": 0.8435,
+        "text": "Team collaboration etiquette: Keep branch names descriptive, write clean commit messages, create feature pull requests, and review teammate pull requests promptly before merging.",
+        "metadata": {
+          "category": "Engineering",
+          "chunk_index": 0,
+          "doc_title": "team-guide.md",
+          "doc_type": "guide",
+          "section": "Git Workflow",
+          "source": "team-guide.md"
+        },
+        "source": "team-guide.md",
+        "section": "Git Workflow",
+        "rank": 5,
+        "initial_rank": 5,
+        "vector_score": 0.1565,
+        "rerank_score": 0.0,
+        "rerank_rank": 5,
+        "rank_delta": 0
+      },
+      {
+        "id": "wifi.md#chunk_0",
+        "score": 0.1527,
+        "distance": 0.8473,
+        "text": "Campus WiFi setup: Connect your laptop to 'Knovera-Secure' SSID using your student ID credentials and accept the enterprise TLS security certificate.",
+        "metadata": {
+          "category": "Campus IT",
+          "chunk_index": 0,
+          "doc_title": "wifi.md",
+          "doc_type": "guide",
+          "section": "Network Access",
+          "source": "wifi.md"
+        },
+        "source": "wifi.md",
+        "section": "Network Access",
+        "rank": 6,
+        "initial_rank": 6,
+        "vector_score": 0.1527,
+        "rerank_score": 0.0,
+        "rerank_rank": 6,
+        "rank_delta": 0
+      },
+      {
+        "id": "campus-guide.md#chunk_0",
+        "score": 0.1206,
+        "distance": 0.8794,
+        "text": "Campus dining options: The campus cafeteria serves breakfast from 7:30 AM to 10:00 AM, lunch from 12:00 PM to 2:30 PM, and offers daily vegetarian and vegan meal options.",
+        "metadata": {
+          "category": "Campus Life",
+          "chunk_index": 0,
+          "doc_title": "campus-guide.md",
+          "doc_type": "guide",
+          "section": "Dining Facilities",
+          "source": "campus-guide.md"
+        },
+        "source": "campus-guide.md",
+        "section": "Dining Facilities",
+        "rank": 7,
+        "initial_rank": 7,
+        "vector_score": 0.1206,
+        "rerank_score": 0.0,
+        "rerank_rank": 7,
+        "rank_delta": 0
+      },
+      {
+        "id": "dev-api.md#chunk_0",
+        "score": 0.1022,
+        "distance": 0.8978,
+        "text": "Developer API client configuration: Initialize the Knovera SDK client with base_url and API key environment variables to invoke batch embedding and retrieval endpoints.",
+        "metadata": {
+          "category": "Developer Tools",
+          "chunk_index": 0,
+          "doc_title": "dev-api.md",
+          "doc_type": "reference",
+          "section": "API Reference",
+          "source": "dev-api.md"
+        },
+        "source": "dev-api.md",
+        "section": "API Reference",
+        "rank": 8,
+        "initial_rank": 8,
+        "vector_score": 0.1022,
+        "rerank_score": 0.0,
+        "rerank_rank": 8,
+        "rank_delta": 0
+      },
+      {
+        "id": "billing.md#chunk_0",
+        "score": 0.0921,
+        "distance": 0.9079,
+        "text": "Subscription billing and refund SLA: Refund requests submitted within 14 days of purchase will be automatically credited back to the original payment method within 3 to 5 business days.",
+        "metadata": {
+          "category": "Billing",
+          "chunk_index": 0,
+          "doc_title": "billing.md",
+          "doc_type": "policy",
+          "section": "Refunds",
+          "source": "billing.md"
+        },
+        "source": "billing.md",
+        "section": "Refunds",
+        "rank": 9,
+        "initial_rank": 9,
+        "vector_score": 0.0921,
+        "rerank_score": 0.0,
+        "rerank_rank": 9,
+        "rank_delta": 0
+      },
+      {
+        "id": "account.md#chunk_0",
+        "score": 0.047,
+        "distance": 0.953,
+        "text": "Password reset instructions: Navigate to /reset-password endpoint, enter your registered email address, and verify identity with a 6-digit OTP code to create a new password.",
+        "metadata": {
+          "category": "Security",
+          "chunk_index": 0,
+          "doc_title": "account.md",
+          "doc_type": "guide",
+          "section": "Authentication",
+          "source": "account.md"
+        },
+        "source": "account.md",
+        "section": "Authentication",
+        "rank": 10,
+        "initial_rank": 10,
+        "vector_score": 0.047,
+        "rerank_score": 0.0,
+        "rerank_rank": 10,
+        "rank_delta": 0
+      }
+    ],
+    "metrics": {
+      "stage_1_retrieval_latency_ms": 636.73,
+      "stage_2_rerank_latency_ms": 22530.75,
+      "total_pipeline_latency_ms": 23167.49,
+      "candidates_scored": 10,
+      "estimated_tokens_processed": 1500,
+      "estimated_cost_usd": 0.000225
+    }
+  }
+}

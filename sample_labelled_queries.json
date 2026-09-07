@@ -1,0 +1,57 @@
+{
+  "assignment": "3.36 Retrieval Evaluation & Recall Testing",
+  "dataset_title": "Knovera RAG Benchmark Labelled Query Set",
+  "total_queries": 6,
+  "labelled_queries": [
+    {
+      "query": "How can a learner reset their password?",
+      "relevant_chunk_ids": [
+        "account-guide.md:0",
+        "account-guide.md:1"
+      ],
+      "category": "Authentication",
+      "description": "User account recovery and single sign-on password reset workflow."
+    },
+    {
+      "query": "What evidence is required for project submission?",
+      "relevant_chunk_ids": [
+        "submission-rubric.md:0"
+      ],
+      "category": "Academics",
+      "description": "Project artifact verification including GitHub PR link and screen recording."
+    },
+    {
+      "query": "When does the cafeteria menu change?",
+      "relevant_chunk_ids": [
+        "campus-guide.md:0"
+      ],
+      "category": "Campus Life",
+      "description": "Dining operational hours and daily meal rotation schedules."
+    },
+    {
+      "query": "What are the API rate limits and token quotas for vector indexing?",
+      "relevant_chunk_ids": [
+        "api-policy.md:0",
+        "api-policy.md:1"
+      ],
+      "category": "Operations",
+      "description": "System throttling thresholds and request concurrency boundaries."
+    },
+    {
+      "query": "What is the refund eligibility window for enterprise billing tiers?",
+      "relevant_chunk_ids": [
+        "billing-faq.md:0"
+      ],
+      "category": "Billing",
+      "description": "SLA and financial cancellation policy terms."
+    },
+    {
+      "query": "How do vector databases handle HNSW distance metrics?",
+      "relevant_chunk_ids": [
+        "vector-db-guide.md:0"
+      ],
+      "category": "Infrastructure",
+      "description": "Cosine similarity, L2 Euclidean distance, and inner product index properties."
+    }
+  ]
+}

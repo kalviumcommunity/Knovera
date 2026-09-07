@@ -1,0 +1,153 @@
+================================================================================
+KNOVERA RAG ASSISTANT — RETRIEVAL RELEVANCE TUNING EXPERIMENT LOG
+================================================================================
+Total Settings Evaluated: 5
+Chosen Optimal Setting:   hybrid_k3
+Justification Summary:    Setting 'hybrid_k3' achieved the optimal relevance performance with a Hit Rate of 100.0% (5/5 queries returning the expected source), a Top-1 Hit Rate of 100.0%, and a Mean Reciprocal Rank (MRR) of 1.0000. It balances precision and recall while returning an average of 1.6 high-confidence chunks per query (avg top score: 0.7048).
+--------------------------------------------------------------------------------
+COMPARATIVE RESULTS TABLE:
+| Retrieval Setting | Hit Rate | Hits | Top-1 Hit Rate | MRR | Avg Top Score | Avg Retained Chunks | Config Overview |
+|---|---|---|---|---|---|---|---|
+| **`baseline_k3`** | **`100.0%`** | `5/5` | `100.0%` | `1.0000` | `0.7048` | `3.0` | k=3, min_score=0.0, filter=False, hybrid=False |
+| **`filtered_k3`** | **`60.0%`** | `3/5` | `60.0%` | `0.6000` | `0.6131` | `2.4` | k=3, min_score=0.0, filter=True, hybrid=False |
+| **`strict_k5`** | **`60.0%`** | `3/5` | `60.0%` | `0.6000` | `0.5903` | `0.8` | k=5, min_score=0.72, filter=False, hybrid=False |
+| **`hybrid_k3`** | **`100.0%`** | `5/5` | `100.0%` | `1.0000` | `0.7048` | `1.6` | k=3, min_score=0.0, filter=False, hybrid=True |
+| **`hybrid_filtered_strict_k3`** | **`60.0%`** | `3/5` | `60.0%` | `0.6000` | `0.5903` | `0.8` | k=3, min_score=0.5, filter=True, hybrid=True |
+================================================================================
+
+DETAILED PER-SETTING QUERY BREAKDOWN:
+
+--- SETTING: baseline_k3 (Hit Rate: 100.0%) ---
+  Query: 'How can a learner reset their password?'
+    Expected Source:  account-guide.md
+    Returned Sources: ['account-guide.md', 'account-guide.md', 'submission-rubric.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9969
+
+  Query: 'When does the cafeteria menu change?'
+    Expected Source:  campus-guide.md
+    Returned Sources: ['campus-guide.md', 'sec-ops.md', 'account-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9945
+
+  Query: 'What evidence is required for project submission?'
+    Expected Source:  submission-rubric.md
+    Returned Sources: ['submission-rubric.md', 'service-policy.md', 'account-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.2593
+
+  Query: 'What is the timeline for subscription refund processing?'
+    Expected Source:  service-policy.md
+    Returned Sources: ['service-policy.md', 'campus-guide.md', 'submission-rubric.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.3132
+
+  Query: 'How should developers manage API key environment variables?'
+    Expected Source:  dev-guide.md
+    Returned Sources: ['dev-guide.md', 'submission-rubric.md', 'sec-ops.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9603
+
+
+--- SETTING: filtered_k3 (Hit Rate: 60.0%) ---
+  Query: 'How can a learner reset their password?'
+    Expected Source:  account-guide.md
+    Returned Sources: ['account-guide.md', 'account-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9969
+
+  Query: 'When does the cafeteria menu change?'
+    Expected Source:  campus-guide.md
+    Returned Sources: ['campus-guide.md', 'account-guide.md', 'campus-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9945
+
+  Query: 'What evidence is required for project submission?'
+    Expected Source:  submission-rubric.md
+    Returned Sources: ['account-guide.md', 'account-guide.md', 'dev-guide.md']
+    Hit: False | Top-1 Hit: False | Reciprocal Rank: 0.0 | Top Score: 0.0539
+
+  Query: 'What is the timeline for subscription refund processing?'
+    Expected Source:  service-policy.md
+    Returned Sources: ['campus-guide.md', 'account-guide.md']
+    Hit: False | Top-1 Hit: False | Reciprocal Rank: 0.0 | Top Score: 0.0601
+
+  Query: 'How should developers manage API key environment variables?'
+    Expected Source:  dev-guide.md
+    Returned Sources: ['dev-guide.md', 'campus-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9603
+
+
+--- SETTING: strict_k5 (Hit Rate: 60.0%) ---
+  Query: 'How can a learner reset their password?'
+    Expected Source:  account-guide.md
+    Returned Sources: ['account-guide.md', 'account-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9969
+
+  Query: 'When does the cafeteria menu change?'
+    Expected Source:  campus-guide.md
+    Returned Sources: ['campus-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9945
+
+  Query: 'What evidence is required for project submission?'
+    Expected Source:  submission-rubric.md
+    Returned Sources: []
+    Hit: False | Top-1 Hit: False | Reciprocal Rank: 0.0 | Top Score: 0.0
+
+  Query: 'What is the timeline for subscription refund processing?'
+    Expected Source:  service-policy.md
+    Returned Sources: []
+    Hit: False | Top-1 Hit: False | Reciprocal Rank: 0.0 | Top Score: 0.0
+
+  Query: 'How should developers manage API key environment variables?'
+    Expected Source:  dev-guide.md
+    Returned Sources: ['dev-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9603
+
+
+--- SETTING: hybrid_k3 (Hit Rate: 100.0%) ---
+  Query: 'How can a learner reset their password?'
+    Expected Source:  account-guide.md
+    Returned Sources: ['account-guide.md', 'account-guide.md', 'submission-rubric.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9969
+
+  Query: 'When does the cafeteria menu change?'
+    Expected Source:  campus-guide.md
+    Returned Sources: ['campus-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9945
+
+  Query: 'What evidence is required for project submission?'
+    Expected Source:  submission-rubric.md
+    Returned Sources: ['submission-rubric.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.2593
+
+  Query: 'What is the timeline for subscription refund processing?'
+    Expected Source:  service-policy.md
+    Returned Sources: ['service-policy.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.3132
+
+  Query: 'How should developers manage API key environment variables?'
+    Expected Source:  dev-guide.md
+    Returned Sources: ['dev-guide.md', 'submission-rubric.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9603
+
+
+--- SETTING: hybrid_filtered_strict_k3 (Hit Rate: 60.0%) ---
+  Query: 'How can a learner reset their password?'
+    Expected Source:  account-guide.md
+    Returned Sources: ['account-guide.md', 'account-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9969
+
+  Query: 'When does the cafeteria menu change?'
+    Expected Source:  campus-guide.md
+    Returned Sources: ['campus-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9945
+
+  Query: 'What evidence is required for project submission?'
+    Expected Source:  submission-rubric.md
+    Returned Sources: []
+    Hit: False | Top-1 Hit: False | Reciprocal Rank: 0.0 | Top Score: 0.0
+
+  Query: 'What is the timeline for subscription refund processing?'
+    Expected Source:  service-policy.md
+    Returned Sources: []
+    Hit: False | Top-1 Hit: False | Reciprocal Rank: 0.0 | Top Score: 0.0
+
+  Query: 'How should developers manage API key environment variables?'
+    Expected Source:  dev-guide.md
+    Returned Sources: ['dev-guide.md']
+    Hit: True | Top-1 Hit: True | Reciprocal Rank: 1.0 | Top Score: 0.9603
+

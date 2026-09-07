@@ -120,6 +120,19 @@ To run this project on a fresh machine, follow these steps:
 - **Automated Unit Test Suite**: Run `py -m unittest test_similarity_ranking.py` to verify metric formulas, mathematical identities, chunk sorting order, top/bottom extraction, cross-metric rank equivalency, and edge case handling.
 - **Technical Justification Report**: Full task solutions, metric mathematical justification, high similarity score guarantees vs non-guarantees, and 3-5 min video script outline available in [`SIMILARITY_RANKING_REPORT.md`](file:///d:/Project/Knovera/SIMILARITY_RANKING_REPORT.md) and [`prompts/similarity_ranking_notes.md`](file:///d:/Project/Knovera/prompts/similarity_ranking_notes.md).
 
+## Retrieval Relevance Tuning (Assignment 3.34)
+
+- **Enterprise Tuning Engine**: Implemented in [`src/retrieval_tuner.py`](file:///d:/Project/Knovera/src/retrieval_tuner.py), managing ground-truth test query pairs (`TestQuery`), candidate retrieval configurations (`RetrievalSetting`), score thresholding (`min_score`), metadata filtering, and hybrid search blending.
+- **Relevance Metrics Computation**: Evaluates Hit Rate, Top-1 Hit Rate, Mean Reciprocal Rank (MRR), Average Top Score, and Average Retained Chunks across candidate settings.
+- **Quantitative Setting Selection**: Implements automated multi-criteria optimization to select winning retrieval parameters with evidence-backed justification.
+- **Interactive Demonstration**: Run `python retrieval_relevance_tuning_demo.py` to:
+  1. Index multi-domain grounded test corpus into ChromaDB collection.
+  2. Evaluate 5 retrieval configurations (`baseline_k3`, `filtered_k3`, `strict_k5`, `hybrid_k3`, `hybrid_filtered_strict_k3`) across 5 ground-truth test queries.
+  3. Display comparative empirical results table (100% Hit Rate for `hybrid_k3` with 46% reduced context token cost).
+  4. Export JSON metrics to [`outputs/retrieval_relevance_tuning_results.json`](file:///d:/Project/Knovera/outputs/retrieval_relevance_tuning_results.json) and plain-text execution log to [`outputs/retrieval_relevance_tuning_output.txt`](file:///d:/Project/Knovera/outputs/retrieval_relevance_tuning_output.txt).
+- **Automated Pytest Suite**: Run `pytest test_retrieval_relevance_tuning.py -v` to verify dataclass serialization, single/multi setting evaluations, score filtering, hit rate calculations, and best setting selection logic.
+- **Comprehensive Technical Report**: Full report, pipeline architecture flowchart, empirical comparison tables, setting selection justification, impact analysis, and video script outline available in [`RETRIEVAL_RELEVANCE_TUNING_REPORT.md`](file:///d:/Project/Knovera/RETRIEVAL_RELEVANCE_TUNING_REPORT.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.

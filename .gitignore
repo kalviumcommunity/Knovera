@@ -4,3 +4,5 @@
 
 src/__pycache__
 __pycache__
+data/chroma_db/
+data/test_chroma_db/

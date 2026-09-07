@@ -1,0 +1,644 @@
+{
+  "assignment": "3.34 Retrieval Relevance Tuning",
+  "total_settings_compared": 5,
+  "chosen_setting": "hybrid_k3",
+  "chosen_justification": "Setting 'hybrid_k3' achieved the optimal relevance performance with a Hit Rate of 100.0% (5/5 queries returning the expected source), a Top-1 Hit Rate of 100.0%, and a Mean Reciprocal Rank (MRR) of 1.0000. It balances precision and recall while returning an average of 1.6 high-confidence chunks per query (avg top score: 0.7048).",
+  "summary_metrics": [
+    {
+      "setting_name": "baseline_k3",
+      "setting_config": {
+        "name": "baseline_k3",
+        "k": 3,
+        "metadata_filter": null,
+        "min_score": 0.0,
+        "use_hybrid": false,
+        "vector_weight": 0.7,
+        "keyword_weight": 0.3,
+        "description": "Standard top-3 vector search without filters or thresholding"
+      },
+      "total_queries": 5,
+      "hits": 5,
+      "hit_rate": 1.0,
+      "top_1_hits": 5,
+      "top_1_hit_rate": 1.0,
+      "mrr": 1.0,
+      "avg_top_score": 0.7048,
+      "avg_retained_chunks": 3.0,
+      "details": [
+        {
+          "query": "How can a learner reset their password?",
+          "expected_source": "account-guide.md",
+          "returned_sources": [
+            "account-guide.md",
+            "account-guide.md",
+            "submission-rubric.md"
+          ],
+          "returned_chunk_ids": [
+            "account-guide.md#chunk_0",
+            "account-guide.md#chunk_1",
+            "submission-rubric.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.9969,
+            0.9639,
+            0.6615
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9969,
+          "kept_chunks_count": 3,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "When does the cafeteria menu change?",
+          "expected_source": "campus-guide.md",
+          "returned_sources": [
+            "campus-guide.md",
+            "sec-ops.md",
+            "account-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "campus-guide.md#chunk_0",
+            "sec-ops.md#chunk_0",
+            "account-guide.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.9945,
+            0.0405,
+            0.0143
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9945,
+          "kept_chunks_count": 3,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "What evidence is required for project submission?",
+          "expected_source": "submission-rubric.md",
+          "returned_sources": [
+            "submission-rubric.md",
+            "service-policy.md",
+            "account-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "submission-rubric.md#chunk_0",
+            "service-policy.md#chunk_0",
+            "account-guide.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.2593,
+            0.0931,
+            0.0539
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.2593,
+          "kept_chunks_count": 3,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "What is the timeline for subscription refund processing?",
+          "expected_source": "service-policy.md",
+          "returned_sources": [
+            "service-policy.md",
+            "campus-guide.md",
+            "submission-rubric.md"
+          ],
+          "returned_chunk_ids": [
+            "service-policy.md#chunk_0",
+            "campus-guide.md#chunk_1",
+            "submission-rubric.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.3132,
+            0.0601,
+            0.0285
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.3132,
+          "kept_chunks_count": 3,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "How should developers manage API key environment variables?",
+          "expected_source": "dev-guide.md",
+          "returned_sources": [
+            "dev-guide.md",
+            "submission-rubric.md",
+            "sec-ops.md"
+          ],
+          "returned_chunk_ids": [
+            "dev-guide.md#chunk_0",
+            "submission-rubric.md#chunk_1",
+            "sec-ops.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.9603,
+            0.6835,
+            0.0438
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9603,
+          "kept_chunks_count": 3,
+          "raw_retrieved_count": 3
+        }
+      ]
+    },
+    {
+      "setting_name": "filtered_k3",
+      "setting_config": {
+        "name": "filtered_k3",
+        "k": 3,
+        "metadata_filter": {
+          "doc_type": "guide"
+        },
+        "min_score": 0.0,
+        "use_hybrid": false,
+        "vector_weight": 0.7,
+        "keyword_weight": 0.3,
+        "description": "Top-3 vector search filtered strictly to doc_type='guide'"
+      },
+      "total_queries": 5,
+      "hits": 3,
+      "hit_rate": 0.6,
+      "top_1_hits": 3,
+      "top_1_hit_rate": 0.6,
+      "mrr": 0.6,
+      "avg_top_score": 0.6131,
+      "avg_retained_chunks": 2.4,
+      "details": [
+        {
+          "query": "How can a learner reset their password?",
+          "expected_source": "account-guide.md",
+          "returned_sources": [
+            "account-guide.md",
+            "account-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "account-guide.md#chunk_0",
+            "account-guide.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.9969,
+            0.9639
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9969,
+          "kept_chunks_count": 2,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "When does the cafeteria menu change?",
+          "expected_source": "campus-guide.md",
+          "returned_sources": [
+            "campus-guide.md",
+            "account-guide.md",
+            "campus-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "campus-guide.md#chunk_0",
+            "account-guide.md#chunk_1",
+            "campus-guide.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.9945,
+            0.0143,
+            0.0136
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9945,
+          "kept_chunks_count": 3,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "What evidence is required for project submission?",
+          "expected_source": "submission-rubric.md",
+          "returned_sources": [
+            "account-guide.md",
+            "account-guide.md",
+            "dev-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "account-guide.md#chunk_1",
+            "account-guide.md#chunk_0",
+            "dev-guide.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.0539,
+            0.0275,
+            0.0055
+          ],
+          "hit": false,
+          "top_1_hit": false,
+          "reciprocal_rank": 0.0,
+          "top_score": 0.0539,
+          "kept_chunks_count": 3,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "What is the timeline for subscription refund processing?",
+          "expected_source": "service-policy.md",
+          "returned_sources": [
+            "campus-guide.md",
+            "account-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "campus-guide.md#chunk_1",
+            "account-guide.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.0601,
+            0.01
+          ],
+          "hit": false,
+          "top_1_hit": false,
+          "reciprocal_rank": 0.0,
+          "top_score": 0.0601,
+          "kept_chunks_count": 2,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "How should developers manage API key environment variables?",
+          "expected_source": "dev-guide.md",
+          "returned_sources": [
+            "dev-guide.md",
+            "campus-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "dev-guide.md#chunk_0",
+            "campus-guide.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.9603,
+            0.0244
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9603,
+          "kept_chunks_count": 2,
+          "raw_retrieved_count": 3
+        }
+      ]
+    },
+    {
+      "setting_name": "strict_k5",
+      "setting_config": {
+        "name": "strict_k5",
+        "k": 5,
+        "metadata_filter": null,
+        "min_score": 0.72,
+        "use_hybrid": false,
+        "vector_weight": 0.7,
+        "keyword_weight": 0.3,
+        "description": "Top-5 vector search with strict similarity score threshold (min_score >= 0.72)"
+      },
+      "total_queries": 5,
+      "hits": 3,
+      "hit_rate": 0.6,
+      "top_1_hits": 3,
+      "top_1_hit_rate": 0.6,
+      "mrr": 0.6,
+      "avg_top_score": 0.5903,
+      "avg_retained_chunks": 0.8,
+      "details": [
+        {
+          "query": "How can a learner reset their password?",
+          "expected_source": "account-guide.md",
+          "returned_sources": [
+            "account-guide.md",
+            "account-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "account-guide.md#chunk_0",
+            "account-guide.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.9969,
+            0.9639
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9969,
+          "kept_chunks_count": 2,
+          "raw_retrieved_count": 5
+        },
+        {
+          "query": "When does the cafeteria menu change?",
+          "expected_source": "campus-guide.md",
+          "returned_sources": [
+            "campus-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "campus-guide.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.9945
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9945,
+          "kept_chunks_count": 1,
+          "raw_retrieved_count": 5
+        },
+        {
+          "query": "What evidence is required for project submission?",
+          "expected_source": "submission-rubric.md",
+          "returned_sources": [],
+          "returned_chunk_ids": [],
+          "returned_scores": [],
+          "hit": false,
+          "top_1_hit": false,
+          "reciprocal_rank": 0.0,
+          "top_score": 0.0,
+          "kept_chunks_count": 0,
+          "raw_retrieved_count": 5
+        },
+        {
+          "query": "What is the timeline for subscription refund processing?",
+          "expected_source": "service-policy.md",
+          "returned_sources": [],
+          "returned_chunk_ids": [],
+          "returned_scores": [],
+          "hit": false,
+          "top_1_hit": false,
+          "reciprocal_rank": 0.0,
+          "top_score": 0.0,
+          "kept_chunks_count": 0,
+          "raw_retrieved_count": 5
+        },
+        {
+          "query": "How should developers manage API key environment variables?",
+          "expected_source": "dev-guide.md",
+          "returned_sources": [
+            "dev-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "dev-guide.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.9603
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9603,
+          "kept_chunks_count": 1,
+          "raw_retrieved_count": 5
+        }
+      ]
+    },
+    {
+      "setting_name": "hybrid_k3",
+      "setting_config": {
+        "name": "hybrid_k3",
+        "k": 3,
+        "metadata_filter": null,
+        "min_score": 0.0,
+        "use_hybrid": true,
+        "vector_weight": 0.7,
+        "keyword_weight": 0.3,
+        "description": "Hybrid vector + lexical keyword search (70% vector / 30% lexical)"
+      },
+      "total_queries": 5,
+      "hits": 5,
+      "hit_rate": 1.0,
+      "top_1_hits": 5,
+      "top_1_hit_rate": 1.0,
+      "mrr": 1.0,
+      "avg_top_score": 0.7048,
+      "avg_retained_chunks": 1.6,
+      "details": [
+        {
+          "query": "How can a learner reset their password?",
+          "expected_source": "account-guide.md",
+          "returned_sources": [
+            "account-guide.md",
+            "account-guide.md",
+            "submission-rubric.md"
+          ],
+          "returned_chunk_ids": [
+            "account-guide.md#chunk_0",
+            "account-guide.md#chunk_1",
+            "submission-rubric.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.9969,
+            0.9639,
+            0.6615
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9969,
+          "kept_chunks_count": 3,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "When does the cafeteria menu change?",
+          "expected_source": "campus-guide.md",
+          "returned_sources": [
+            "campus-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "campus-guide.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.9945
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9945,
+          "kept_chunks_count": 1,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "What evidence is required for project submission?",
+          "expected_source": "submission-rubric.md",
+          "returned_sources": [
+            "submission-rubric.md"
+          ],
+          "returned_chunk_ids": [
+            "submission-rubric.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.2593
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.2593,
+          "kept_chunks_count": 1,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "What is the timeline for subscription refund processing?",
+          "expected_source": "service-policy.md",
+          "returned_sources": [
+            "service-policy.md"
+          ],
+          "returned_chunk_ids": [
+            "service-policy.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.3132
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.3132,
+          "kept_chunks_count": 1,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "How should developers manage API key environment variables?",
+          "expected_source": "dev-guide.md",
+          "returned_sources": [
+            "dev-guide.md",
+            "submission-rubric.md"
+          ],
+          "returned_chunk_ids": [
+            "dev-guide.md#chunk_0",
+            "submission-rubric.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.9603,
+            0.6835
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9603,
+          "kept_chunks_count": 2,
+          "raw_retrieved_count": 3
+        }
+      ]
+    },
+    {
+      "setting_name": "hybrid_filtered_strict_k3",
+      "setting_config": {
+        "name": "hybrid_filtered_strict_k3",
+        "k": 3,
+        "metadata_filter": {
+          "doc_type": "guide"
+        },
+        "min_score": 0.5,
+        "use_hybrid": true,
+        "vector_weight": 0.7,
+        "keyword_weight": 0.3,
+        "description": "Filtered hybrid search with moderate score threshold (min_score >= 0.50)"
+      },
+      "total_queries": 5,
+      "hits": 3,
+      "hit_rate": 0.6,
+      "top_1_hits": 3,
+      "top_1_hit_rate": 0.6,
+      "mrr": 0.6,
+      "avg_top_score": 0.5903,
+      "avg_retained_chunks": 0.8,
+      "details": [
+        {
+          "query": "How can a learner reset their password?",
+          "expected_source": "account-guide.md",
+          "returned_sources": [
+            "account-guide.md",
+            "account-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "account-guide.md#chunk_0",
+            "account-guide.md#chunk_1"
+          ],
+          "returned_scores": [
+            0.9969,
+            0.9639
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9969,
+          "kept_chunks_count": 2,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "When does the cafeteria menu change?",
+          "expected_source": "campus-guide.md",
+          "returned_sources": [
+            "campus-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "campus-guide.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.9945
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9945,
+          "kept_chunks_count": 1,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "What evidence is required for project submission?",
+          "expected_source": "submission-rubric.md",
+          "returned_sources": [],
+          "returned_chunk_ids": [],
+          "returned_scores": [],
+          "hit": false,
+          "top_1_hit": false,
+          "reciprocal_rank": 0.0,
+          "top_score": 0.0,
+          "kept_chunks_count": 0,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "What is the timeline for subscription refund processing?",
+          "expected_source": "service-policy.md",
+          "returned_sources": [],
+          "returned_chunk_ids": [],
+          "returned_scores": [],
+          "hit": false,
+          "top_1_hit": false,
+          "reciprocal_rank": 0.0,
+          "top_score": 0.0,
+          "kept_chunks_count": 0,
+          "raw_retrieved_count": 3
+        },
+        {
+          "query": "How should developers manage API key environment variables?",
+          "expected_source": "dev-guide.md",
+          "returned_sources": [
+            "dev-guide.md"
+          ],
+          "returned_chunk_ids": [
+            "dev-guide.md#chunk_0"
+          ],
+          "returned_scores": [
+            0.9603
+          ],
+          "hit": true,
+          "top_1_hit": true,
+          "reciprocal_rank": 1.0,
+          "top_score": 0.9603,
+          "kept_chunks_count": 1,
+          "raw_retrieved_count": 3
+        }
+      ]
+    }
+  ]
+}

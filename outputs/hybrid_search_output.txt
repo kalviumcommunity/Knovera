@@ -1,0 +1,31 @@
+
+Query: "What are the password reset steps?"
+Metadata Filter: {'section': 'Account access'}
+
+Precision Comparison (Target: section == 'Account access'):
+  - Unfiltered Vector Precision: 66.7% (2/3 relevant)
+  - Filtered Vector Precision:   100.0% (2/2 relevant)
+  - Effect: Pruned cross-domain IT security/WiFi chunks, keeping only account recovery guides.
+
+Query: "How do I resolve ERR-AUTH-902 token error in API?"
+Exact Keywords: ['ERR-AUTH-902', 'API']
+
+Hybrid Re-Ranking Analysis:
+  - Top Hybrid Chunk: developer-api.md#chunk_0 | Score: 0.7466
+  - Lexical Keyword Score Boost: 0.8750 (Matches: 3)
+  - Benefit: Guarantees records containing the exact error code 'ERR-AUTH-902' are promoted to Rank #1.
+
+Query: "How do I troubleshoot password reset OTP expiration or invalid tokens?"
+Metadata Scope: {'category': 'Authentication'}
+Keywords: ['password', 'reset', 'OTP', 'ERR-AUTH-902']
+
+Multi-Mode Precision Metrics:
+  1. Unfiltered Vector Precision: 66.7%
+  2. Filtered Vector Precision:   100.0%
+  3. Unfiltered Hybrid Precision: 66.7%
+  4. Filtered Hybrid Precision:   100.0%
+  --> Precision Gain from Filtering & Hybrid: +33.3%
+
+================================================================================
+END OF DEMONSTRATION RUN AUDIT LOG
+================================================================================

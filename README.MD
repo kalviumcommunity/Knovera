@@ -168,9 +168,26 @@ To run this project on a fresh machine, follow these steps:
 - **Automated Test Suite**: Run `python test_rag_pipeline.py` to verify 12 unit and integration test cases across all stages.
 - **Comprehensive Technical Report**: Complete architectural breakdowns, stage data flows, mathematical grounding, sample executions, and video walkthrough script available in [`RAG_PIPELINE_ARCHITECTURE_FLOW_REPORT.md`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/RAG_PIPELINE_ARCHITECTURE_FLOW_REPORT.md).
 
+## Context Injection & Prompt Augmentation (Assignment 3.38)
+
+- **Grounded Context Injection Engine**: Implemented in [`src/context_injector.py`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/src/context_injector.py), providing chunk formatting, source markers (`[1] source#chunk_index`), dynamic token budget calculation, and grounded prompt augmentation.
+- **Key Modules & Functions**:
+  1. `format_chunk(index, chunk, style)`: Formats individual retrieved chunks with unambiguous indexed citation markers.
+  2. `assemble_context(chunks, max_tokens)`: Iterates through ranked chunks, measures exact BPE tokens via `tiktoken`, and terminates when reaching the context budget ceiling.
+  3. `build_prompt(question, retrieved_chunks, max_context_tokens)`: Synthesizes a grounded prompt with strict anti-hallucination instructions and explicit fallback directives.
+  4. `ContextInjector`: Object-oriented engine managing model context windows (e.g., 8,000 tokens) with dedicated allocations for context (5,000), generation output (1,500), and instructions (800).
+- **Interactive Demonstration**: Run `python context_injection_demo.py` to:
+  1. Demonstrate standard, detailed, and compact chunk formatting styles.
+  2. Simulate token budget overflow scenarios and inspect dropped chunk audit details.
+  3. Render complete grounded prompts and calculate token telemetry metrics.
+  4. Export sample augmented prompts to [`sample_augmented_prompt.json`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/sample_augmented_prompt.json) and [`sample_augmented_prompt.txt`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/sample_augmented_prompt.txt).
+- **Automated Test Suite**: Run `python test_context_injector.py` to verify 12 unit and integration test cases covering formatting, token budgets, and prompt structures.
+- **Comprehensive Technical Report**: Full architectural flowcharts, token budget mathematical models, overflow mitigation strategies, and video script outline available in [`CONTEXT_INJECTION_PROMPT_AUGMENTATION_REPORT.md`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/CONTEXT_INJECTION_PROMPT_AUGMENTATION_REPORT.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+
 
 
 

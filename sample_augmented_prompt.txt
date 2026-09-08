@@ -1,0 +1,44 @@
+================================================================================
+KNOVERA RAG ASSISTANT - SAMPLE AUGMENTED PROMPT
+================================================================================
+
+You are a grounded assistant for Knovera.
+Answer the question using ONLY the provided context below.
+If the answer is not in the context, or if the context is insufficient, explicitly say:
+"I don't have enough information in the provided context."
+Do not extrapolate or speculate beyond the provided evidence.
+When possible, cite sources using the citation markers like [1] or [2].
+
+Context:
+[1] Source: submission-rubric.md#0 | Section: 'Evidence Requirements' | Category: Academics
+Project submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components.
+
+---
+
+[2] Source: account-guide.md#0 | Section: 'Authentication' | Category: Authentication
+Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal. A secure verification link is sent to the registered email address immediately.
+
+---
+
+[3] Source: campus-guide.md#0 | Section: 'Dining Facilities' | Category: Campus Life
+Campus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering hot artisan wraps, organic salads, and rotating daily chef specials every weekday.
+
+---
+
+[4] Source: grading-policy.md#0 | Section: 'Evaluation Rubrics' | Category: Academics
+Assignment grading criteria: Submissions are evaluated on unit test coverage (40%), modular code structure (30%), and comprehensive documentation (30%). A score of 60% or higher is required to pass.
+
+Question:
+What evidence is required for project submission and what are the grading criteria?
+
+Answer:
+
+--------------------------------------------------------------------------------
+TELEMETRY METRICS:
+Question Tokens     : 14
+Context Tokens      : 243
+Total Prompt Tokens : 341
+Max Context Budget  : 1500
+Chunks Included     : 4
+Chunks Dropped      : 0
+--------------------------------------------------------------------------------

@@ -21,3 +21,19 @@ def render_prompt(template_str: str, **kwargs) -> str:
         return template_str.format(**kwargs)
     except KeyError as e:
         raise ValueError(f"Missing required template variable: {e}")
+
+GROUNDED_RAG_PROMPT_TEMPLATE = """You are a grounded assistant for Knovera.
+Answer the question using ONLY the provided context below.
+If the answer is not in the context, or if the context is insufficient, explicitly say:
+"I don't have enough information in the provided context."
+Do not extrapolate or speculate beyond the provided evidence.
+When possible, cite sources using the citation markers like [1] or [2].
+
+Context:
+{context}
+
+Question:
+{question}
+
+Answer:"""
+

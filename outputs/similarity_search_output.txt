@@ -2,40 +2,40 @@
 KNOVERA RAG ASSISTANT - ASSIGNMENT 3.32 SIMILARITY SEARCH & TOP-K RETRIEVAL LOG
 ================================================================================
 
-Timestamp: 2026-09-07 13:47:40
+Timestamp: 2026-09-08 14:19:27
 Embedding Model: openai/text-embedding-3-small
 Vector Dimension: 1536
 Collection Record Count: 10
 
 --- TASK 1-3: PRIMARY RETRIEVAL RESULTS (Query: 'How can a learner reset their password?', k=3) ---
-rank: 1 | score: 0.9967 | distance: 0.0033
+rank: 1 | score: 0.7527 | distance: 0.2473
 source: account-guide.md | chunk_index: 0 | category: Authentication
 text: Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.
 
-rank: 2 | score: 0.9901 | distance: 0.0099
+rank: 2 | score: 0.5958 | distance: 0.4042
 source: account-guide.md | chunk_index: 1 | category: Authentication
 text: Learners can recover access using their registered email. A one-time secure verification link is dispatched, which remains valid for 15 minutes.
 
-rank: 3 | score: 0.0268 | distance: 0.9732
-source: service-policy.md | chunk_index: 1 | category: Billing
-text: Refund processing requires an approved ticket from the billing department. Once authorized, funds will appear on the original payment method in 3-5 business days.
+rank: 3 | score: 0.2625 | distance: 0.7375
+source: service-policy.md | chunk_index: 0 | category: Billing
+text: Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning.
 
 --- TASK 4: MULTI-K DEMONSTRATION (k=1, k=3, k=5) ---
 
 k = 1
-0.9967 {'source': 'account-guide.md', 'chunk_index': 0, 'section': 'Password Recovery', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Passw
+0.7527 {'source': 'account-guide.md', 'chunk_index': 0, 'section': 'Password Recovery', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Passw
 
 k = 3
-0.9967 {'source': 'account-guide.md', 'chunk_index': 0, 'section': 'Password Recovery', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Passw
-0.9901 {'source': 'account-guide.md', 'chunk_index': 1, 'section': 'Email Verification', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Learners can recover access using their registered email. A one-time secure verification link is dis
-0.0268 {'source': 'service-policy.md', 'chunk_index': 1, 'section': 'Refund Processing SLA', 'doc_title': 'Service Policy Guide', 'category': 'Billing'} Refund processing requires an approved ticket from the billing department. Once authorized, funds wi
+0.7527 {'source': 'account-guide.md', 'chunk_index': 0, 'section': 'Password Recovery', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Passw
+0.5958 {'source': 'account-guide.md', 'chunk_index': 1, 'section': 'Email Verification', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Learners can recover access using their registered email. A one-time secure verification link is dis
+0.2625 {'source': 'service-policy.md', 'chunk_index': 0, 'section': 'Refund Eligibility', 'doc_title': 'Service Policy Guide', 'category': 'Billing'} Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refu
 
 k = 5
-0.9967 {'source': 'account-guide.md', 'chunk_index': 0, 'section': 'Password Recovery', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Passw
-0.9901 {'source': 'account-guide.md', 'chunk_index': 1, 'section': 'Email Verification', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Learners can recover access using their registered email. A one-time secure verification link is dis
-0.0268 {'source': 'service-policy.md', 'chunk_index': 1, 'section': 'Refund Processing SLA', 'doc_title': 'Service Policy Guide', 'category': 'Billing'} Refund processing requires an approved ticket from the billing department. Once authorized, funds wi
--0.0019 {'source': 'account-guide.md', 'chunk_index': 2, 'section': 'Multi-Factor Security', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Two-factor authentication (2FA) is mandatory for enterprise admin consoles. Admins must register an 
--0.0050 {'source': 'service-policy.md', 'chunk_index': 0, 'section': 'Refund Eligibility', 'doc_title': 'Service Policy Guide', 'category': 'Billing'} Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refu
+0.7527 {'source': 'account-guide.md', 'chunk_index': 0, 'section': 'Password Recovery', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Passw
+0.5958 {'source': 'account-guide.md', 'chunk_index': 1, 'section': 'Email Verification', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Learners can recover access using their registered email. A one-time secure verification link is dis
+0.2625 {'source': 'service-policy.md', 'chunk_index': 0, 'section': 'Refund Eligibility', 'doc_title': 'Service Policy Guide', 'category': 'Billing'} Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refu
+0.2385 {'source': 'account-guide.md', 'chunk_index': 2, 'section': 'Multi-Factor Security', 'doc_title': 'Account Admin Guide', 'category': 'Authentication'} Two-factor authentication (2FA) is mandatory for enterprise admin consoles. Admins must register an 
+0.1981 {'source': 'campus-guide.md', 'chunk_index': 1, 'section': 'Payment Methods', 'doc_title': 'Campus Guide', 'category': 'Campus Life'} Campus dining cards can be recharged via the student portal or mobile app. Cash and contactless digi
 
 ================================================================================
 AUDIT VERIFICATION COMPLETED SUCCESSFULLY

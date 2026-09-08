@@ -16,8 +16,14 @@ import os
 import sys
 import math
 import logging
+from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 from dotenv import load_dotenv
+
+# Ensure Knovera root is in sys.path when run directly
+_root_dir = str(Path(__file__).resolve().parent.parent)
+if _root_dir not in sys.path:
+    sys.path.insert(0, _root_dir)
 
 from src.embedding_generator import EmbeddingGenerator, cosine_similarity
 

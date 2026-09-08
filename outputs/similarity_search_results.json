@@ -1,6 +1,6 @@
 {
   "assignment": "3.32 Similarity Search & Top-K Retrieval",
-  "timestamp": "2026-09-07 13:47:40",
+  "timestamp": "2026-09-08 14:19:27",
   "model_alignment": {
     "model_name": "openai/text-embedding-3-small",
     "query_dimension": 1536,
@@ -20,16 +20,16 @@
     "batch_size": 64,
     "total_batches": 1,
     "failures": [],
-    "duration_seconds": 0.026,
-    "throughput_records_per_sec": 384.81,
+    "duration_seconds": 0.0475,
+    "throughput_records_per_sec": 210.7,
     "status": "SUCCESS"
   },
   "primary_query": "How can a learner reset their password?",
   "results_k3": [
     {
       "rank": 1,
-      "score": 0.9967,
-      "distance": 0.0033,
+      "score": 0.7527,
+      "distance": 0.2473,
       "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.",
       "metadata": {
         "source": "account-guide.md",
@@ -42,8 +42,8 @@
     },
     {
       "rank": 2,
-      "score": 0.9901,
-      "distance": 0.0099,
+      "score": 0.5958,
+      "distance": 0.4042,
       "text": "Learners can recover access using their registered email. A one-time secure verification link is dispatched, which remains valid for 15 minutes.",
       "metadata": {
         "source": "account-guide.md",
@@ -56,17 +56,17 @@
     },
     {
       "rank": 3,
-      "score": 0.0268,
-      "distance": 0.9732,
-      "text": "Refund processing requires an approved ticket from the billing department. Once authorized, funds will appear on the original payment method in 3-5 business days.",
+      "score": 0.2625,
+      "distance": 0.7375,
+      "text": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning.",
       "metadata": {
         "source": "service-policy.md",
-        "chunk_index": 1,
-        "section": "Refund Processing SLA",
+        "chunk_index": 0,
+        "section": "Refund Eligibility",
         "doc_title": "Service Policy Guide",
         "category": "Billing"
       },
-      "id": "service-policy.md:1"
+      "id": "service-policy.md:0"
     }
   ],
   "multi_k_demonstration": {
@@ -78,14 +78,14 @@
       3,
       5
     ],
-    "execution_time_seconds": 0.0141,
+    "execution_time_seconds": 1.4138,
     "runs": [
       {
         "k": 1,
         "retrieved_count": 1,
-        "top_score": 0.9967,
-        "min_score": 0.9967,
-        "avg_score": 0.9967,
+        "top_score": 0.7527,
+        "min_score": 0.7527,
+        "avg_score": 0.7527,
         "total_context_characters": 171,
         "estimated_context_tokens": 42,
         "unique_sources": [
@@ -94,8 +94,8 @@
         "results": [
           {
             "rank": 1,
-            "score": 0.9967,
-            "distance": 0.0033,
+            "score": 0.7527,
+            "distance": 0.2473,
             "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.",
             "metadata": {
               "source": "account-guide.md",
@@ -111,10 +111,10 @@
       {
         "k": 3,
         "retrieved_count": 3,
-        "top_score": 0.9967,
-        "min_score": 0.0268,
-        "avg_score": 0.6712,
-        "total_context_characters": 477,
+        "top_score": 0.7527,
+        "min_score": 0.2625,
+        "avg_score": 0.537,
+        "total_context_characters": 479,
         "estimated_context_tokens": 119,
         "unique_sources": [
           "account-guide.md",
@@ -123,8 +123,8 @@
         "results": [
           {
             "rank": 1,
-            "score": 0.9967,
-            "distance": 0.0033,
+            "score": 0.7527,
+            "distance": 0.2473,
             "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.",
             "metadata": {
               "source": "account-guide.md",
@@ -137,8 +137,8 @@
           },
           {
             "rank": 2,
-            "score": 0.9901,
-            "distance": 0.0099,
+            "score": 0.5958,
+            "distance": 0.4042,
             "text": "Learners can recover access using their registered email. A one-time secure verification link is dispatched, which remains valid for 15 minutes.",
             "metadata": {
               "source": "account-guide.md",
@@ -151,37 +151,38 @@
           },
           {
             "rank": 3,
-            "score": 0.0268,
-            "distance": 0.9732,
-            "text": "Refund processing requires an approved ticket from the billing department. Once authorized, funds will appear on the original payment method in 3-5 business days.",
+            "score": 0.2625,
+            "distance": 0.7375,
+            "text": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning.",
             "metadata": {
               "source": "service-policy.md",
-              "chunk_index": 1,
-              "section": "Refund Processing SLA",
+              "chunk_index": 0,
+              "section": "Refund Eligibility",
               "doc_title": "Service Policy Guide",
               "category": "Billing"
             },
-            "id": "service-policy.md:1"
+            "id": "service-policy.md:0"
           }
         ]
       },
       {
         "k": 5,
         "retrieved_count": 5,
-        "top_score": 0.9967,
-        "min_score": -0.005,
-        "avg_score": 0.4013,
-        "total_context_characters": 791,
-        "estimated_context_tokens": 197,
+        "top_score": 0.7527,
+        "min_score": 0.1981,
+        "avg_score": 0.4095,
+        "total_context_characters": 773,
+        "estimated_context_tokens": 193,
         "unique_sources": [
           "account-guide.md",
-          "service-policy.md"
+          "service-policy.md",
+          "campus-guide.md"
         ],
         "results": [
           {
             "rank": 1,
-            "score": 0.9967,
-            "distance": 0.0033,
+            "score": 0.7527,
+            "distance": 0.2473,
             "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.",
             "metadata": {
               "source": "account-guide.md",
@@ -194,8 +195,8 @@
           },
           {
             "rank": 2,
-            "score": 0.9901,
-            "distance": 0.0099,
+            "score": 0.5958,
+            "distance": 0.4042,
             "text": "Learners can recover access using their registered email. A one-time secure verification link is dispatched, which remains valid for 15 minutes.",
             "metadata": {
               "source": "account-guide.md",
@@ -208,22 +209,22 @@
           },
           {
             "rank": 3,
-            "score": 0.0268,
-            "distance": 0.9732,
-            "text": "Refund processing requires an approved ticket from the billing department. Once authorized, funds will appear on the original payment method in 3-5 business days.",
+            "score": 0.2625,
+            "distance": 0.7375,
+            "text": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning.",
             "metadata": {
               "source": "service-policy.md",
-              "chunk_index": 1,
-              "section": "Refund Processing SLA",
+              "chunk_index": 0,
+              "section": "Refund Eligibility",
               "doc_title": "Service Policy Guide",
               "category": "Billing"
             },
-            "id": "service-policy.md:1"
+            "id": "service-policy.md:0"
           },
           {
             "rank": 4,
-            "score": -0.0019,
-            "distance": 1.0019,
+            "score": 0.2385,
+            "distance": 0.7615,
             "text": "Two-factor authentication (2FA) is mandatory for enterprise admin consoles. Admins must register an authenticator app (TOTP) or hardware security key.",
             "metadata": {
               "source": "account-guide.md",
@@ -236,17 +237,17 @@
           },
           {
             "rank": 5,
-            "score": -0.005,
-            "distance": 1.005,
-            "text": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning.",
+            "score": 0.1981,
+            "distance": 0.8019,
+            "text": "Campus dining cards can be recharged via the student portal or mobile app. Cash and contactless digital cards are accepted at all food counters.",
             "metadata": {
-              "source": "service-policy.md",
-              "chunk_index": 0,
-              "section": "Refund Eligibility",
-              "doc_title": "Service Policy Guide",
-              "category": "Billing"
+              "source": "campus-guide.md",
+              "chunk_index": 1,
+              "section": "Payment Methods",
+              "doc_title": "Campus Guide",
+              "category": "Campus Life"
             },
-            "id": "service-policy.md:0"
+            "id": "campus-guide.md:1"
           }
         ]
       }
@@ -261,14 +262,14 @@
       3,
       5
     ],
-    "execution_time_seconds": 0.0156,
+    "execution_time_seconds": 1.409,
     "runs": [
       {
         "k": 1,
         "retrieved_count": 1,
-        "top_score": 0.9967,
-        "min_score": 0.9967,
-        "avg_score": 0.9967,
+        "top_score": 0.7517,
+        "min_score": 0.7517,
+        "avg_score": 0.7517,
         "total_context_characters": 155,
         "estimated_context_tokens": 38,
         "unique_sources": [
@@ -277,8 +278,8 @@
         "results": [
           {
             "rank": 1,
-            "score": 0.9967,
-            "distance": 0.0033,
+            "score": 0.7517,
+            "distance": 0.2483,
             "text": "Campus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering Italian pasta, fresh garden salads, and hot daily specials.",
             "metadata": {
               "source": "campus-guide.md",
@@ -294,10 +295,10 @@
       {
         "k": 3,
         "retrieved_count": 3,
-        "top_score": 0.9967,
-        "min_score": 0.0042,
-        "avg_score": 0.6517,
-        "total_context_characters": 461,
+        "top_score": 0.7517,
+        "min_score": 0.178,
+        "avg_score": 0.4782,
+        "total_context_characters": 463,
         "estimated_context_tokens": 115,
         "unique_sources": [
           "campus-guide.md",
@@ -306,8 +307,8 @@
         "results": [
           {
             "rank": 1,
-            "score": 0.9967,
-            "distance": 0.0033,
+            "score": 0.7517,
+            "distance": 0.2483,
             "text": "Campus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering Italian pasta, fresh garden salads, and hot daily specials.",
             "metadata": {
               "source": "campus-guide.md",
@@ -320,8 +321,8 @@
           },
           {
             "rank": 2,
-            "score": 0.9542,
-            "distance": 0.0458,
+            "score": 0.5048,
+            "distance": 0.4952,
             "text": "Campus dining cards can be recharged via the student portal or mobile app. Cash and contactless digital cards are accepted at all food counters.",
             "metadata": {
               "source": "campus-guide.md",
@@ -334,39 +335,38 @@
           },
           {
             "rank": 3,
-            "score": 0.0042,
-            "distance": 0.9958,
-            "text": "Refund processing requires an approved ticket from the billing department. Once authorized, funds will appear on the original payment method in 3-5 business days.",
+            "score": 0.178,
+            "distance": 0.822,
+            "text": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning.",
             "metadata": {
               "source": "service-policy.md",
-              "chunk_index": 1,
-              "section": "Refund Processing SLA",
+              "chunk_index": 0,
+              "section": "Refund Eligibility",
               "doc_title": "Service Policy Guide",
               "category": "Billing"
             },
-            "id": "service-policy.md:1"
+            "id": "service-policy.md:0"
           }
         ]
       },
       {
         "k": 5,
         "retrieved_count": 5,
-        "top_score": 0.9967,
-        "min_score": -0.0051,
-        "avg_score": 0.3894,
-        "total_context_characters": 796,
-        "estimated_context_tokens": 199,
+        "top_score": 0.7517,
+        "min_score": 0.1555,
+        "avg_score": 0.3504,
+        "total_context_characters": 793,
+        "estimated_context_tokens": 198,
         "unique_sources": [
           "campus-guide.md",
           "service-policy.md",
-          "dev-guide.md",
           "account-guide.md"
         ],
         "results": [
           {
             "rank": 1,
-            "score": 0.9967,
-            "distance": 0.0033,
+            "score": 0.7517,
+            "distance": 0.2483,
             "text": "Campus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering Italian pasta, fresh garden salads, and hot daily specials.",
             "metadata": {
               "source": "campus-guide.md",
@@ -379,8 +379,8 @@
           },
           {
             "rank": 2,
-            "score": 0.9542,
-            "distance": 0.0458,
+            "score": 0.5048,
+            "distance": 0.4952,
             "text": "Campus dining cards can be recharged via the student portal or mobile app. Cash and contactless digital cards are accepted at all food counters.",
             "metadata": {
               "source": "campus-guide.md",
@@ -393,36 +393,36 @@
           },
           {
             "rank": 3,
-            "score": 0.0042,
-            "distance": 0.9958,
-            "text": "Refund processing requires an approved ticket from the billing department. Once authorized, funds will appear on the original payment method in 3-5 business days.",
+            "score": 0.178,
+            "distance": 0.822,
+            "text": "Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning.",
             "metadata": {
               "source": "service-policy.md",
-              "chunk_index": 1,
-              "section": "Refund Processing SLA",
+              "chunk_index": 0,
+              "section": "Refund Eligibility",
               "doc_title": "Service Policy Guide",
               "category": "Billing"
             },
-            "id": "service-policy.md:1"
+            "id": "service-policy.md:0"
           },
           {
             "rank": 4,
-            "score": -0.0031,
-            "distance": 1.0031,
-            "text": "Knovera Python SDK Integration: Install via pip install knovera. Initialize the client using API key authentication to manage vector embeddings and semantic search.",
+            "score": 0.1622,
+            "distance": 0.8378,
+            "text": "Enterprise Service Level Agreement (SLA): Knovera guarantees 99.9% uptime for core API endpoints. Outages exceeding SLA thresholds qualify for service credits.",
             "metadata": {
-              "source": "dev-guide.md",
-              "chunk_index": 0,
-              "section": "SDK Setup",
-              "doc_title": "Developer Integration Guide",
-              "category": "Developer API"
+              "source": "service-policy.md",
+              "chunk_index": 2,
+              "section": "Uptime SLA",
+              "doc_title": "Service Policy Guide",
+              "category": "Infrastructure"
             },
-            "id": "dev-guide.md:0"
+            "id": "service-policy.md:2"
           },
           {
             "rank": 5,
-            "score": -0.0051,
-            "distance": 1.0051,
+            "score": 0.1555,
+            "distance": 0.8445,
             "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal and submitting their registered email address.",
             "metadata": {
               "source": "account-guide.md",

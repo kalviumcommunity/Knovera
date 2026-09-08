@@ -12,9 +12,16 @@ Implements:
 import os
 import re
 import time
+import sys
 import logging
+from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple, Union
 from dotenv import load_dotenv
+
+# Ensure Knovera root is in sys.path when run directly
+_root_dir = str(Path(__file__).resolve().parent.parent)
+if _root_dir not in sys.path:
+    sys.path.insert(0, _root_dir)
 
 from src.context_injector import (
     build_prompt,

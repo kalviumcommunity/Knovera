@@ -1,0 +1,120 @@
+{
+  "scenario": "Multi-Turn Project Submission Inquiry",
+  "system_prompt": "You are Knovera, an expert academic and technical assistant. Answer user questions accurately based strictly on retrieved documentation context. Cite source documents using [1], [2] notation. If sufficient evidence is not available in the provided context, state: 'I don't have enough reliable context to answer that.'",
+  "turns": [
+    {
+      "turn": 1,
+      "user_question": "What evidence is required for project submission?",
+      "rewritten_query": "What evidence is required for project submission?",
+      "naive_retrieval": {
+        "top_source": "submission_rubric.md",
+        "top_score": 0.6802
+      },
+      "rewritten_retrieval": {
+        "top_source": "submission_rubric.md",
+        "top_score": 0.6802,
+        "num_retrieved": 2
+      },
+      "answer": "Based on the provided documentation: Project submission evidence requirement: Final project submissions require a GitHub pull request link, a sample output JSON file, and a 3-5 minute video explanation demonstrating working tests and pipeline execution. [1] Video explanation requirements: The video explanation must be recorded as a screen-share walkthrough (3-5 minutes), uploaded to Google Drive with permission set to 'Anyone with the link can view', and verified in an incognito private tab before submission. [2]",
+      "sources": [
+        {
+          "category": "Academics",
+          "chunk_index": 0,
+          "doc_title": "Project Submission Guidelines",
+          "section": "Submission Evidence",
+          "source": "submission_rubric.md",
+          "id": "submission_rubric.md:0",
+          "score": 0.6802,
+          "rank": 1
+        },
+        {
+          "category": "Media",
+          "chunk_index": 1,
+          "doc_title": "Video Recording Guidelines",
+          "section": "Video Standards",
+          "source": "video_policy.md",
+          "id": "video_policy.md:0",
+          "score": 0.4235,
+          "rank": 2
+        }
+      ],
+      "history_tokens": 167
+    },
+    {
+      "turn": 2,
+      "user_question": "What about the video?",
+      "rewritten_query": "What video explanation is required for project submission evidence requirement?",
+      "naive_retrieval": {
+        "top_source": "video_policy.md",
+        "top_score": 0.3772
+      },
+      "rewritten_retrieval": {
+        "top_source": "video_policy.md",
+        "top_score": 0.6871,
+        "num_retrieved": 2
+      },
+      "answer": "Based on the provided documentation: Video explanation requirements: The video explanation must be recorded as a screen-share walkthrough (3-5 minutes), uploaded to Google Drive with permission set to 'Anyone with the link can view', and verified in an incognito private tab before submission. [1] Project submission evidence requirement: Final project submissions require a GitHub pull request link, a sample output JSON file, and a 3-5 minute video explanation demonstrating working tests and pipeline execution. [2]",
+      "sources": [
+        {
+          "category": "Media",
+          "chunk_index": 1,
+          "doc_title": "Video Recording Guidelines",
+          "section": "Video Standards",
+          "source": "video_policy.md",
+          "id": "video_policy.md:0",
+          "score": 0.6871,
+          "rank": 1
+        },
+        {
+          "category": "Academics",
+          "chunk_index": 0,
+          "doc_title": "Project Submission Guidelines",
+          "section": "Submission Evidence",
+          "source": "submission_rubric.md",
+          "id": "submission_rubric.md:0",
+          "score": 0.6802,
+          "rank": 2
+        }
+      ],
+      "history_tokens": 269
+    },
+    {
+      "turn": 3,
+      "user_question": "Does it apply to Sprint 2?",
+      "rewritten_query": "Does project submission evidence requirement apply to Sprint 2?",
+      "naive_retrieval": {
+        "top_source": "sprint_schedule.md",
+        "top_score": 0.5456
+      },
+      "rewritten_retrieval": {
+        "top_source": "sprint_schedule.md",
+        "top_score": 0.6601,
+        "num_retrieved": 2
+      },
+      "answer": "Based on the provided documentation: All evidence guidelines including PR link and video explanation fully apply to Sprint 2. [1] Sprint 2 deliverables and scope: Sprint 2 covers Conversational RAG, multi-turn history tracking, follow-up query rewriting, and source attribution. [1]",
+      "sources": [
+        {
+          "category": "Curriculum",
+          "chunk_index": 2,
+          "doc_title": "Sprint Roadmap & Scope",
+          "section": "Sprint 2 Policy",
+          "source": "sprint_schedule.md",
+          "id": "sprint_schedule.md:0",
+          "score": 0.6601,
+          "rank": 1
+        },
+        {
+          "category": "Academics",
+          "chunk_index": 0,
+          "doc_title": "Project Submission Guidelines",
+          "section": "Submission Evidence",
+          "source": "submission_rubric.md",
+          "id": "submission_rubric.md:0",
+          "score": 0.5567,
+          "rank": 2
+        }
+      ],
+      "history_tokens": 336
+    }
+  ]
+}

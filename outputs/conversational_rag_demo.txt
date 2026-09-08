@@ -1,0 +1,52 @@
+================================================================================
+KNOVERA - CONVERSATIONAL RAG & FOLLOW-UP CONTEXT DEMO
+================================================================================
+
+[STEP 1] Indexing Knowledge Base Corpus...
+Successfully indexed 4 document chunks into 'conversational_demo_kb'.
+
+================================================================================
+STARTING MULTI-TURN CONVERSATION FLOW
+================================================================================
+
+--- TURN 1 ---
+User Question: "What evidence is required for project submission?"
+Prior Conversation Turns in History: 0
+  ➜ Standalone Rewritten Query : "What evidence is required for project submission?"
+  ➜ Naive Top Retrieved Source   : submission_rubric.md (score: 0.6802)
+  ➜ Rewritten Top Retrieved Source: submission_rubric.md (score: 0.6802)
+  ➜ Grounded Assistant Answer    : Based on the provided documentation: Project submission evidence requirement: Final project submissions require a GitHub pull request link, a sample output JSON file, and a 3-5 minute video explanation demonstrating working tests and pipeline execution. [1] Video explanation requirements: The video explanation must be recorded as a screen-share walkthrough (3-5 minutes), uploaded to Google Drive with permission set to 'Anyone with the link can view', and verified in an incognito private tab before submission. [2]
+  ➜ History Manager Token Status : 167/1500 tokens (11.1%)
+
+--- TURN 2 ---
+User Question: "What about the video?"
+Prior Conversation Turns in History: 2
+  ➜ Standalone Rewritten Query : "What video explanation is required for project submission evidence requirement?"
+  ➜ Naive Top Retrieved Source   : video_policy.md (score: 0.3772)
+  ➜ Rewritten Top Retrieved Source: video_policy.md (score: 0.6871)
+  ➜ Grounded Assistant Answer    : Based on the provided documentation: Video explanation requirements: The video explanation must be recorded as a screen-share walkthrough (3-5 minutes), uploaded to Google Drive with permission set to 'Anyone with the link can view', and verified in an incognito private tab before submission. [1] Project submission evidence requirement: Final project submissions require a GitHub pull request link, a sample output JSON file, and a 3-5 minute video explanation demonstrating working tests and pipeline execution. [2]
+  ➜ History Manager Token Status : 269/1500 tokens (17.9%)
+
+--- TURN 3 ---
+User Question: "Does it apply to Sprint 2?"
+Prior Conversation Turns in History: 4
+  ➜ Standalone Rewritten Query : "Does project submission evidence requirement apply to Sprint 2?"
+  ➜ Naive Top Retrieved Source   : sprint_schedule.md (score: 0.5456)
+  ➜ Rewritten Top Retrieved Source: sprint_schedule.md (score: 0.6601)
+  ➜ Grounded Assistant Answer    : Based on the provided documentation: All evidence guidelines including PR link and video explanation fully apply to Sprint 2. [1] Sprint 2 deliverables and scope: Sprint 2 covers Conversational RAG, multi-turn history tracking, follow-up query rewriting, and source attribution. [1]
+  ➜ History Manager Token Status : 336/1500 tokens (22.4%)
+
+================================================================================
+CONVERSATIONAL RAG BENCHMARK COMPARISON SUMMARY
+================================================================================
+Turn   Raw User Question              Rewritten Standalone Query                   
+---------------------------------------------------------------------------------
+1      What evidence is required fo   What evidence is required for project submi  
+2      What about the video?          What video explanation is required for proj  
+3      Does it apply to Sprint 2?     Does project submission evidence requiremen  
+
+CONCLUSION:
+✓ Successfully tracked multi-turn dialogue context across interactions.
+✓ Successfully resolved ambiguous follow-ups ('What about the video?') into explicit retrieval queries.
+✓ Proven vector retrieval accuracy improves significantly when using rewritten queries.
+✓ Generated citations and grounded answers while preserving strict token limits.

@@ -1,0 +1,49 @@
+{
+  "prompt": "You are a grounded assistant for Knovera.\nAnswer the question using ONLY the provided context below.\nIf the answer is not in the context, or if the context is insufficient, explicitly say:\n\"I don't have enough information in the provided context.\"\nDo not extrapolate or speculate beyond the provided evidence.\nWhen possible, cite sources using the citation markers like [1] or [2].\n\nContext:\n[1] Source: submission-rubric.md#0 | Section: 'Evidence Requirements' | Category: Academics\nProject submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components.\n\n---\n\n[2] Source: account-guide.md#0 | Section: 'Authentication' | Category: Authentication\nPassword reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal. A secure verification link is sent to the registered email address immediately.\n\n---\n\n[3] Source: campus-guide.md#0 | Section: 'Dining Facilities' | Category: Campus Life\nCampus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering hot artisan wraps, organic salads, and rotating daily chef specials every weekday.\n\n---\n\n[4] Source: grading-policy.md#0 | Section: 'Evaluation Rubrics' | Category: Academics\nAssignment grading criteria: Submissions are evaluated on unit test coverage (40%), modular code structure (30%), and comprehensive documentation (30%). A score of 60% or higher is required to pass.\n\nQuestion:\nWhat evidence is required for project submission and what are the grading criteria?\n\nAnswer:",
+  "context": "[1] Source: submission-rubric.md#0 | Section: 'Evidence Requirements' | Category: Academics\nProject submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components.\n\n---\n\n[2] Source: account-guide.md#0 | Section: 'Authentication' | Category: Authentication\nPassword reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal. A secure verification link is sent to the registered email address immediately.\n\n---\n\n[3] Source: campus-guide.md#0 | Section: 'Dining Facilities' | Category: Campus Life\nCampus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering hot artisan wraps, organic salads, and rotating daily chef specials every weekday.\n\n---\n\n[4] Source: grading-policy.md#0 | Section: 'Evaluation Rubrics' | Category: Academics\nAssignment grading criteria: Submissions are evaluated on unit test coverage (40%), modular code structure (30%), and comprehensive documentation (30%). A score of 60% or higher is required to pass.",
+  "context_tokens": 243,
+  "question_tokens": 14,
+  "total_prompt_tokens": 341,
+  "max_context_tokens": 1500,
+  "sources_used": [
+    {
+      "source": "submission-rubric.md",
+      "chunk_index": 0,
+      "section": "Evidence Requirements",
+      "doc_title": "Project Submission Rubric",
+      "category": "Academics",
+      "marker": "[1]",
+      "id": "submission-rubric.md#chunk_0"
+    },
+    {
+      "source": "account-guide.md",
+      "chunk_index": 0,
+      "section": "Authentication",
+      "doc_title": "Account & Security Guide",
+      "category": "Authentication",
+      "marker": "[2]",
+      "id": "account-guide.md#chunk_0"
+    },
+    {
+      "source": "campus-guide.md",
+      "chunk_index": 0,
+      "section": "Dining Facilities",
+      "doc_title": "Campus Amenities Guide",
+      "category": "Campus Life",
+      "marker": "[3]",
+      "id": "campus-guide.md#chunk_0"
+    },
+    {
+      "source": "grading-policy.md",
+      "chunk_index": 0,
+      "section": "Evaluation Rubrics",
+      "doc_title": "Academic Grading Policy",
+      "category": "Academics",
+      "marker": "[4]",
+      "id": "grading-policy.md#chunk_0"
+    }
+  ],
+  "chunks_included_count": 4,
+  "chunks_dropped_count": 0,
+  "dropped_chunks": []
+}

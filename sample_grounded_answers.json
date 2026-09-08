@@ -1,0 +1,193 @@
+{
+  "assignment": "3.39 Grounded Answer Generation",
+  "sample_grounded_answer": {
+    "question": "What evidence is required for project submission?",
+    "answer": "Based on the provided documentation: Project submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components. [1] A score of 60% or higher is required to pass. [2]",
+    "context": "[1] submission-rubric.md#0\nProject submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components.\n\n---\n\n[2] grading-policy.md#0\nAssignment grading criteria: Submissions are evaluated on unit test coverage (40%), modular code structure (30%), and comprehensive documentation (30%). A score of 60% or higher is required to pass.",
+    "prompt": "You are a grounded assistant for Knovera.\nAnswer the question using ONLY the provided context below.\nIf the answer is not in the context, or if the context is insufficient, explicitly say:\n\"I don't have enough information in the provided context.\"\nDo not extrapolate or speculate beyond the provided evidence.\nWhen possible, cite sources using the citation markers like [1] or [2].\n\nContext:\n[1] submission-rubric.md#0\nProject submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components.\n\n---\n\n[2] grading-policy.md#0\nAssignment grading criteria: Submissions are evaluated on unit test coverage (40%), modular code structure (30%), and comprehensive documentation (30%). A score of 60% or higher is required to pass.\n\nQuestion:\nWhat evidence is required for project submission?\n\nAnswer:",
+    "sources": [
+      {
+        "source": "submission-rubric.md",
+        "chunk_index": 0,
+        "section": "Evidence Requirements",
+        "doc_title": "Project Submission Rubric",
+        "category": "Academics",
+        "marker": "[1]",
+        "id": "submission-rubric.md#chunk_0"
+      },
+      {
+        "source": "grading-policy.md",
+        "chunk_index": 0,
+        "section": "Evaluation Rubrics",
+        "doc_title": "Academic Grading Policy",
+        "category": "Academics",
+        "marker": "[2]",
+        "id": "grading-policy.md#chunk_0"
+      }
+    ],
+    "grounding_verified": true,
+    "grounding_score": 1.0,
+    "verification_details": {
+      "is_grounded": true,
+      "grounding_score": 1.0,
+      "total_claim_tokens": 23,
+      "supported_claim_tokens": 23,
+      "unsupported_terms": [],
+      "cited_markers": [
+        "[2]",
+        "[1]"
+      ],
+      "has_citations": true,
+      "reason": "VERIFIED_GROUNDED"
+    },
+    "status": "GROUNDED_SUCCESS"
+  },
+  "sample_missing_context_fallback": {
+    "question": "What is the warp drive maintenance schedule for the starship Enterprise?",
+    "answer": "I don't have enough information in the provided context.",
+    "context": "",
+    "prompt": "",
+    "sources": [],
+    "grounding_verified": true,
+    "grounding_score": 1.0,
+    "status": "MISSING_CONTEXT_FALLBACK"
+  },
+  "comparisons_with_vs_without_retrieval": [
+    {
+      "question": "What evidence is required for project submission?",
+      "with_retrieval": {
+        "answer": "Based on the provided documentation: Project submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components. [1] A score of 60% or higher is required to pass. [2]",
+        "sources_count": 2,
+        "sources": [
+          "submission-rubric.md",
+          "grading-policy.md"
+        ],
+        "grounding_score": 1.0,
+        "is_grounded": true,
+        "has_citations": true
+      },
+      "without_retrieval": {
+        "answer": "Generally speaking, for what evidence is required for project submission, organizations typically require standard documentation, digital artifacts, and general verification steps. Please consult your institutional portal or system administrator for specific policies.",
+        "sources_count": 0,
+        "sources": [],
+        "grounding_score": 0.0,
+        "is_grounded": false,
+        "has_citations": false
+      },
+      "key_differences": [
+        "With retrieval answers are tied directly to corpus chunks (verifiable source provenance).",
+        "Without retrieval answers rely on generic parametric assumptions (hallucination risk).",
+        "With retrieval includes deterministic citation markers [1], [2] for auditing.",
+        "With retrieval safely triggers fallback when context is insufficient."
+      ]
+    },
+    {
+      "question": "How can a learner reset their password?",
+      "with_retrieval": {
+        "answer": "Based on the provided documentation: Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal. [1]",
+        "sources_count": 1,
+        "sources": [
+          "account-guide.md"
+        ],
+        "grounding_score": 1.0,
+        "is_grounded": true,
+        "has_citations": true
+      },
+      "without_retrieval": {
+        "answer": "Generally speaking, for how can a learner reset their password, organizations typically require standard documentation, digital artifacts, and general verification steps. Please consult your institutional portal or system administrator for specific policies.",
+        "sources_count": 0,
+        "sources": [],
+        "grounding_score": 0.0,
+        "is_grounded": false,
+        "has_citations": false
+      },
+      "key_differences": [
+        "With retrieval answers are tied directly to corpus chunks (verifiable source provenance).",
+        "Without retrieval answers rely on generic parametric assumptions (hallucination risk).",
+        "With retrieval includes deterministic citation markers [1], [2] for auditing.",
+        "With retrieval safely triggers fallback when context is insufficient."
+      ]
+    },
+    {
+      "question": "When does the cafeteria menu change?",
+      "with_retrieval": {
+        "answer": "Based on the provided documentation: Campus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering hot artisan wraps, organic salads, and rotating daily chef specials every weekday. [1]",
+        "sources_count": 1,
+        "sources": [
+          "campus-guide.md"
+        ],
+        "grounding_score": 1.0,
+        "is_grounded": true,
+        "has_citations": true
+      },
+      "without_retrieval": {
+        "answer": "Generally speaking, for when does the cafeteria menu change, organizations typically require standard documentation, digital artifacts, and general verification steps. Please consult your institutional portal or system administrator for specific policies.",
+        "sources_count": 0,
+        "sources": [],
+        "grounding_score": 0.0,
+        "is_grounded": false,
+        "has_citations": false
+      },
+      "key_differences": [
+        "With retrieval answers are tied directly to corpus chunks (verifiable source provenance).",
+        "Without retrieval answers rely on generic parametric assumptions (hallucination risk).",
+        "With retrieval includes deterministic citation markers [1], [2] for auditing.",
+        "With retrieval safely triggers fallback when context is insufficient."
+      ]
+    }
+  ],
+  "supporting_chunks_corpus": [
+    {
+      "id": "submission-rubric.md#chunk_0",
+      "text": "Project submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components.",
+      "metadata": {
+        "source": "submission-rubric.md",
+        "chunk_index": 0,
+        "section": "Evidence Requirements",
+        "doc_title": "Project Submission Rubric",
+        "category": "Academics"
+      },
+      "score": 0.8924,
+      "rank": 1
+    },
+    {
+      "id": "account-guide.md#chunk_0",
+      "text": "Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal. A secure verification link is sent to the registered email address immediately.",
+      "metadata": {
+        "source": "account-guide.md",
+        "chunk_index": 0,
+        "section": "Authentication",
+        "doc_title": "Account & Security Guide",
+        "category": "Authentication"
+      },
+      "score": 0.7812,
+      "rank": 2
+    },
+    {
+      "id": "campus-guide.md#chunk_0",
+      "text": "Campus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering hot artisan wraps, organic salads, and rotating daily chef specials every weekday.",
+      "metadata": {
+        "source": "campus-guide.md",
+        "chunk_index": 0,
+        "section": "Dining Facilities",
+        "doc_title": "Campus Amenities Guide",
+        "category": "Campus Life"
+      },
+      "score": 0.6945,
+      "rank": 3
+    },
+    {
+      "id": "grading-policy.md#chunk_0",
+      "text": "Assignment grading criteria: Submissions are evaluated on unit test coverage (40%), modular code structure (30%), and comprehensive documentation (30%). A score of 60% or higher is required to pass.",
+      "metadata": {
+        "source": "grading-policy.md",
+        "chunk_index": 0,
+        "section": "Evaluation Rubrics",
+        "doc_title": "Academic Grading Policy",
+        "category": "Academics"
+      },
+      "score": 0.612,
+      "rank": 4
+    }
+  ]
+}

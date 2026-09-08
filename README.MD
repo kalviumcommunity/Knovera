@@ -184,9 +184,28 @@ To run this project on a fresh machine, follow these steps:
 - **Automated Test Suite**: Run `python test_context_injector.py` to verify 12 unit and integration test cases covering formatting, token budgets, and prompt structures.
 - **Comprehensive Technical Report**: Full architectural flowcharts, token budget mathematical models, overflow mitigation strategies, and video script outline available in [`CONTEXT_INJECTION_PROMPT_AUGMENTATION_REPORT.md`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/CONTEXT_INJECTION_PROMPT_AUGMENTATION_REPORT.md).
 
+## Grounded Answer Generation (Assignment 3.39)
+
+- **Grounded Generation & Verification Engine**: Implemented in [`src/grounded_generator.py`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/src/grounded_generator.py), synthesizing factual responses strictly derived from retrieved evidence with deterministic citations, automated claim-to-chunk verification, and missing-context fallback guards.
+- **Key Capabilities & Functions**:
+  1. `generate_grounded_answer(question, retrieved_chunks)`: Generates answers using only injected context with inline citations (`[1]`, `[2]`).
+  2. `verify_grounding(answer, retrieved_chunks)`: Analyzes word overlap and citation validity, computing a quantitative `grounding_score` [0.0 - 1.0] and detecting unsupported claims.
+  3. `answer_query(question, retriever, k)`: Detects empty or insufficient retrieval states and safely returns: *"I don't have enough information in the provided context."*
+  4. `generate_ungrounded_answer(question)`: Executes baseline zero-shot LLM queries without context to demonstrate ungrounded parametric completion behavior.
+  5. `compare_grounded_vs_ungrounded(question, retrieved_chunks)`: Performs empirical side-by-side benchmarking of with-retrieval vs without-retrieval outputs.
+  6. `GroundedGenerator`: Object-oriented orchestrator for retrieval, generation, verification, and comparison.
+- **Interactive Demonstration**: Run `python grounded_generation_demo.py` to:
+  1. Generate grounded answers from injected context and run automated accuracy audits.
+  2. Test out-of-domain queries to verify missing-context fallback behavior.
+  3. Display side-by-side comparison tables across multiple domain queries.
+  4. Export complete structured evaluation payload to [`sample_grounded_answers.json`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/sample_grounded_answers.json).
+- **Automated Test Suite**: Run `python test_grounded_generator.py` to verify 10 unit and integration test cases.
+- **Comprehensive Technical Report**: Complete architectural diagrams, empirical comparison tables, verification methods, and video walkthrough script available in [`GROUNDED_ANSWER_GENERATION_REPORT.md`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/GROUNDED_ANSWER_GENERATION_REPORT.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+
 
 
 

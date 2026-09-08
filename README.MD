@@ -202,9 +202,31 @@ To run this project on a fresh machine, follow these steps:
 - **Automated Test Suite**: Run `python test_grounded_generator.py` to verify 10 unit and integration test cases.
 - **Comprehensive Technical Report**: Complete architectural diagrams, empirical comparison tables, verification methods, and video walkthrough script available in [`GROUNDED_ANSWER_GENERATION_REPORT.md`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/GROUNDED_ANSWER_GENERATION_REPORT.md).
 
+## Source Citation & Attribution (Assignment 3.40)
+
+- **Source Citation & Traceability Engine**: Implemented in [`src/source_tracer.py`](file:///d:/Project/Knovera/src/source_tracer.py), pairing generated factual claims with inline citation markers (`[1]`, `[2]`), mapping markers to document metadata, verifying exact character offsets and line spans against raw source text, and auditing for fabricated markers.
+- **Interactive Demonstration**: Run `py source_citation_demo.py` to execute citation mapping, reverse offset verification, anti-fabrication audits, and export [`sample_cited_answers.json`](file:///d:/Project/Knovera/sample_cited_answers.json).
+- **Automated Test Suite**: Run `py -m unittest test_source_citation.py` to verify 12 unit test cases.
+- **Comprehensive Technical Report**: Full architectural diagrams, reverse-lookup offset algorithms, anti-fabrication guards, and video walkthrough script available in [`SOURCE_CITATION_ATTRIBUTION_REPORT.md`](file:///d:/Project/Knovera/SOURCE_CITATION_ATTRIBUTION_REPORT.md).
+
+## Hallucination Guardrails & Refusal Handling (Assignment 3.41)
+
+- **Hallucination Guardrail Engine**: Implemented in [`src/hallucination_guardrail.py`](file:///d:/Project/Knovera/src/hallucination_guardrail.py), preventing ungrounded generation by auditing retrieved context strength before LLM invocation.
+- **Key Modules & Capabilities**:
+  1. `retrieval_is_strong(chunks, min_top_score=0.72, min_supporting_chunks=1)`: Evaluates context relevance against similarity and support thresholds.
+  2. `evaluate_retrieval_quality(chunks)`: Performs multi-signal diagnostic evaluation returning detailed metrics, refusal reasons (`TOP_SCORE_BELOW_THRESHOLD`, `NO_CHUNKS_RETRIEVED`, `INSUFFICIENT_SUPPORT`), and status codes (`refused_low_similarity`, `refused_empty_context`).
+  3. `guarded_answer(question, chunks)`: Intercepts weak retrieval states to return standard non-hallucinatory refusals (*"I don't have enough reliable context to answer that."*) while allowing strong context queries to pass to grounded generation with citations.
+  4. `HallucinationGuardrail`: Object-oriented guardrail manager maintaining thresholds and logging telemetry (evaluated, refused, answered counts, refusal rates).
+  5. `tune_guardrail_thresholds(eval_dataset)`: Dynamic threshold tuning utility optimizing F1-scores for answerable vs unanswerable query classification.
+  6. `RAGPipeline.guarded_query(query)`: Integrated guardrail execution in end-to-end RAG pipeline workflows.
+- **Interactive Demonstration**: Run `py hallucination_guardrail_demo.py` to inspect retrieval diagnostics, refusal cases, confident answered cases, guardrail telemetry, and export [`sample_guardrail_outputs.json`](file:///d:/Project/Knovera/sample_guardrail_outputs.json).
+- **Automated Test Suite**: Run `py -m unittest test_hallucination_guardrail.py` to execute 16 unit tests covering empty, weak, low-similarity, custom threshold, and pipeline integration cases.
+- **Comprehensive Technical Report**: Full pre-generation workflow diagrams, threshold tuning analysis, refusing vs answering trade-off matrices, high-stakes domain rationale, and benchmark results available in [`HALLUCINATION_GUARDRAILS_REFUSAL_REPORT.md`](file:///d:/Project/Knovera/HALLUCINATION_GUARDRAILS_REFUSAL_REPORT.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+
 
 
 

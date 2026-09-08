@@ -1,0 +1,104 @@
+{
+  "metadata": {
+    "assignment": "3.41 Hallucination Guardrails & Refusal Handling",
+    "min_top_score_threshold": 0.72,
+    "min_supporting_chunks_threshold": 1,
+    "standard_refusal_message": "I don't have enough reliable context to answer that."
+  },
+  "answer_case": {
+    "question": "What evidence is required for project submission?",
+    "answer": "Based on the provided documentation: The GitHub PR must be public, open at submission time, and pass automated unit tests with a score >= 60%. [2] Learners must submit a public GitHub repository PR link and a 3-minute video walkthrough. [1]",
+    "citations": {
+      "[1]": {
+        "source": "submission_guide.md",
+        "chunk_id": "submission_guide.md#chunk_1",
+        "chunk_index": 0,
+        "section": "Submission Requirements",
+        "page": 2,
+        "char_span": "0-89",
+        "text": "Learners must submit a public GitHub repository PR link and a 3-minute video walkthrough."
+      },
+      "[2]": {
+        "source": "submission_guide.md",
+        "chunk_id": "submission_guide.md#chunk_2",
+        "chunk_index": 0,
+        "section": "Passing Criteria",
+        "page": 2,
+        "char_span": "0-105",
+        "text": "The GitHub PR must be public, open at submission time, and pass automated unit tests with a score >= 60%."
+      }
+    },
+    "cited_markers": [
+      "[2]",
+      "[1]"
+    ],
+    "fabricated_citations_detected": false,
+    "fabricated_markers": [],
+    "status": "answered",
+    "guardrail_triggered": false,
+    "retrieval_metrics": {
+      "is_strong": true,
+      "total_chunks": 2,
+      "top_score": 0.895,
+      "strong_chunks_count": 2,
+      "avg_score": 0.8535,
+      "refusal_reason": "STRONG_CONTEXT",
+      "status_code": "answered"
+    }
+  },
+  "refusal_cases": {
+    "low_similarity_refusal": {
+      "question": "What is the refund policy for a product not in this corpus?",
+      "answer": "I don't have enough reliable context to answer that.",
+      "sources": [],
+      "citations": {},
+      "status": "refused_low_similarity",
+      "guardrail_triggered": true,
+      "retrieval_metrics": {
+        "is_strong": false,
+        "total_chunks": 2,
+        "top_score": 0.45,
+        "strong_chunks_count": 0,
+        "avg_score": 0.415,
+        "refusal_reason": "TOP_SCORE_BELOW_THRESHOLD (0.4500 < 0.7200)",
+        "status_code": "refused_low_similarity"
+      },
+      "grounding_verified": true,
+      "grounding_score": 1.0
+    },
+    "empty_context_refusal": {
+      "question": "How do I calibrate quantum flux sensors?",
+      "answer": "I don't have enough reliable context to answer that.",
+      "sources": [],
+      "citations": {},
+      "status": "refused_empty_context",
+      "guardrail_triggered": true,
+      "retrieval_metrics": {
+        "is_strong": false,
+        "total_chunks": 0,
+        "top_score": 0.0,
+        "strong_chunks_count": 0,
+        "avg_score": 0.0,
+        "refusal_reason": "NO_CHUNKS_RETRIEVED",
+        "status_code": "refused_empty_context"
+      },
+      "grounding_verified": true,
+      "grounding_score": 1.0
+    }
+  },
+  "telemetry_snapshot": {
+    "total_evaluated": 3,
+    "total_refused": 2,
+    "total_answered": 1,
+    "refusal_rate": 0.6667,
+    "refusal_reasons_breakdown": {
+      "TOP_SCORE_BELOW_THRESHOLD (0.4500 < 0.7200)": 1,
+      "NO_CHUNKS_RETRIEVED": 1
+    },
+    "thresholds": {
+      "min_top_score": 0.72,
+      "min_supporting_chunks": 1,
+      "min_avg_score": 0.6
+    }
+  }
+}

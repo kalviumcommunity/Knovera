@@ -541,3 +541,44 @@ class RAGPipeline:
             model_name=self.model_name,
             use_api=self.use_api
         )
+
+    def guarded_query(
+        self,
+        query: str,
+        k: Optional[int] = None,
+        min_top_score: float = 0.72,
+        min_supporting_chunks: int = 1,
+        min_avg_score: float = 0.60,
+        metadata_filter: Optional[Dict[str, Any]] = None,
+        collection_name: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Runs the end-to-end RAG pipeline protected by Hallucination Guardrails.
+        Retrieves top-k context, evaluates retrieval quality against similarity thresholds,
+        and returns safe refusal if context is weak or grounded answer if context is strong.
+        """
+        from src.hallucination_guardrail import guarded_answer
+        
+        target_k = k if k is not None else self.default_k
+        target_collection = collection_name or self.default_collection
+        
+        # 1. Embed & Retrieve
+        query_vector = self.embed(query)
+        chunks = self.retrieve(
+            query_vector=query_vector,
+            k=target_k,
+            metadata_filter=metadata_filter,
+            collection_name=target_collection
+        )
+        
+        # 2. Guarded Answer Generation
+        return guarded_answer(
+            question=query,
+            chunks=chunks,
+            model_name=self.model_name,
+            min_top_score=min_top_score,
+            min_supporting_chunks=min_supporting_chunks,
+            min_avg_score=min_avg_score,
+            use_api=self.use_api
+        )
+

@@ -90,6 +90,7 @@ def generate_grounded_answer(
             "context": "",
             "prompt": "",
             "sources": [],
+            "citations": {},
             "grounding_verified": True,
             "grounding_score": 1.0,
             "status": "MISSING_CONTEXT_FALLBACK"
@@ -150,6 +151,20 @@ def generate_grounded_answer(
         
     # Task 2: Check source accuracy
     verification = verify_grounding(answer_text, retrieved_chunks)
+
+    # Build citation map keyed by marker e.g. [1]
+    citation_map = {}
+    for idx, c in enumerate(retrieved_chunks, start=1):
+        meta = c.get("metadata", {})
+        citation_map[f"[{idx}]"] = {
+            "source": meta.get("source", c.get("source", "Unknown Document")),
+            "chunk_id": meta.get("chunk_id", c.get("id", f"chunk_{idx}")),
+            "chunk_index": meta.get("chunk_index", 0),
+            "section": meta.get("section") or meta.get("section_heading", "General"),
+            "page": meta.get("page_number", meta.get("page", 1)),
+            "char_span": f"{meta.get('char_start', 0)}-{meta.get('char_end', len(c.get('text', '')))}",
+            "text": c.get("text", "")
+        }
     
     return {
         "question": question,
@@ -157,6 +172,7 @@ def generate_grounded_answer(
         "context": prompt_data["context"],
         "prompt": prompt_data["prompt"],
         "sources": prompt_data["sources_used"],
+        "citations": citation_map,
         "grounding_verified": verification["is_grounded"],
         "grounding_score": verification["grounding_score"],
         "verification_details": verification,
@@ -186,11 +202,17 @@ def _synthesize_deterministic_grounded_answer(
         marker_match = re.search(r'\[\d+\]', header)
         marker = marker_match.group(0) if marker_match else "[1]"
         
+        header_words = set(w.lower() for w in re.findall(r'\b\w+\b', header))
         sentences = [s.strip() for s in re.split(r'(?<=[.!?])\s+', body) if len(s.strip()) > 10]
         for sent in sentences:
             sent_clean = sent.rstrip(".")
             sent_words = set(w.lower() for w in re.findall(r'\b\w+\b', sent_clean))
             overlap = len(query_words.intersection(sent_words))
+            for qw in query_words:
+                if len(qw) > 3 and any((qw in sw or sw in qw) for sw in sent_words):
+                    overlap += 0.5
+                if len(qw) > 3 and any((qw in hw or hw in qw) for hw in header_words):
+                    overlap += 0.25
             if overlap > 0:
                 scored_sentences.append((overlap, f"{sent_clean}. {marker}"))
                 

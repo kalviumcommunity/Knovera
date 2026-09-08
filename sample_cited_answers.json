@@ -1,0 +1,102 @@
+{
+  "assignment": "3.40 Source Citation & Attribution",
+  "generated_at": "2026-09-08T14:41:31+05:30",
+  "sample_cases": [
+    {
+      "case_id": "case_1_grounded_answer_with_citations",
+      "question": "What evidence is required for project submission?",
+      "retrieved_chunks": [
+        {
+          "id": "submission-rubric.md#chunk_0",
+          "text": "Project submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components.",
+          "score": 0.8921,
+          "metadata": {
+            "source": "submission-rubric.md",
+            "chunk_id": "submission-rubric.md#chunk_0",
+            "chunk_index": 0,
+            "section": "Evidence Requirements",
+            "page_number": 1,
+            "char_start": 120,
+            "char_end": 315,
+            "doc_title": "Project Submission Rubric",
+            "category": "Academics"
+          }
+        },
+        {
+          "id": "grading-policy.md#chunk_0",
+          "text": "Assignment grading criteria: Submissions are evaluated on unit test coverage (40%), modular code structure (30%), and comprehensive documentation (30%). A score of 60% or higher is required to pass.",
+          "score": 0.7415,
+          "metadata": {
+            "source": "grading-policy.md",
+            "chunk_id": "grading-policy.md#chunk_0",
+            "chunk_index": 0,
+            "section": "Evaluation Rubrics",
+            "page_number": 1,
+            "char_start": 45,
+            "char_end": 245,
+            "doc_title": "Academic Grading Policy",
+            "category": "Academics"
+          }
+        }
+      ],
+      "answer": "Based on the provided documentation: Project submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components. [1]",
+      "citations": {
+        "[1]": {
+          "source": "submission-rubric.md",
+          "chunk_id": "submission-rubric.md#chunk_0",
+          "chunk_index": 0,
+          "section": "Evidence Requirements",
+          "page": 1,
+          "char_span": "120-315",
+          "text": "Project submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components."
+        },
+        "[2]": {
+          "source": "grading-policy.md",
+          "chunk_id": "grading-policy.md#chunk_0",
+          "chunk_index": 0,
+          "section": "Evaluation Rubrics",
+          "page": 1,
+          "char_span": "45-245",
+          "text": "Assignment grading criteria: Submissions are evaluated on unit test coverage (40%), modular code structure (30%), and comprehensive documentation (30%). A score of 60% or higher is required to pass."
+        }
+      },
+      "cited_markers": ["[1]"],
+      "verification_report": {
+        "marker": "[1]",
+        "is_valid": true,
+        "source": "submission-rubric.md",
+        "chunk_id": "submission-rubric.md#chunk_0",
+        "section": "Evidence Requirements",
+        "line_range": "L2-L4",
+        "verified_exact_match": true
+      },
+      "status": "GROUNDED_SUCCESS"
+    },
+    {
+      "case_id": "case_2_no_source_fallback",
+      "question": "What is the maintenance schedule for the warp core engine?",
+      "retrieved_chunks": [],
+      "answer": "I don't have enough information in the provided context.",
+      "citations": {},
+      "cited_markers": [],
+      "verification_report": {
+        "status": "FALLBACK_EXECUTED",
+        "fabricated_citations_prevented": true
+      },
+      "status": "MISSING_CONTEXT_FALLBACK"
+    },
+    {
+      "case_id": "case_3_fabricated_citation_detection",
+      "question": "How are security tokens formatted?",
+      "raw_llm_answer": "Security tokens follow RS256 JWT signatures [1], while quantum encryption keys are stored in subterranean vaults [5].",
+      "valid_context_markers": ["[1]"],
+      "fabrication_audit": {
+        "has_fabricated_citations": true,
+        "total_citations_found": 2,
+        "valid_citations": ["[1]"],
+        "fabricated_citations": ["[5]"],
+        "action": "FLAGGED_AND_STRIPPED"
+      }
+    }
+  ]
+}

@@ -29,6 +29,7 @@ if _root_dir not in sys.path:
 
 from src.vector_store import VectorDatabase
 from src.embedding_generator import EmbeddingGenerator
+from src.history_manager import HistoryManager, rewrite_followup
 from templates.prompts import QA_PROMPT_TEMPLATE, render_prompt
 
 # Try importing OpenAI client
@@ -440,6 +441,112 @@ def answer_query(
     }
 
 
+def conversational_answer(
+    history: Union[List[Dict[str, str]], HistoryManager],
+    user_question: str,
+    k: int = 4,
+    score_threshold: Optional[float] = None,
+    metadata_filter: Optional[Dict[str, Any]] = None,
+    collection_name: str = "knovera_knowledge_base",
+    vector_db: Optional[VectorDatabase] = None,
+    generator: Optional[EmbeddingGenerator] = None,
+    model_name: Optional[str] = None,
+    use_api: bool = False
+) -> Dict[str, Any]:
+    """
+    Executes a multi-turn conversational RAG flow:
+    1. Rewrites raw follow-up user_question into a standalone search query using history context.
+    2. Embeds the rewritten standalone query.
+    3. Retrieves relevant chunks for the standalone query.
+    4. Evaluates context availability / strength.
+    5. Synthesizes a grounded answer to the original user_question using retrieved context.
+    6. Appends turn to conversation history.
+    7. Returns complete response metadata including rewritten_query, answer, and sources.
+    
+    Args:
+        history: List of turn dicts or HistoryManager instance.
+        user_question: Raw user follow-up question.
+        k: Top-k chunks to retrieve.
+        score_threshold: Minimum similarity cutoff.
+        metadata_filter: Optional filter dict.
+        collection_name: Target vector database collection.
+        vector_db: VectorDatabase instance.
+        generator: EmbeddingGenerator instance.
+        model_name: Optional LLM model identifier.
+        use_api: Whether to call live OpenAI/OpenRouter API.
+        
+    Returns:
+        Dict[str, Any]: Response dictionary with 'raw_query', 'rewritten_query',
+                        'answer', 'sources', 'context', 'num_retrieved', and 'status'.
+    """
+    # 1. Rewrite follow-up question using conversation history context
+    standalone_query = rewrite_followup(
+        history=history,
+        question=user_question,
+        use_api=use_api,
+        model_name=model_name
+    )
+    
+    # 2. Embed standalone query
+    active_gen = generator or EmbeddingGenerator()
+    query_vector = embed_query(standalone_query, generator=active_gen)
+    
+    # 3. Retrieve context using standalone query vector
+    active_db = vector_db or VectorDatabase(embedding_generator=active_gen)
+    chunks = retrieve_context(
+        query_vector=query_vector,
+        vector_db=active_db,
+        collection_name=collection_name,
+        k=k,
+        score_threshold=score_threshold,
+        metadata_filter=metadata_filter
+    )
+    
+    # 4. Handle context strength & answer generation
+    if not chunks:
+        answer = EMPTY_RETRIEVAL_FALLBACK_MESSAGE
+        status = "NO_CONTEXT_FOUND"
+        context = ""
+    else:
+        context = assemble_context(chunks)
+        answer = generate_answer(
+            query=user_question,
+            context=context,
+            model_name=model_name,
+            use_api=use_api
+        )
+        status = "SUCCESS"
+        
+    # 5. Append interaction turn to history
+    if isinstance(history, HistoryManager):
+        history.add_user_message(user_question)
+        history.add_assistant_message(answer)
+        if history.should_trim():
+            history.trim_to_budget()
+    elif isinstance(history, list):
+        history.append({"role": "user", "content": user_question})
+        history.append({"role": "assistant", "content": answer})
+        
+    # 6. Build sources metadata
+    sources = []
+    for chunk in chunks:
+        meta = dict(chunk.get("metadata", {}))
+        meta["id"] = chunk.get("id")
+        meta["score"] = chunk.get("score")
+        meta["rank"] = chunk.get("rank")
+        sources.append(meta)
+        
+    return {
+        "raw_query": user_question,
+        "rewritten_query": standalone_query,
+        "answer": answer,
+        "sources": sources,
+        "context": context,
+        "num_retrieved": len(chunks),
+        "status": status
+    }
+
+
 # ============================================================================
 # OBJECT-ORIENTED PIPELINE CLASS
 # ============================================================================
@@ -581,4 +688,34 @@ class RAGPipeline:
             min_avg_score=min_avg_score,
             use_api=self.use_api
         )
+
+    def conversational_query(
+        self,
+        user_question: str,
+        history: Union[List[Dict[str, str]], HistoryManager],
+        k: Optional[int] = None,
+        score_threshold: Optional[float] = None,
+        metadata_filter: Optional[Dict[str, Any]] = None,
+        collection_name: Optional[str] = None
+    ) -> Dict[str, Any]:
+        """
+        Executes a multi-turn conversational query using history tracking and query rewriting.
+        """
+        target_k = k if k is not None else self.default_k
+        target_thresh = score_threshold if score_threshold is not None else self.score_threshold
+        target_collection = collection_name or self.default_collection
+        
+        return conversational_answer(
+            history=history,
+            user_question=user_question,
+            k=target_k,
+            score_threshold=target_thresh,
+            metadata_filter=metadata_filter,
+            collection_name=target_collection,
+            vector_db=self.vector_db,
+            generator=self.generator,
+            model_name=self.model_name,
+            use_api=self.use_api
+        )
+
 

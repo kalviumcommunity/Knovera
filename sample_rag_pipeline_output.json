@@ -1,0 +1,139 @@
+[
+  {
+    "test_index": 1,
+    "description": "Standard Academic Query (Expected Match: submission-rubric.md)",
+    "pipeline_output": {
+      "query": "What evidence is required for project submission?",
+      "answer": "Based on the provided documentation: Project submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components. [1] A score of 60% or higher is required to pass. [2]",
+      "sources": [
+        {
+          "category": "Academics",
+          "chunk_index": 0,
+          "doc_title": "Project Submission Rubric",
+          "section": "Evidence Requirements",
+          "source": "submission-rubric.md",
+          "id": "submission-rubric.md:0",
+          "score": 0.6638,
+          "rank": 1
+        },
+        {
+          "category": "Academics",
+          "chunk_index": 0,
+          "doc_title": "Academic Grading Policy",
+          "section": "Evaluation Rubrics",
+          "source": "grading-policy.md",
+          "id": "grading-policy.md:0",
+          "score": 0.4658,
+          "rank": 2
+        }
+      ],
+      "context": "[1] Source: submission-rubric.md | Section: Evidence Requirements\nProject submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components.\n\n[2] Source: grading-policy.md | Section: Evaluation Rubrics\nAssignment grading criteria: Submissions are evaluated on unit test coverage (40%), modular code structure (30%), and comprehensive documentation (30%). A score of 60% or higher is required to pass.",
+      "num_retrieved": 2,
+      "stage_latencies_ms": {
+        "embed_ms": 1807.77,
+        "retrieve_ms": 5.62,
+        "assemble_ms": 0.01,
+        "generate_ms": 0.17,
+        "total_ms": 1813.59
+      },
+      "status": "SUCCESS"
+    }
+  },
+  {
+    "test_index": 2,
+    "description": "Authentication Query (Expected Match: account-guide.md)",
+    "pipeline_output": {
+      "query": "How can a learner reset their password?",
+      "answer": "Based on the provided documentation: Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal. [1]",
+      "sources": [
+        {
+          "category": "Authentication",
+          "chunk_index": 0,
+          "doc_title": "Account & Security Guide",
+          "section": "Authentication",
+          "source": "account-guide.md",
+          "id": "account-guide.md:0",
+          "score": 0.7176,
+          "rank": 1
+        },
+        {
+          "category": "Academics",
+          "chunk_index": 0,
+          "doc_title": "Project Submission Rubric",
+          "section": "Evidence Requirements",
+          "source": "submission-rubric.md",
+          "id": "submission-rubric.md:0",
+          "score": 0.212,
+          "rank": 2
+        }
+      ],
+      "context": "[1] Source: account-guide.md | Section: Authentication\nPassword reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal. A secure verification link is sent to the registered email address immediately.\n\n[2] Source: submission-rubric.md | Section: Evidence Requirements\nProject submission evidence requirement: Learners must upload repository GitHub links and a 3-minute video walkthrough demonstrating all test executions, architectural flows, and key modular components.",
+      "num_retrieved": 2,
+      "stage_latencies_ms": {
+        "embed_ms": 487.85,
+        "retrieve_ms": 3.29,
+        "assemble_ms": 0.01,
+        "generate_ms": 0.08,
+        "total_ms": 491.24
+      },
+      "status": "SUCCESS"
+    }
+  },
+  {
+    "test_index": 3,
+    "description": "Campus Life Query (Expected Match: campus-guide.md)",
+    "pipeline_output": {
+      "query": "When does the cafeteria menu change?",
+      "answer": "Based on the provided documentation: Campus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering hot artisan wraps, organic salads, and rotating daily specials every weekday. [1] Password reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal. [2]",
+      "sources": [
+        {
+          "category": "Campus Life",
+          "chunk_index": 0,
+          "doc_title": "Campus Amenities Guide",
+          "section": "Dining Facilities",
+          "source": "campus-guide.md",
+          "id": "campus-guide.md:0",
+          "score": 0.5417,
+          "rank": 1
+        },
+        {
+          "category": "Authentication",
+          "chunk_index": 0,
+          "doc_title": "Account & Security Guide",
+          "section": "Authentication",
+          "source": "account-guide.md",
+          "id": "account-guide.md:0",
+          "score": 0.0939,
+          "rank": 2
+        }
+      ],
+      "context": "[1] Source: campus-guide.md | Section: Dining Facilities\nCampus cafeteria hours and lunch menu: The cafeteria operates from 11:30 AM to 2:30 PM offering hot artisan wraps, organic salads, and rotating daily specials every weekday.\n\n[2] Source: account-guide.md | Section: Authentication\nPassword reset instructions for learner accounts: Users can recover access by clicking 'Forgot Password' on the login portal. A secure verification link is sent to the registered email address immediately.",
+      "num_retrieved": 2,
+      "stage_latencies_ms": {
+        "embed_ms": 504.24,
+        "retrieve_ms": 9.4,
+        "assemble_ms": 0.01,
+        "generate_ms": 0.14,
+        "total_ms": 513.81
+      },
+      "status": "SUCCESS"
+    }
+  },
+  {
+    "test_index": 4,
+    "description": "Out-of-Domain Query with High Threshold (Empty Retrieval Guard Test)",
+    "pipeline_output": {
+      "query": "What is the warp drive maintenance schedule on the starship Enterprise?",
+      "answer": "I could not find relevant context for that question.",
+      "sources": [],
+      "context": "",
+      "num_retrieved": 0,
+      "stage_latencies_ms": {
+        "embed_ms": 462.73,
+        "retrieve_ms": 5.98,
+        "total_ms": 468.72
+      },
+      "status": "NO_CONTEXT_FOUND"
+    }
+  }
+]

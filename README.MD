@@ -151,9 +151,27 @@ To run this project on a fresh machine, follow these steps:
 - **Automated Pytest Suite**: Run `pytest test_retrieval_evaluator.py -v` to verify dataclass serialization, recall/precision metric formulas, multi-k analysis, failure diagnostics, and export functionality.
 - **Comprehensive Technical Report**: Full architectural flowcharts, metric equations, empirical result tables, failure diagnostics, and recall optimization roadmap available in [`RETRIEVAL_EVALUATION_RECALL_TESTING_REPORT.md`](file:///d:/Project/Knovera/RETRIEVAL_EVALUATION_RECALL_TESTING_REPORT.md).
 
+## RAG Pipeline Architecture & Flow Design (Assignment 3.37)
+
+- **End-to-End Pipeline Architecture**: Implemented in [`src/rag_pipeline.py`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/src/rag_pipeline.py), connecting the stages: `User Query -> Embed Query -> Retrieve Context (Top-K) -> Assemble Context -> Generate Grounded Answer -> Return Answer + Sources`.
+- **Separated, Testable Code Stages**:
+  1. `embed_query(query)`: Converts user questions into 1536-dimensional normalized embedding vectors.
+  2. `retrieve_context(query_vector, k=4)`: Performs top-k vector similarity search in ChromaDB with cosine distance scoring and optional score threshold filtering.
+  3. `assemble_context(chunks)`: Structures retrieved evidence chunks into indexed citation blocks (`[index] Source: doc.md | Section: sec\n<text>`).
+  4. `generate_answer(query, context)`: Synthesizes a factual, grounded response using structured prompt templates and LLM completion with offline extractive fallback.
+  5. `answer_query(query, k=4)`: Coordinates end-to-end execution, tracks per-stage latencies, and enforces strict non-hallucination fallback when retrieval returns no context.
+- **Interactive Demonstration**: Run `python rag_pipeline_demo.py` to:
+  1. Display complete ASCII RAG pipeline architecture diagram.
+  2. Execute step-by-step isolated stages with latency tracking.
+  3. Run positive and out-of-domain sample queries demonstrating grounded answering and empty retrieval fallback.
+  4. Export full JSON audit logs to [`sample_rag_pipeline_output.json`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/sample_rag_pipeline_output.json).
+- **Automated Test Suite**: Run `python test_rag_pipeline.py` to verify 12 unit and integration test cases across all stages.
+- **Comprehensive Technical Report**: Complete architectural breakdowns, stage data flows, mathematical grounding, sample executions, and video walkthrough script available in [`RAG_PIPELINE_ARCHITECTURE_FLOW_REPORT.md`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/RAG_PIPELINE_ARCHITECTURE_FLOW_REPORT.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+
 
 
 

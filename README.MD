@@ -243,7 +243,22 @@ To run this project on a fresh machine, follow these steps:
 - **Automated Test Suite**: Run `py -m unittest test_rag_evaluator.py` to verify metric scoring, refusal grounding, citation accuracy, failure diagnosis, and summary calculations.
 - **Comprehensive Technical Report**: Complete evaluation workflow diagrams, metric definitions, empirical score tables, failure case root-cause analysis, weakest dimension improvement blueprint, and 3–5 min video walkthrough script available in [`RAG_EVALUATION_ANSWER_QUALITY_REPORT.md`](file:///d:/Project/Knovera/RAG_EVALUATION_ANSWER_QUALITY_REPORT.md).
 
+## Backend API for the RAG Service (Assignment 3.44)
+
+- **FastAPI Backend REST Service**: Implemented in [`src/rag_api.py`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/src/rag_api.py) and [`src/api_config.py`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/src/api_config.py), establishing a stable, production-grade REST contract between the Knovera RAG pipeline and frontend/external client consumers.
+- **Key Endpoints & Features**:
+  1. `POST /query`: Primary question answering endpoint accepting `QueryRequest` and returning structured `QueryResponse` with grounded answer, source citations (`source`, `chunk_id`, `score`, `rank`), execution status (`answered`, `refused_empty_context`, `refused_low_similarity`), and per-stage latency breakdown.
+  2. `GET /health`: Service health and readiness endpoint monitoring active ChromaDB collection status, embedding models, and chat LLMs.
+  3. `GET /config`: Sanitized runtime configuration endpoint with credential masking.
+  4. `GET /`: Service overview and OpenAPI interactive documentation routing (`/docs` and `/redoc`).
+  5. **Strict Input Validation & HTTP Status Codes**: Validates query lengths (3 to 1000 characters), rejects empty queries, and returns standard HTTP codes (`200 OK`, `400 Bad Request`, `422 Unprocessable Entity`, `500 Internal Server Error`).
+  6. **Environment-Driven Configuration**: Dynamically loads API keys, embedding models, vector store directories, and port bindings via `APIConfig` and `.env`.
+- **Interactive Demonstration**: Run `python rag_api_demo.py` to execute health checks, configuration inspection, grounded queries, guardrail refusals, input validation tests, and export [`sample_api_query_response.json`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/sample_api_query_response.json) and [`outputs/api_query_sample.json`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/outputs/api_query_sample.json).
+- **Automated Test Suite**: Run `python test_rag_api.py` (or `python -m unittest test_rag_api.py`) to verify all 14 unit and integration test cases covering request schemas, validation limits, error handlers, and environment loading.
+- **Comprehensive Technical Report**: Complete REST endpoint specifications, Pydantic schemas, validation error tables, environment configuration guide, frontend integration TypeScript/React snippets, and video walkthrough script available in [`BACKEND_API_RAG_SERVICE_REPORT.md`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/BACKEND_API_RAG_SERVICE_REPORT.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
+
 

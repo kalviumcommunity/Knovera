@@ -223,13 +223,27 @@ To run this project on a fresh machine, follow these steps:
 - **Automated Test Suite**: Run `py -m unittest test_hallucination_guardrail.py` to execute 16 unit tests covering empty, weak, low-similarity, custom threshold, and pipeline integration cases.
 - **Comprehensive Technical Report**: Full pre-generation workflow diagrams, threshold tuning analysis, refusing vs answering trade-off matrices, high-stakes domain rationale, and benchmark results available in [`HALLUCINATION_GUARDRAILS_REFUSAL_REPORT.md`](file:///d:/Project/Knovera/HALLUCINATION_GUARDRAILS_REFUSAL_REPORT.md).
 
+## Conversational RAG & Follow-Up Context (Assignment 3.42)
+
+- **Conversational RAG Engine**: Implemented in [`src/history_manager.py`](file:///d:/Project/Knovera/src/history_manager.py) and [`src/rag_pipeline.py`](file:///d:/Project/Knovera/src/rag_pipeline.py), handling multi-turn dialogue history, standalone query rewriting for ambiguous follow-up questions, and token budgeting.
+- **Interactive Demonstration**: Run `py conversational_rag_demo.py` to compare naive follow-up retrieval against standalone rewritten query retrieval, inspect dialogue turn histories, and export [`sample_conversational_rag.json`](file:///d:/Project/Knovera/sample_conversational_rag.json).
+- **Automated Test Suite**: Run `py -m unittest test_conversational_rag.py` to execute unit and integration tests.
+- **Comprehensive Technical Report**: Full multi-turn architecture diagrams, empirical retrieval score lift comparisons, and long-conversation grounding strategies available in [`CONVERSATIONAL_RAG_FOLLOWUP_CONTEXT_REPORT.md`](file:///d:/Project/Knovera/CONVERSATIONAL_RAG_FOLLOWUP_CONTEXT_REPORT.md).
+
+## RAG Evaluation & Answer Quality Scoring (Assignment 3.43)
+
+- **RAG Answer Quality Evaluation Engine**: Implemented in [`src/rag_evaluator.py`](file:///d:/Project/Knovera/src/rag_evaluator.py), providing end-to-end evaluation of the RAG pipeline across three key quality dimensions:
+  1. `judge_expected_points(answer, expected_points)`: Quantifies **Correctness** by matching expected key factual points against the synthesized answer.
+  2. `judge_grounding(answer, context)`: Quantifies **Grounding** by evaluating whether answer claims are supported by context (or safely refused when context is absent).
+  3. `check_citations(citations, expected_sources)`: Quantifies **Citation Accuracy** ($F_1$ score) by validating inline cited sources against expected ground-truth sources.
+  4. `diagnose_failure_cause(correctness, grounding, citation_accuracy)`: Diagnoses root causes of quality degradation (`WEAK_RETRIEVAL`, `UNSUPPORTED_DETAILS`, `BAD_CITATIONS`, `MISSING_EXPECTED_ANSWER_POINTS`).
+  5. `summarize_evaluations(rows)`: Summarizes overall quality scores, averages, and isolates failure cases.
+- **Structured Test Set**: [`data/sample_rag_test_set.json`](file:///d:/Project/Knovera/data/sample_rag_test_set.json) containing questions, expected points, and expected sources across academic policies, media rules, vector specs, chunking standards, and out-of-scope refusals.
+- **Interactive Demonstration**: Run `py rag_evaluation_demo.py` to evaluate the RAG system, print the detailed per-query quality table, compute aggregate metric summaries, and export [`sample_rag_evaluation_results.json`](file:///d:/Project/Knovera/sample_rag_evaluation_results.json) and [`outputs/rag_evaluation_output.txt`](file:///d:/Project/Knovera/outputs/rag_evaluation_output.txt).
+- **Automated Test Suite**: Run `py -m unittest test_rag_evaluator.py` to verify metric scoring, refusal grounding, citation accuracy, failure diagnosis, and summary calculations.
+- **Comprehensive Technical Report**: Complete evaluation workflow diagrams, metric definitions, empirical score tables, failure case root-cause analysis, weakest dimension improvement blueprint, and 3–5 min video walkthrough script available in [`RAG_EVALUATION_ANSWER_QUALITY_REPORT.md`](file:///d:/Project/Knovera/RAG_EVALUATION_ANSWER_QUALITY_REPORT.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.
-
-
-
-
-
-
 

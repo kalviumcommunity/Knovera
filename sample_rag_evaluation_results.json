@@ -1,0 +1,245 @@
+{
+  "summary": {
+    "questions": 6,
+    "avg_correctness": 0.9445,
+    "avg_grounding": 1.0,
+    "avg_citation_accuracy": 0.6111,
+    "overall_quality_score": 0.8519,
+    "weakest_dimension": "citation_accuracy",
+    "failures_count": 5,
+    "failures": [
+      {
+        "question": "What evidence is required for project submission?",
+        "answer": "Based on the provided documentation: Project submission evidence requirement: Final project submissions require a GitHub pull request link, a sample output JSON file, and a 3-5 minute video explanation demonstrating working tests and pipeline execution. [1] Chunking Strategy Recommendations: For dense technical source code and JSON data, use a smaller chunk size of 256 tokens and preserve logical function/class boundaries to maintain contextual coherence. [4]",
+        "correctness": 1.0,
+        "grounding": 1.0,
+        "citation_accuracy": 0.6667,
+        "citations": [
+          "chunking-guide.md",
+          "submission-rubric.md"
+        ],
+        "expected_points": [
+          "PR link",
+          "sample output",
+          "video explanation"
+        ],
+        "expected_sources": [
+          "submission-rubric.md"
+        ],
+        "num_retrieved": 4,
+        "status": "SUCCESS",
+        "failure_cause": "BAD_CITATIONS_OR_MISSING_METADATA"
+      },
+      {
+        "question": "What should the system do when context is missing?",
+        "answer": "Based on the provided documentation: System Guardrails & Missing Context Behavior: When supporting context is missing or insufficient to answer a query, the system must refuse to answer and state 'I don't have enough reliable context to answer that.' The system must never hallucinate facts. [1] Video explanation guidelines: The video explanation must be recorded as a 3-5 minute screen-share walkthrough, uploaded to Google Drive with permissions set to 'Anyone with the link can view', and tested in an incognito window. [4]",
+        "correctness": 1.0,
+        "grounding": 1.0,
+        "citation_accuracy": 0.6667,
+        "citations": [
+          "guardrails.md",
+          "video-policy.md"
+        ],
+        "expected_points": [
+          "refuse",
+          "say not enough information"
+        ],
+        "expected_sources": [
+          "guardrails.md"
+        ],
+        "num_retrieved": 4,
+        "status": "SUCCESS",
+        "failure_cause": "BAD_CITATIONS_OR_MISSING_METADATA"
+      },
+      {
+        "question": "How long should the video explanation walkthrough be?",
+        "answer": "Based on the provided documentation: Video explanation guidelines: The video explanation must be recorded as a 3-5 minute screen-share walkthrough, uploaded to Google Drive with permissions set to 'Anyone with the link can view', and tested in an incognito window. [1] Project submission evidence requirement: Final project submissions require a GitHub pull request link, a sample output JSON file, and a 3-5 minute video explanation demonstrating working tests and pipeline execution. [2]",
+        "correctness": 0.6667,
+        "grounding": 1.0,
+        "citation_accuracy": 0.6667,
+        "citations": [
+          "submission-rubric.md",
+          "video-policy.md"
+        ],
+        "expected_points": [
+          "3-5 minutes",
+          "screen-share walkthrough",
+          "Google Drive"
+        ],
+        "expected_sources": [
+          "video-policy.md"
+        ],
+        "num_retrieved": 4,
+        "status": "SUCCESS",
+        "failure_cause": "MISSING_EXPECTED_ANSWER_POINTS"
+      },
+      {
+        "question": "What is the recommended chunk size for dense technical source code?",
+        "answer": "Based on the provided documentation: Chunking Strategy Recommendations: For dense technical source code and JSON data, use a smaller chunk size of 256 tokens and preserve logical function/class boundaries to maintain contextual coherence. [1] Vector Database Specifications: For unit-normalized embedding vectors (such as text-embedding-3-small), Cosine Similarity and Dot Product produce identical similarity orderings. [3]",
+        "correctness": 1.0,
+        "grounding": 1.0,
+        "citation_accuracy": 0.6667,
+        "citations": [
+          "chunking-guide.md",
+          "vector-db-specs.md"
+        ],
+        "expected_points": [
+          "256 tokens",
+          "smaller chunk size",
+          "preserve function boundaries"
+        ],
+        "expected_sources": [
+          "chunking-guide.md"
+        ],
+        "num_retrieved": 4,
+        "status": "SUCCESS",
+        "failure_cause": "BAD_CITATIONS_OR_MISSING_METADATA"
+      },
+      {
+        "question": "What is the capital city of Mars?",
+        "answer": "Based on the provided documentation: System Guardrails & Missing Context Behavior: When supporting context is missing or insufficient to answer a query, the system must refuse to answer and state 'I don't have enough reliable context to answer that.' The system must never hallucinate facts. [1]",
+        "correctness": 1.0,
+        "grounding": 1.0,
+        "citation_accuracy": 0.0,
+        "citations": [
+          "guardrails.md"
+        ],
+        "expected_points": [
+          "refuse",
+          "say not enough information"
+        ],
+        "expected_sources": [],
+        "num_retrieved": 4,
+        "status": "SUCCESS",
+        "failure_cause": "BAD_CITATIONS_OR_MISSING_METADATA"
+      }
+    ]
+  },
+  "results": [
+    {
+      "question": "What evidence is required for project submission?",
+      "answer": "Based on the provided documentation: Project submission evidence requirement: Final project submissions require a GitHub pull request link, a sample output JSON file, and a 3-5 minute video explanation demonstrating working tests and pipeline execution. [1] Chunking Strategy Recommendations: For dense technical source code and JSON data, use a smaller chunk size of 256 tokens and preserve logical function/class boundaries to maintain contextual coherence. [4]",
+      "correctness": 1.0,
+      "grounding": 1.0,
+      "citation_accuracy": 0.6667,
+      "citations": [
+        "chunking-guide.md",
+        "submission-rubric.md"
+      ],
+      "expected_points": [
+        "PR link",
+        "sample output",
+        "video explanation"
+      ],
+      "expected_sources": [
+        "submission-rubric.md"
+      ],
+      "num_retrieved": 4,
+      "status": "SUCCESS",
+      "failure_cause": "BAD_CITATIONS_OR_MISSING_METADATA"
+    },
+    {
+      "question": "What should the system do when context is missing?",
+      "answer": "Based on the provided documentation: System Guardrails & Missing Context Behavior: When supporting context is missing or insufficient to answer a query, the system must refuse to answer and state 'I don't have enough reliable context to answer that.' The system must never hallucinate facts. [1] Video explanation guidelines: The video explanation must be recorded as a 3-5 minute screen-share walkthrough, uploaded to Google Drive with permissions set to 'Anyone with the link can view', and tested in an incognito window. [4]",
+      "correctness": 1.0,
+      "grounding": 1.0,
+      "citation_accuracy": 0.6667,
+      "citations": [
+        "guardrails.md",
+        "video-policy.md"
+      ],
+      "expected_points": [
+        "refuse",
+        "say not enough information"
+      ],
+      "expected_sources": [
+        "guardrails.md"
+      ],
+      "num_retrieved": 4,
+      "status": "SUCCESS",
+      "failure_cause": "BAD_CITATIONS_OR_MISSING_METADATA"
+    },
+    {
+      "question": "How long should the video explanation walkthrough be?",
+      "answer": "Based on the provided documentation: Video explanation guidelines: The video explanation must be recorded as a 3-5 minute screen-share walkthrough, uploaded to Google Drive with permissions set to 'Anyone with the link can view', and tested in an incognito window. [1] Project submission evidence requirement: Final project submissions require a GitHub pull request link, a sample output JSON file, and a 3-5 minute video explanation demonstrating working tests and pipeline execution. [2]",
+      "correctness": 0.6667,
+      "grounding": 1.0,
+      "citation_accuracy": 0.6667,
+      "citations": [
+        "submission-rubric.md",
+        "video-policy.md"
+      ],
+      "expected_points": [
+        "3-5 minutes",
+        "screen-share walkthrough",
+        "Google Drive"
+      ],
+      "expected_sources": [
+        "video-policy.md"
+      ],
+      "num_retrieved": 4,
+      "status": "SUCCESS",
+      "failure_cause": "MISSING_EXPECTED_ANSWER_POINTS"
+    },
+    {
+      "question": "What vector distance metric is recommended for normalized unit embeddings?",
+      "answer": "Based on the provided documentation: Vector Database Specifications: For unit-normalized embedding vectors (such as text-embedding-3-small), Cosine Similarity and Dot Product produce identical similarity orderings. [1] Cosine Similarity is recommended. [1]",
+      "correctness": 1.0,
+      "grounding": 1.0,
+      "citation_accuracy": 1.0,
+      "citations": [
+        "vector-db-specs.md"
+      ],
+      "expected_points": [
+        "Cosine Similarity",
+        "Dot Product"
+      ],
+      "expected_sources": [
+        "vector-db-specs.md"
+      ],
+      "num_retrieved": 4,
+      "status": "SUCCESS",
+      "failure_cause": null
+    },
+    {
+      "question": "What is the recommended chunk size for dense technical source code?",
+      "answer": "Based on the provided documentation: Chunking Strategy Recommendations: For dense technical source code and JSON data, use a smaller chunk size of 256 tokens and preserve logical function/class boundaries to maintain contextual coherence. [1] Vector Database Specifications: For unit-normalized embedding vectors (such as text-embedding-3-small), Cosine Similarity and Dot Product produce identical similarity orderings. [3]",
+      "correctness": 1.0,
+      "grounding": 1.0,
+      "citation_accuracy": 0.6667,
+      "citations": [
+        "chunking-guide.md",
+        "vector-db-specs.md"
+      ],
+      "expected_points": [
+        "256 tokens",
+        "smaller chunk size",
+        "preserve function boundaries"
+      ],
+      "expected_sources": [
+        "chunking-guide.md"
+      ],
+      "num_retrieved": 4,
+      "status": "SUCCESS",
+      "failure_cause": "BAD_CITATIONS_OR_MISSING_METADATA"
+    },
+    {
+      "question": "What is the capital city of Mars?",
+      "answer": "Based on the provided documentation: System Guardrails & Missing Context Behavior: When supporting context is missing or insufficient to answer a query, the system must refuse to answer and state 'I don't have enough reliable context to answer that.' The system must never hallucinate facts. [1]",
+      "correctness": 1.0,
+      "grounding": 1.0,
+      "citation_accuracy": 0.0,
+      "citations": [
+        "guardrails.md"
+      ],
+      "expected_points": [
+        "refuse",
+        "say not enough information"
+      ],
+      "expected_sources": [],
+      "num_retrieved": 4,
+      "status": "SUCCESS",
+      "failure_cause": "BAD_CITATIONS_OR_MISSING_METADATA"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "upload_request": {
+    "endpoint": "POST /documents",
+    "filename": "travel-reimbursement-policy.md",
+    "content_type": "text/markdown",
+    "file_size_bytes": 730,
+    "curl_command": "curl -X POST http://localhost:8000/documents -F \"file=@travel-reimbursement-policy.md\""
+  },
+  "upload_response": {
+    "status": "indexed",
+    "filename": "travel-reimbursement-policy.md",
+    "summary": {
+      "document": "C:\\Users\\K Jayanth\\OneDrive\\Desktop\\Mini-Projects\\Knovera\\uploads\\travel-reimbursement-policy.md",
+      "filename": "travel-reimbursement-policy.md",
+      "chunks": 1,
+      "indexed": 1,
+      "raw_characters": 730,
+      "cleaned_characters": 730,
+      "collection_name": "knovera_knowledge_base",
+      "stage_latencies_ms": {
+        "load_ms": 0.26,
+        "clean_ms": 0.99,
+        "chunk_ms": 263.78,
+        "tag_ms": 0.05,
+        "embed_ms": 449.74,
+        "index_ms": 23.43,
+        "total_ms": 738.3
+      }
+    },
+    "message": "Successfully indexed 1 chunks from 'travel-reimbursement-policy.md' into collection 'knovera_knowledge_base'.",
+    "timestamp": "2026-09-09T08:51:20.510811+00:00"
+  },
+  "runtime_searchability_test": {
+    "query_before_upload": {
+      "question": "What is the Knovera travel reimbursement policy for domestic flight bookings and daily meal allowance?",
+      "status": "answered",
+      "answer": "Based on the provided documentation: Knovera Customer Service & Refund Policy: Enterprise clients are eligible for full subscription refunds within a 14-day evaluation window from initial provisioning. [1]",
+      "sources_count": 1
+    },
+    "query_after_upload": {
+      "question": "What is the Knovera travel reimbursement policy for domestic flight bookings and daily meal allowance?",
+      "status": "answered",
+      "answer": "Based on the provided documentation: A daily per-diem meal allowance of $75 is provided for domestic travel ($20 breakfast, $25 lunch, $30 dinner). [1] # Knovera Travel & Expense Reimbursement Policy. [1]",
+      "sources": [
+        {
+          "source": "travel-reimbursement-policy.md",
+          "chunk_id": "travel-reimbursement-policy.md:0",
+          "score": 0.8244,
+          "rank": 1,
+          "section": "Knovera Travel & Expense Reimbursement Policy",
+          "doc_title": "Travel Reimbursement Policy"
+        },
+        {
+          "source": "service-policy.md",
+          "chunk_id": "service-policy.md:0",
+          "score": 0.4273,
+          "rank": 2,
+          "section": "Refund Eligibility",
+          "doc_title": "Service Policy Guide"
+        }
+      ],
+      "latency_ms": 455.67
+    }
+  }
+}

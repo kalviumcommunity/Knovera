@@ -1,0 +1,1 @@
+Short test policy content for alias endpoint.

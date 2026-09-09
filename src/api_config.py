@@ -79,6 +79,13 @@ class APIConfig:
         except ValueError:
             self.min_top_score = 0.72
 
+        # Upload Settings
+        self.upload_dir: str = os.getenv("UPLOAD_DIR", str(_root_dir / "uploads")).strip()
+        try:
+            self.max_upload_size_mb: int = int(os.getenv("MAX_UPLOAD_SIZE_MB", "10"))
+        except ValueError:
+            self.max_upload_size_mb = 10
+
         self.use_live_api: bool = os.getenv("USE_LIVE_API", "false").lower() in ("true", "1", "yes")
 
     def to_dict(self, mask_secrets: bool = True) -> Dict[str, Any]:

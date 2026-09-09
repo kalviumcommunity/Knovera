@@ -20,7 +20,7 @@ _root_dir = str(Path(__file__).resolve().parent.parent)
 if _root_dir not in sys.path:
     sys.path.insert(0, _root_dir)
 
-from fastapi import FastAPI, HTTPException, Request, status
+from fastapi import FastAPI, HTTPException, Request, status, UploadFile, File
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
@@ -40,6 +40,13 @@ from src.hallucination_guardrail import (
 )
 from src.vector_store import VectorDatabase
 from src.embedding_generator import EmbeddingGenerator
+from src.document_indexer import (
+    store_upload,
+    process_uploaded_document,
+    validate_upload_metadata,
+    DEFAULT_MAX_FILE_SIZE_BYTES,
+    SUPPORTED_EXTENSIONS
+)
 
 logger = logging.getLogger("knovera.api")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -178,6 +185,64 @@ class ConfigResponse(BaseModel):
     min_top_score: float
     use_live_api: bool
     api_key_status: str
+
+
+class DocumentIndexingSummary(BaseModel):
+    """Summary metadata of document chunking and vector indexing."""
+    document: str = Field(..., description="Local path to the stored document")
+    filename: str = Field(..., description="Original filename")
+    chunks: int = Field(..., description="Total token chunks generated")
+    indexed: int = Field(..., description="Total chunks indexed into vector store")
+    raw_characters: Optional[int] = Field(default=None, description="Raw character count before cleaning")
+    cleaned_characters: Optional[int] = Field(default=None, description="Cleaned character count after normalization")
+    collection_name: Optional[str] = Field(default=None, description="Vector store collection name")
+    stage_latencies_ms: Optional[Dict[str, float]] = Field(default=None, description="Ingestion stage latencies in milliseconds")
+
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "document": "uploads/new-policy.md",
+                "filename": "new-policy.md",
+                "chunks": 4,
+                "indexed": 4,
+                "raw_characters": 1250,
+                "cleaned_characters": 1180,
+                "collection_name": "knovera_knowledge_base"
+            }
+        }
+    }
+
+
+class DocumentUploadResponse(BaseModel):
+    """Structured response payload for document upload and indexing endpoint."""
+    status: str = Field(default="indexed", description="Indexing status: 'indexed', 'failed'")
+    filename: str = Field(..., description="Name of the uploaded file")
+    summary: DocumentIndexingSummary = Field(..., description="Detailed ingestion, chunking, and embedding summary")
+    message: Optional[str] = Field(
+        default="Document successfully ingested, chunked, embedded, and indexed into knowledge base.",
+        description="Human-readable success message"
+    )
+    timestamp: Optional[str] = Field(default=None, description="ISO-formatted UTC timestamp of the upload operation")
+
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "status": "indexed",
+                "filename": "new-policy.md",
+                "summary": {
+                    "document": "uploads/new-policy.md",
+                    "filename": "new-policy.md",
+                    "chunks": 4,
+                    "indexed": 4,
+                    "raw_characters": 1250,
+                    "cleaned_characters": 1180,
+                    "collection_name": "knovera_knowledge_base"
+                },
+                "message": "Document successfully ingested, chunked, embedded, and indexed into knowledge base.",
+                "timestamp": "2026-09-09T08:30:00Z"
+            }
+        }
+    }
 
 
 class ErrorDetail(BaseModel):
@@ -462,6 +527,7 @@ def create_app(service: Optional[RAGService] = None) -> FastAPI:
             "documentation": "/docs",
             "endpoints": {
                 "query": "POST /query",
+                "upload": "POST /documents",
                 "health": "GET /health",
                 "config": "GET /config"
             }
@@ -514,6 +580,84 @@ def create_app(service: Optional[RAGService] = None) -> FastAPI:
             use_live_api=cfg_dict["use_live_api"],
             api_key_status=cfg_dict["api_key_masked"]
         )
+
+    @app.post(
+        "/documents",
+        response_model=DocumentUploadResponse,
+        status_code=status.HTTP_201_CREATED,
+        tags=["Ingestion"],
+        responses={
+            400: {"description": "Bad Request (empty file or invalid document)"},
+            413: {"description": "Payload Too Large (file exceeds size limit)"},
+            415: {"description": "Unsupported Media Type (unsupported file extension)"},
+            500: {"description": "Internal Server Error (indexing failure)"}
+        }
+    )
+    async def upload_document(file: UploadFile = File(...)) -> DocumentUploadResponse:
+        """
+        Document Upload & Indexing Endpoint.
+        Accepts a multi-format document file (.txt, .md, .pdf, .html), validates metadata,
+        stores it safely, executes text cleaning, token chunking, metadata tagging,
+        dense vector embedding, and indexes it into the ChromaDB vector database so
+        it becomes immediately searchable at runtime without restarting the application.
+        """
+        try:
+            upload_dir = Path(config.upload_dir)
+            max_bytes = config.max_upload_size_mb * 1024 * 1024
+
+            # Step 1: Validate and safely store upload
+            stored_path, file_size = await store_upload(
+                file=file,
+                upload_dir=upload_dir,
+                max_size_bytes=max_bytes
+            )
+
+            # Step 2: Ingest, clean, chunk, embed, and index
+            summary_dict = process_uploaded_document(
+                path=stored_path,
+                vector_db=rag_service.vector_db,
+                embedding_generator=rag_service.embedding_generator,
+                collection_name=config.collection_name
+            )
+
+            summary_model = DocumentIndexingSummary(
+                document=summary_dict["document"],
+                filename=summary_dict["filename"],
+                chunks=summary_dict["chunks"],
+                indexed=summary_dict["indexed"],
+                raw_characters=summary_dict.get("raw_characters"),
+                cleaned_characters=summary_dict.get("cleaned_characters"),
+                collection_name=summary_dict.get("collection_name"),
+                stage_latencies_ms=summary_dict.get("stage_latencies_ms")
+            )
+
+            return DocumentUploadResponse(
+                status="indexed",
+                filename=file.filename or stored_path.name,
+                summary=summary_model,
+                message=f"Successfully indexed {summary_model.chunks} chunks from '{file.filename}' into collection '{config.collection_name}'.",
+                timestamp=datetime.datetime.now(datetime.timezone.utc).isoformat()
+            )
+
+        except HTTPException:
+            raise
+        except Exception as err:
+            logger.error(f"Document upload/indexing failed for '{file.filename}': {err}", exc_info=True)
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"Document indexing failed: {str(err)}"
+            )
+
+    @app.post(
+        "/upload",
+        response_model=DocumentUploadResponse,
+        status_code=status.HTTP_201_CREATED,
+        tags=["Ingestion"],
+        include_in_schema=False
+    )
+    async def upload_document_alias(file: UploadFile = File(...)) -> DocumentUploadResponse:
+        """Alias for /documents endpoint."""
+        return await upload_document(file=file)
 
     @app.post(
         "/query",

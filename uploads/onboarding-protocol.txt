@@ -1,0 +1,4 @@
+Knovera Onboarding Protocol:
+Step 1: Set up company email and SSO login.
+Step 2: Request API access keys from enterprise portal.
+Step 3: Complete mandatory security training modules.

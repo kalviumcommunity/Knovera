@@ -1,0 +1,75 @@
+[
+  {
+    "id": "q1",
+    "category": "Submission Requirements",
+    "question": "What evidence is required for project submission?",
+    "expected_points": [
+      "PR link",
+      "sample output",
+      "video explanation"
+    ],
+    "expected_sources": [
+      "submission-rubric.md"
+    ]
+  },
+  {
+    "id": "q2",
+    "category": "Guardrails & Safety",
+    "question": "What should the system do when context is missing?",
+    "expected_points": [
+      "refuse",
+      "say not enough information"
+    ],
+    "expected_sources": [
+      "guardrails.md"
+    ]
+  },
+  {
+    "id": "q3",
+    "category": "Media Guidelines",
+    "question": "How long should the video explanation walkthrough be?",
+    "expected_points": [
+      "3-5 minutes",
+      "screen-share walkthrough",
+      "Google Drive"
+    ],
+    "expected_sources": [
+      "video-policy.md"
+    ]
+  },
+  {
+    "id": "q4",
+    "category": "Vector DB Specifications",
+    "question": "What vector distance metric is recommended for normalized unit embeddings?",
+    "expected_points": [
+      "Cosine Similarity",
+      "Dot Product"
+    ],
+    "expected_sources": [
+      "vector-db-specs.md"
+    ]
+  },
+  {
+    "id": "q5",
+    "category": "Chunking Strategy",
+    "question": "What is the recommended chunk size for dense technical source code?",
+    "expected_points": [
+      "256 tokens",
+      "smaller chunk size",
+      "preserve function boundaries"
+    ],
+    "expected_sources": [
+      "chunking-guide.md"
+    ]
+  },
+  {
+    "id": "q6",
+    "category": "Out of Scope / Refusal",
+    "question": "What is the capital city of Mars?",
+    "expected_points": [
+      "refuse",
+      "say not enough information"
+    ],
+    "expected_sources": []
+  }
+]

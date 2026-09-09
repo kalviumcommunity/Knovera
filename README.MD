@@ -257,6 +257,18 @@ To run this project on a fresh machine, follow these steps:
 - **Automated Test Suite**: Run `python test_rag_api.py` (or `python -m unittest test_rag_api.py`) to verify all 14 unit and integration test cases covering request schemas, validation limits, error handlers, and environment loading.
 - **Comprehensive Technical Report**: Complete REST endpoint specifications, Pydantic schemas, validation error tables, environment configuration guide, frontend integration TypeScript/React snippets, and video walkthrough script available in [`BACKEND_API_RAG_SERVICE_REPORT.md`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/BACKEND_API_RAG_SERVICE_REPORT.md).
 
+## Document Upload & Indexing Endpoint (Assignment 3.45)
+
+- **Document Upload & Ingestion Engine**: Implemented in [`src/document_indexer.py`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/src/document_indexer.py) and [`src/rag_api.py`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/src/rag_api.py), enabling runtime expansion of the vector knowledge base through a unified REST endpoint without service restarts.
+- **Key Capabilities & Architecture**:
+  1. `POST /documents` (and alias `POST /upload`): Accepts `multipart/form-data` uploads (`.txt`, `.md`, `.pdf`, `.html`), validates file types and sizes, stores documents securely to `uploads/`, and coordinates multi-stage ingestion.
+  2. **End-to-End Processing Pipeline**: Automates loading (`DocumentLoader`), cleaning (`TextCleaner`), token-aware chunking (`TokenChunker`), metadata tagging (`ChunkTagger`), batch embedding (`EmbeddingGenerator`), and atomic vector database upsert (`VectorDatabase`).
+  3. **Immediate Runtime Searchability**: Newly indexed documents are immediately searchable via `POST /query` without server restart or index rebuilds.
+  4. **Strict Error Handling & Validation**: Returns `HTTP 415` for unsupported formats, `HTTP 400` for empty/corrupt files, `HTTP 413` for files exceeding size limits (default 10 MB), and `HTTP 500` for unexpected pipeline failures.
+- **Interactive Demonstration**: Run `python document_upload_demo.py` to observe pre-upload query state, upload a new policy document, confirm immediate post-upload query retrieval with source attribution, test validation error cases, and export [`sample_document_upload_run.json`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/sample_document_upload_run.json) and [`outputs/sample_upload_query_result.json`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/outputs/sample_upload_query_result.json).
+- **Automated Test Suite**: Run `python test_document_upload.py` to verify 10 unit and integration test cases covering format validation, empty file rejections, oversized payload guards, and runtime searchability.
+- **Comprehensive Technical Report**: Full architecture flowcharts, API schemas, large document asynchronous queue strategies, and video walkthrough script available in [`DOCUMENT_UPLOAD_INDEXING_REPORT.md`](file:///c:/Users/K%20Jayanth/OneDrive/Desktop/Mini-Projects/Knovera/DOCUMENT_UPLOAD_INDEXING_REPORT.md).
+
 ## Clean-Run Proof
 
 The setup instructions have been tested on a fresh setup and everything runs cleanly without any conflicts or missing dependencies.

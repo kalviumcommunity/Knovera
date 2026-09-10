@@ -2,12 +2,12 @@
 src/api/routes/chunks.py
 
 Knowledge Base Chunks Inspection API.
-Queries actual indexed passages and vector chunks from ChromaDB and SQLite.
+Queries actual indexed passages and vector chunks from MongoDB and SQLite.
 """
 
 import json
 from typing import List, Optional, Dict, Any
-from fastapi import APIRouter, Query, Depends
+from fastapi import APIRouter, Query, Depends, Header
 from pydantic import BaseModel
 
 from src.db import get_db_connection
@@ -40,9 +40,64 @@ class ChunkListResponse(BaseModel):
 def get_chunks(
     search: Optional[str] = Query(None, description="Search chunk text or section"),
     doc: Optional[str] = Query(None, description="Filter by source document filename"),
+    admin_id: Optional[str] = Query(None),
+    x_admin_id: Optional[str] = Header(None, alias="X-Admin-Id"),
     config: APIConfig = Depends(get_config)
 ):
     """Retrieve indexed passages and vector chunks from the database."""
+    target_admin = admin_id or x_admin_id or "admin@knovera.ai"
+    # Try reading directly from MongoDB vector database first
+    try:
+        from src.services.vector_store import VectorDatabase
+        vdb = VectorDatabase(mongodb_url=config.mongodb_url, in_memory=False)
+        if vdb.is_reachable():
+            col = vdb.create_or_get_collection(config.collection_name)
+            mongo_filter = {}
+            if doc and doc != "all":
+                mongo_filter["metadata.source"] = doc
+            if search:
+                mongo_filter["$or"] = [
+                    {"text": {"$regex": search, "$options": "i"}},
+                    {"metadata.section": {"$regex": search, "$options": "i"}},
+                    {"metadata.source": {"$regex": search, "$options": "i"}}
+                ]
+            if target_admin and target_admin != "all":
+                mongo_filter["$and"] = [
+                    {"$or": [{"metadata.admin_id": target_admin}, {"metadata.admin_id": {"$exists": False}}]}
+                ]
+
+            mongo_docs = list(col.find(mongo_filter))
+            if mongo_docs:
+                chunks = []
+                distinct_docs = set()
+                for d in mongo_docs:
+                    m = d.get("metadata", {})
+                    src = m.get("source") or d.get("id", "").split(":")[0] or "unknown"
+                    distinct_docs.add(src)
+                    chunks.append(
+                        ChunkModel(
+                            id=str(d.get("id") or d.get("_id")),
+                            sourceDoc=src,
+                            section=m.get("section") or m.get("section_heading") or "",
+                            chunkIndex=int(m.get("chunk_index", 0)) if str(m.get("chunk_index", "0")).isdigit() else 0,
+                            tokenCount=len(d.get("text", "").split()),
+                            content=d.get("text", ""),
+                            embeddingModel=config.embedding_model,
+                            indexedAt=d.get("updated_at") or "",
+                            metadata=m
+                        )
+                    )
+                chunks.sort(key=lambda c: c.chunkIndex)
+                return ChunkListResponse(
+                    chunks=chunks,
+                    totalChunks=len(chunks),
+                    totalDocuments=len(distinct_docs),
+                    embeddingModel=config.embedding_model,
+                    dimension=config.expected_dimension if hasattr(config, "expected_dimension") else 1536
+                )
+    except Exception:
+        pass
+
     conn = get_db_connection()
     cursor = conn.cursor()
 

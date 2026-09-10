@@ -1,0 +1,29 @@
+KNOVERA CUSTOMER SERVICE & REFUND POLICY
+Document Reference: POL-2026-089
+Effective Date: January 15, 2026
+Version: 3.2 (Enterprise Edition)
+
+1. Overview & Purpose
+Knovera is committed to delivering world-class enterprise Retrieval-Augmented Generation (RAG) solutions and customer support. This policy outlines our standard customer service response times, eligible refund windows, billing cancellation procedures, and enterprise escalation pathways.
+
+2. Service Level Agreements (SLAs) & Technical Support
+Our global engineering and support staff adhere to strict incident response commitments:
+- Tier 1 Technical Inquiries (Account, Billing, General Questions): Initial verified response within 2 business hours.
+- Tier 2 Specialized Engineering (Vector Ingestion, API Integration, Guardrail Tuning): Initial response within 6 business hours.
+- Emergency Severity 1 Incidents (Production Outage, Complete Service Disruption): 24/7 dedicated response within 15 minutes with continuous hourly status updates.
+
+3. Customer Refund & Cancellation Criteria
+- 100% Full Refund Window: All customers and organizations are eligible for a 100% full refund within a 30-day window from the initial subscription activation date, no questions asked.
+- Pro-Rated Refund Window: Refund requests submitted after 30 days but before 60 days from activation are subject to a pro-rated service fee calculation based on unused calendar days.
+- Beyond 60 Days: No refunds will be issued for billing cycles beyond 60 days. However, accounts can be paused or cancelled at any time without additional penalty or hidden cancellation fees.
+- Refund Processing Time: Approved refunds are processed back to the original payment method (Credit Card, Corporate ACH, Wire Transfer) within 3 to 5 business days.
+
+4. Subscription Pauses & Downgrades
+- Customers may pause active subscriptions for up to 90 calendar days without losing indexed vector collections or custom guardrail configurations.
+- Downgrading to the Developer Free tier takes effect at the end of the current billing cycle.
+
+5. Dispute Resolution & Contact Information
+For refund inquiries, billing discrepancies, or escalation requests, please contact:
+- Billing Support: billing@knovera.ai
+- General Inquiries: support@knovera.ai
+- Enterprise Hotline: +1 (800) 555-KNOV (Available 24/7 for Enterprise Plan customers)

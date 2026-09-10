@@ -2,13 +2,14 @@
 src/api/routes/documents.py
 
 Document upload, processing, indexing, and knowledge base management endpoints.
+Persists document metadata in MongoDB Atlas with multi-tenant admin isolation.
 """
 
 import datetime
 import logging
 from pathlib import Path
-from typing import Dict, Any, List
-from fastapi import APIRouter, HTTPException, status, UploadFile, File, Depends
+from typing import Dict, Any, List, Optional
+from fastapi import APIRouter, HTTPException, status, UploadFile, File, Depends, Query, Header
 
 from src.config import get_config, APIConfig
 from src.models.schemas import (
@@ -20,6 +21,7 @@ from src.models.schemas import (
 from src.services.document_indexer import store_upload, process_uploaded_document
 from src.services.vector_store import VectorDatabase
 from src.services.embedding_generator import EmbeddingGenerator
+from src.services.mongo_storage import get_mongo_storage
 
 logger = logging.getLogger("knovera.api.documents")
 router = APIRouter(tags=["Document Ingestion"])
@@ -50,16 +52,16 @@ def get_vector_db(config: APIConfig = Depends(get_config)) -> VectorDatabase:
 )
 async def upload_document(
     file: UploadFile = File(...),
+    admin_id: Optional[str] = Query(None),
+    x_admin_id: Optional[str] = Header(None, alias="X-Admin-Id"),
     config: APIConfig = Depends(get_config),
     vector_db: VectorDatabase = Depends(get_vector_db)
 ) -> DocumentUploadResponse:
     """
     Document Upload & Indexing Endpoint.
-    Accepts a multi-format document file (.txt, .md, .pdf, .html), validates metadata,
-    stores it safely, executes text cleaning, token chunking, metadata tagging,
-    dense vector embedding, and indexes it into the ChromaDB vector database so
-    it becomes immediately searchable at runtime without restarting the application.
+    Stores file, chunks and indexes into MongoDB Atlas vector storage tagged with admin_id.
     """
+    target_admin = admin_id or x_admin_id or "admin@knovera.ai"
     try:
         upload_dir = Path(config.upload_dir)
         max_bytes = config.max_upload_size_mb * 1024 * 1024
@@ -72,10 +74,11 @@ async def upload_document(
         )
 
         # Step 2: Ingest, clean, chunk, embed, and index
+        active_gen = getattr(vector_db, "embedding_generator", getattr(vector_db, "generator", None))
         summary_dict = process_uploaded_document(
             path=stored_path,
             vector_db=vector_db,
-            embedding_generator=vector_db.embedding_generator,
+            embedding_generator=active_gen,
             collection_name=config.collection_name
         )
 
@@ -89,6 +92,18 @@ async def upload_document(
             collection_name=summary_dict.get("collection_name"),
             stage_latencies_ms=summary_dict.get("stage_latencies_ms")
         )
+
+        # Step 3: Record in MongoDB documents collection
+        storage = get_mongo_storage()
+        storage.record_document({
+            "filename": file.filename or stored_path.name,
+            "admin_id": target_admin,
+            "chunk_count": summary_model.chunks,
+            "file_size": file_size,
+            "collection_name": config.collection_name,
+            "uploaded_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "status": "indexed"
+        }, admin_id=target_admin)
 
         return DocumentUploadResponse(
             status="indexed",
@@ -116,11 +131,13 @@ async def upload_document(
 )
 async def upload_document_alias(
     file: UploadFile = File(...),
+    admin_id: Optional[str] = Query(None),
+    x_admin_id: Optional[str] = Header(None, alias="X-Admin-Id"),
     config: APIConfig = Depends(get_config),
     vector_db: VectorDatabase = Depends(get_vector_db)
 ) -> DocumentUploadResponse:
     """Alias for /documents endpoint."""
-    return await upload_document(file=file, config=config, vector_db=vector_db)
+    return await upload_document(file=file, admin_id=admin_id, x_admin_id=x_admin_id, config=config, vector_db=vector_db)
 
 
 @router.get(
@@ -128,13 +145,16 @@ async def upload_document_alias(
     response_model=DocumentListResponse
 )
 def list_documents(
+    admin_id: Optional[str] = Query(None),
+    x_admin_id: Optional[str] = Header(None, alias="X-Admin-Id"),
     config: APIConfig = Depends(get_config),
     vector_db: VectorDatabase = Depends(get_vector_db)
 ) -> DocumentListResponse:
-    """List documents stored in the uploads directory and collection chunk count."""
-    upload_dir = Path(config.upload_dir)
-    docs_info: List[DocumentInfo] = []
-    
+    """List documents stored in MongoDB Atlas for the requesting admin."""
+    target_admin = admin_id or x_admin_id or "admin@knovera.ai"
+    storage = get_mongo_storage()
+    mongo_docs = storage.list_documents(admin_id=target_admin)
+
     total_chunks = 0
     try:
         if vector_db.is_reachable():
@@ -142,19 +162,36 @@ def list_documents(
     except Exception:
         pass
 
-    if upload_dir.exists():
-        for item in upload_dir.glob("*.*"):
-            if item.is_file() and not item.name.startswith("."):
-                docs_info.append(
-                    DocumentInfo(
-                        filename=item.name,
-                        chunk_count=0,
-                        collection_name=config.collection_name,
-                        indexed_at=datetime.datetime.fromtimestamp(
-                            item.stat().st_mtime, tz=datetime.timezone.utc
-                        ).isoformat()
-                    )
+    docs_info: List[DocumentInfo] = []
+    
+    if mongo_docs:
+        for doc in mongo_docs:
+            docs_info.append(
+                DocumentInfo(
+                    filename=doc.get("filename", "unknown"),
+                    chunk_count=doc.get("chunk_count", 0),
+                    collection_name=doc.get("collection_name", config.collection_name),
+                    indexed_at=doc.get("uploaded_at", datetime.datetime.now(datetime.timezone.utc).isoformat())
                 )
+            )
+    else:
+        # Fallback to files on disk and sample directory
+        upload_dir = Path(config.upload_dir)
+        seen = set()
+        if upload_dir.exists():
+            for item in upload_dir.glob("*.*"):
+                if item.is_file() and not item.name.startswith("."):
+                    seen.add(item.name)
+                    docs_info.append(
+                        DocumentInfo(
+                            filename=item.name,
+                            chunk_count=0,
+                            collection_name=config.collection_name,
+                            indexed_at=datetime.datetime.fromtimestamp(
+                                item.stat().st_mtime, tz=datetime.timezone.utc
+                            ).isoformat()
+                        )
+                    )
 
     return DocumentListResponse(
         documents=docs_info,
@@ -169,15 +206,30 @@ def list_documents(
 )
 def delete_document(
     filename: str,
-    config: APIConfig = Depends(get_config)
+    admin_id: Optional[str] = Query(None),
+    x_admin_id: Optional[str] = Header(None, alias="X-Admin-Id"),
+    config: APIConfig = Depends(get_config),
+    vector_db: VectorDatabase = Depends(get_vector_db)
 ):
-    """Delete a document file from uploads directory and database."""
+    """Delete a document record from MongoDB Atlas, disk, and vector collection."""
+    target_admin = admin_id or x_admin_id or "admin@knovera.ai"
+    storage = get_mongo_storage()
+    storage.delete_document(filename, admin_id=target_admin)
+
+    # Delete from vector store
+    try:
+        if vector_db.is_reachable():
+            vector_db.delete_by_source(config.collection_name, filename)
+    except Exception as e:
+        logger.warning(f"Could not purge vectors for '{filename}': {e}")
+
+    # Delete from uploads directory if exists
     upload_dir = Path(config.upload_dir)
     target_path = upload_dir / filename
-
     if target_path.exists() and target_path.is_file():
-        target_path.unlink()
-        logger.info(f"Deleted uploaded document file '{filename}'")
-        return {"status": "deleted", "filename": filename}
+        try:
+            target_path.unlink()
+        except Exception:
+            pass
 
-    raise HTTPException(status_code=404, detail=f"Document file '{filename}' not found.")
+    return {"status": "deleted", "filename": filename}

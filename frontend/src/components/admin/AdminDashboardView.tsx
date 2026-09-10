@@ -427,7 +427,7 @@ export default function AdminDashboardView() {
             >
               <div>
                 <div style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text-primary)' }}>
-                  ChromaDB Vector Store
+                  MongoDB Vector Store
                 </div>
                 <div style={{ fontSize: '11.5px', color: 'var(--text-muted)' }}>Collection: knovera_docs ({stats?.totalChunks || 0} chunks)</div>
               </div>

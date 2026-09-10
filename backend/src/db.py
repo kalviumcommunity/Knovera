@@ -75,11 +75,16 @@ def init_database() -> None:
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS conversations (
             id TEXT PRIMARY KEY,
+            user_id TEXT DEFAULT 'user@knovera.ai',
             title TEXT NOT NULL,
             created_at TEXT NOT NULL,
             updated_at TEXT NOT NULL
         )
     """)
+    try:
+        cursor.execute("ALTER TABLE conversations ADD COLUMN user_id TEXT DEFAULT 'user@knovera.ai'")
+    except Exception:
+        pass
 
     # 4. Chat Messages Table
     cursor.execute("""
@@ -269,7 +274,7 @@ def seed_audit_logs(conn: sqlite3.Connection):
             None,
             None,
             "success",
-            "Ingested 54 chunks, computed 384d BGE embeddings, persisted to ChromaDB collection knovera_docs."
+            "Ingested 54 chunks, computed 384d BGE embeddings, persisted to MongoDB collection knovera_docs."
         ),
         (
             "log_104",
@@ -328,7 +333,7 @@ def seed_knowledge_chunks(conn: sqlite3.Connection):
             "Section 2.4 — Data Encryption at Rest",
             2,
             310,
-            "Customer records and proprietary embeddings stored in ChromaDB must use AES-256 GCM encryption. Key rotation occurs automatically every 90 days managed by AWS KMS with tamper-evident cloud audit logging enabled.",
+            "Customer records and proprietary embeddings stored in MongoDB must use AES-256 GCM encryption. Key rotation occurs automatically every 90 days managed by AWS KMS with tamper-evident cloud audit logging enabled.",
             "BAAI/bge-small-en-v1.5",
             now,
             json.dumps({"department": "Security", "compliance": "SOC2-Type2", "version": "2.4"})
@@ -361,7 +366,7 @@ def seed_knowledge_chunks(conn: sqlite3.Connection):
             "Row 14 — Enterprise Tier AI Seat Licenses",
             14,
             190,
-            "Enterprise Plan ($49/seat/mo): Unlimited vector embeddings, dedicated ChromaDB isolated collections, custom safety guardrails, 99.95% SLA guarantee, and priority GPU inference queues.",
+            "Enterprise Plan ($49/seat/mo): Unlimited vector embeddings, dedicated MongoDB isolated collections, custom safety guardrails, 99.95% SLA guarantee, and priority GPU inference queues.",
             "BAAI/bge-small-en-v1.5",
             now,
             json.dumps({"category": "Commercial", "fiscalQuarter": "Q3-2026"})

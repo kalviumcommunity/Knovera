@@ -8,7 +8,7 @@ import time
 import datetime
 import logging
 from typing import Dict, Any, Optional
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Header
 
 from src.config import get_config, APIConfig
 from src.models.schemas import (
@@ -255,10 +255,12 @@ def query_rag(
 )
 def chat_rag(
     request: ChatRequest,
+    x_user_id: Optional[str] = Header(None, alias="X-User-Id"),
+    x_admin_id: Optional[str] = Header(None, alias="X-Admin-Id"),
     rag_service: RAGService = Depends(get_rag_service)
 ) -> ChatResponse:
     """
-    Conversational RAG endpoint with session memory.
+    Conversational RAG endpoint with session memory and MongoDB multi-tenant telemetry.
     """
     start_time = time.perf_counter()
     session_id = request.session_id
@@ -300,6 +302,25 @@ def chat_rag(
     ]
 
     total_latency = round((time.perf_counter() - start_time) * 1000, 2)
+
+    # Record audit log in MongoDB Atlas
+    try:
+        from src.services.mongo_storage import get_mongo_storage
+        storage = get_mongo_storage()
+        storage.create_log({
+            "session_id": session_id,
+            "user": x_user_id or "user@knovera.ai",
+            "action": f"Chat Query: {request.message[:45]}",
+            "query_snippet": request.message,
+            "latency_ms": total_latency,
+            "groundedness_score": source_objects[0].score if source_objects else 0.0,
+            "guardrail_status": "passed" if result.get("status") == "answered" else "refused",
+            "guardrail_name": "Grounded Hallucination Shield",
+            "status": "success" if result.get("status") == "answered" else "warning",
+            "details": f"Generated grounded response with {len(source_objects)} citations from indexed knowledge base."
+        }, admin_id=x_admin_id or "admin@knovera.ai")
+    except Exception as log_err:
+        logger.warning(f"Could not record query log in MongoDB: {log_err}")
 
     return ChatResponse(
         session_id=session_id,

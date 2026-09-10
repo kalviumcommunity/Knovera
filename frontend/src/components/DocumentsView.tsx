@@ -145,7 +145,7 @@ export default function DocumentsView({ onSelectDocForQuery }: DocumentsViewProp
         </div>
 
         <span className="badge badge-indigo" style={{ fontSize: '11px' }}>
-          Instantly indexed into ChromaDB vector database
+          Instantly indexed into MongoDB vector database
         </span>
       </div>
 

@@ -217,7 +217,8 @@ export interface AdminSettings {
   };
   system: {
     backendUrl: string;
-    chromaHost: string;
+    mongoHost?: string;
+    chromaHost?: string;
     healthPollSec: number;
     organizationName: string;
   };

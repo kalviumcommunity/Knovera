@@ -1,0 +1,28 @@
+KNOVERA PRODUCT TIERS & PRICING MATRIX (2026)
+Document Reference: PRI-2026-Q1
+
+1. Tier Comparison Table
+
+Tier 1: Developer Community (Free)
+- Price: $0 / month
+- Vector Database: Shared MongoDB Vector cluster (up to 1,000 document chunks)
+- Query Limits: 500 queries per month
+- LLM Models: OpenRouter Free models (gpt-4o-mini, openrouter/free)
+- Guardrails: Standard prompt injection guardrail
+- Support: Community discord & documentation
+
+Tier 2: Team Pro ($19 / user / month)
+- Price: $19 per active seat monthly (billed annually at $15/seat/mo)
+- Vector Database: Dedicated MongoDB Atlas collection (up to 50,000 chunks)
+- Query Limits: 10,000 queries per month per team
+- LLM Models: High-throughput OpenAI & Anthropic Claude models
+- Guardrails: Custom safety rules, PII auto-redaction, groundedness filters
+- Support: Standard business email support (8-hour SLA)
+
+Tier 3: Enterprise Cloud ($49 / seat / month)
+- Price: $49 per active seat monthly
+- Vector Database: Unlimited isolated MongoDB collections, custom embedding models
+- Query Limits: Unlimited high-priority queries with GPU acceleration
+- Guardrails: Enterprise-grade prompt firewall, real-time SOC2 audit logging, tamper-evident logs
+- SLA Guarantee: 99.95% uptime with 24/7 dedicated telephone support hotline
+- Add-ons: Private VPC peering, Custom fine-tuned cross-encoders, On-premise deployment options

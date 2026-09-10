@@ -121,7 +121,7 @@ export default function KnowledgeBaseView() {
               }}
             >
               <Database size={11} />
-              <span>ChromaDB & SQLite Live</span>
+              <span>MongoDB & SQLite Live</span>
             </span>
           </div>
           <p style={{ fontSize: '13.5px', color: 'var(--text-secondary)', marginTop: '2px' }}>
@@ -173,7 +173,7 @@ export default function KnowledgeBaseView() {
           }}
         >
           <CheckCircle2 size={16} />
-          <span>Knowledge index refreshed. Synchronized live with database and ChromaDB collection <code>knovera_docs</code>.</span>
+          <span>Knowledge index refreshed. Synchronized live with MongoDB Atlas cluster collection <code>knovera_docs</code>.</span>
         </div>
       )}
 

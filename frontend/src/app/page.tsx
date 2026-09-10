@@ -81,11 +81,11 @@ export default function RootPortalPage() {
           </span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <Link
             href="/login"
             style={{
-              padding: '7px 14px',
+              padding: '7px 13px',
               fontSize: '13px',
               fontWeight: 500,
               color: 'var(--text-secondary)',
@@ -95,7 +95,22 @@ export default function RootPortalPage() {
               backgroundColor: '#ffffff',
             }}
           >
-            User Login
+            Sign In
+          </Link>
+          <Link
+            href="/signup"
+            style={{
+              padding: '7px 13px',
+              fontSize: '13px',
+              fontWeight: 600,
+              color: 'var(--accent-slate)',
+              textDecoration: 'none',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border-medium)',
+              backgroundColor: '#f8fafc',
+            }}
+          >
+            Sign Up
           </Link>
           <Link
             href="/admin/login"
@@ -103,7 +118,7 @@ export default function RootPortalPage() {
               display: 'flex',
               alignItems: 'center',
               gap: '6px',
-              padding: '7px 16px',
+              padding: '7px 15px',
               fontSize: '13px',
               fontWeight: 600,
               color: '#ffffff',
@@ -304,7 +319,7 @@ export default function RootPortalPage() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: '10px 14px',
+                  padding: '10px 12px',
                   backgroundColor: 'var(--bg-app)',
                   border: '1px solid var(--border-light)',
                   color: 'var(--text-secondary)',
@@ -314,7 +329,25 @@ export default function RootPortalPage() {
                   textDecoration: 'none',
                 }}
               >
-                Login Page
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '10px 12px',
+                  backgroundColor: 'var(--bg-app)',
+                  border: '1px solid var(--border-medium)',
+                  color: 'var(--accent-slate)',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                }}
+              >
+                Sign Up
               </Link>
             </div>
           </div>

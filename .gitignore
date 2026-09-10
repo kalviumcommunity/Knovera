@@ -1,8 +1,22 @@
+# Python / Backend
+Backend/.venv/
 .venv/
+Backend/.env
 .env
 *.log
-
-src/__pycache__
-__pycache__
+Backend/data/chroma_db/
+Backend/data/test_chroma_db/
 data/chroma_db/
 data/test_chroma_db/
+**/__pycache__/
+*.pyc
+
+# Node.js / Frontend
+Frontend/node_modules/
+Frontend/.next/
+Frontend/out/
+Frontend/.env*.local
+node_modules/
+.next/
+out/
+.DS_Store

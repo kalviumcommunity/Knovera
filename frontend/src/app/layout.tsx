@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import React from 'react';
 import './globals.css';
+import FloatingAiButton from '@/components/FloatingAiButton';
 
 export const metadata: Metadata = {
   title: 'Knovera | Enterprise Grounded RAG Studio',
@@ -22,7 +23,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <FloatingAiButton />
+      </body>
     </html>
   );
 }

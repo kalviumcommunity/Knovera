@@ -161,3 +161,23 @@ def list_documents(
         total_documents=len(docs_info),
         total_chunks=total_chunks
     )
+
+
+@router.delete(
+    "/documents/{filename}",
+    status_code=status.HTTP_200_OK
+)
+def delete_document(
+    filename: str,
+    config: APIConfig = Depends(get_config)
+):
+    """Delete a document file from uploads directory and database."""
+    upload_dir = Path(config.upload_dir)
+    target_path = upload_dir / filename
+
+    if target_path.exists() and target_path.is_file():
+        target_path.unlink()
+        logger.info(f"Deleted uploaded document file '{filename}'")
+        return {"status": "deleted", "filename": filename}
+
+    raise HTTPException(status_code=404, detail=f"Document file '{filename}' not found.")

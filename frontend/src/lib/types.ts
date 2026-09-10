@@ -133,3 +133,137 @@ export interface EvaluationResponse {
   details: EvaluationDetailItem[];
   timestamp: string;
 }
+
+export interface ChatTurn {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  sources?: SourceCitation[];
+  latency_ms?: number;
+  timestamp?: string;
+  feedback?: 'up' | 'down';
+}
+
+export interface Conversation {
+  id: string;
+  title: string;
+  messages: ChatTurn[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ConversationGroup = 'Today' | 'Yesterday' | 'Previous 7 Days' | 'Older';
+
+export type GuardrailCategory =
+  | 'hallucination'
+  | 'injection'
+  | 'pii'
+  | 'policy'
+  | 'retrieval'
+  | 'custom';
+
+export interface Guardrail {
+  id: string;
+  name: string;
+  category: GuardrailCategory;
+  description: string;
+  rule: string;
+  triggerCondition: string;
+  action: string;
+  priority: number;
+  enabled: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface AuditLog {
+  id: string;
+  timestamp: string;
+  sessionId: string;
+  user: string;
+  action: string;
+  querySnippet?: string;
+  latencyMs: number;
+  groundednessScore?: number;
+  guardrailStatus?: 'passed' | 'triggered' | 'bypassed';
+  guardrailName?: string;
+  status: 'success' | 'warning' | 'error';
+  details?: string;
+}
+
+export interface AdminSettings {
+  model: {
+    primaryModel: string;
+    temperature: number;
+    maxTokens: number;
+    systemPrompt: string;
+  };
+  chat: {
+    sessionTimeoutMins: number;
+    streamingEnabled: boolean;
+    feedbackEnabled: boolean;
+    defaultK: number;
+  };
+  retrieval: {
+    similarityThreshold: number;
+    hybridAlpha: number;
+    rerankerEnabled: boolean;
+    contextCompression: boolean;
+  };
+  guardrails: {
+    strictness: 'low' | 'standard' | 'strict';
+    piiMaskType: 'redacted' | 'asterisk' | 'hash';
+    autoRefusalNotice: string;
+  };
+  system: {
+    backendUrl: string;
+    chromaHost: string;
+    healthPollSec: number;
+    organizationName: string;
+  };
+}
+
+export interface ChunkItem {
+  id: string;
+  sourceDoc: string;
+  section: string;
+  chunkIndex: number;
+  tokenCount: number;
+  content: string;
+  embeddingModel: string;
+  indexedAt: string;
+  metadata: Record<string, any>;
+}
+
+export interface ChunkListResponse {
+  chunks: ChunkItem[];
+  totalChunks: number;
+  totalDocuments: number;
+  embeddingModel: string;
+  dimension: number;
+}
+
+export interface LogListResponse {
+  logs: AuditLog[];
+  total: number;
+  page: number;
+  pageSize: number;
+  total_pages?: number;
+}
+
+export interface DashboardStatsResponse {
+  totalQueries: number;
+  avgLatencyMs: number;
+  groundednessPercent: number;
+  activeGuardrailsCount: number;
+  totalChunks: number;
+  totalDocuments: number;
+  responseBreakdown: Record<string, number>;
+  recentActivity: Array<{
+    id: string;
+    title: string;
+    desc: string;
+    time: string;
+    status: string;
+  }>;
+}

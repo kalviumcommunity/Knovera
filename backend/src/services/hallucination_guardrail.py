@@ -27,9 +27,9 @@ from src.source_tracer import answer_with_citations
 logger = logging.getLogger(__name__)
 
 # Default Guardrail Quality Thresholds
-MIN_TOP_SCORE: float = 0.72
+MIN_TOP_SCORE: float = 0.20
 MIN_SUPPORTING_CHUNKS: int = 1
-MIN_AVG_SCORE: float = 0.60
+MIN_AVG_SCORE: float = 0.15
 STANDARD_SAFE_REFUSAL: str = "I don't have enough reliable context to answer that."
 
 

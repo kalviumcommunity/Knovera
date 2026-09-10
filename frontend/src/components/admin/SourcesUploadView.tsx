@@ -205,11 +205,11 @@ export default function SourcesUploadView() {
               }}
             >
               <Database size={11} />
-              <span>ChromaDB Vector Store</span>
+              <span>MongoDB Vector Store</span>
             </span>
           </div>
           <p style={{ fontSize: '13.5px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Ingest enterprise documents, policies, and contracts directly into ChromaDB and SQLite.
+            Ingest enterprise documents, policies, and contracts directly into MongoDB and SQLite.
           </p>
         </div>
 
@@ -498,7 +498,7 @@ export default function SourcesUploadView() {
 
                         <button
                           onClick={() => handleDelete(source)}
-                          title="Delete source from database & ChromaDB"
+                          title="Delete source from database & MongoDB"
                           style={{
                             display: 'inline-flex',
                             alignItems: 'center',

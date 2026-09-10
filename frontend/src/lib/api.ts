@@ -13,6 +13,7 @@ import {
   Conversation,
   ChatTurn,
 } from './types';
+import { getStoredAuth } from './auth';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
 
@@ -78,6 +79,19 @@ class ApiClient {
       headers['Content-Type'] = 'application/json';
     }
 
+    // Attach active user / admin session identity for multi-tenant isolation
+    const auth = getStoredAuth();
+    if (auth) {
+      headers['X-User-Id'] = auth.email || auth.id;
+      headers['X-User-Role'] = auth.role;
+      if (auth.role === 'admin') {
+        headers['X-Admin-Id'] = auth.email || auth.id;
+      }
+      if (auth.organization) {
+        headers['X-Tenant-Id'] = auth.organization;
+      }
+    }
+
     try {
       const res = await fetch(url, {
         ...options,
@@ -127,27 +141,34 @@ class ApiClient {
     });
   }
 
-  /** Get list of indexed documents from server/disk */
-  async getDocuments(): Promise<DocumentListResponse> {
-    return this.request<DocumentListResponse>('/api/documents');
+  /** Get list of indexed documents from server/MongoDB */
+  async getDocuments(adminId?: string): Promise<DocumentListResponse> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
+    return this.request<DocumentListResponse>(`/api/documents?admin_id=${encodeURIComponent(activeAdmin)}`);
   }
 
-  /** Upload and immediately index a document into ChromaDB */
-  async uploadDocument(file: File): Promise<DocumentUploadResponse> {
+  /** Upload and immediately index a document into MongoDB Atlas */
+  async uploadDocument(file: File, adminId?: string): Promise<DocumentUploadResponse> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('admin_id', activeAdmin);
 
-    return this.request<DocumentUploadResponse>('/api/documents', {
+    return this.request<DocumentUploadResponse>(`/api/documents?admin_id=${encodeURIComponent(activeAdmin)}`, {
       method: 'POST',
       body: formData,
     });
   }
 
-  /** Delete a document source from server and database */
-  async deleteDocument(filename: string): Promise<{ status: string; filename: string }> {
-    return this.request<{ status: string; filename: string }>(`/api/documents/${encodeURIComponent(filename)}`, {
-      method: 'DELETE',
-    });
+  /** Delete a document source from server and MongoDB */
+  async deleteDocument(filename: string, adminId?: string): Promise<{ status: string; filename: string }> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
+    return this.request<{ status: string; filename: string }>(
+      `/api/documents/${encodeURIComponent(filename)}?admin_id=${encodeURIComponent(activeAdmin)}`,
+      {
+        method: 'DELETE',
+      }
+    );
   }
 
   /** Run batch evaluation on RAG pipeline */
@@ -159,90 +180,109 @@ class ApiClient {
   }
 
   /* -------------------------------------------------------------
-   * GUARDRAILS DATABASE API
+   * GUARDRAILS DATABASE API (MONGODB)
    * ------------------------------------------------------------- */
-  async getGuardrails(): Promise<Guardrail[]> {
-    return this.request<Guardrail[]>('/api/guardrails');
+  async getGuardrails(adminId?: string): Promise<Guardrail[]> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
+    return this.request<Guardrail[]>(`/api/guardrails?admin_id=${encodeURIComponent(activeAdmin)}`);
   }
 
-  async createGuardrail(payload: Partial<Guardrail>): Promise<Guardrail> {
+  async createGuardrail(payload: Partial<Guardrail>, adminId?: string): Promise<Guardrail> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
     return this.request<Guardrail>('/api/guardrails', {
       method: 'POST',
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ ...payload, admin_id: activeAdmin }),
     });
   }
 
-  async updateGuardrail(id: string, payload: Partial<Guardrail>): Promise<Guardrail> {
-    return this.request<Guardrail>(`/api/guardrails/${id}`, {
+  async updateGuardrail(id: string, payload: Partial<Guardrail>, adminId?: string): Promise<Guardrail> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
+    return this.request<Guardrail>(`/api/guardrails/${id}?admin_id=${encodeURIComponent(activeAdmin)}`, {
       method: 'PUT',
       body: JSON.stringify(payload),
     });
   }
 
-  async deleteGuardrail(id: string): Promise<{ status: string; id: string }> {
-    return this.request<{ status: string; id: string }>(`/api/guardrails/${id}`, {
+  async deleteGuardrail(id: string, adminId?: string): Promise<{ status: string; id: string }> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
+    return this.request<{ status: string; id: string }>(`/api/guardrails/${id}?admin_id=${encodeURIComponent(activeAdmin)}`, {
       method: 'DELETE',
     });
   }
 
-  async reorderGuardrails(orderedIds: string[]): Promise<{ status: string; count: number }> {
+  async reorderGuardrails(orderedIds: string[], adminId?: string): Promise<{ status: string; count: number }> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
     return this.request<{ status: string; count: number }>('/api/guardrails/reorder', {
       method: 'POST',
-      body: JSON.stringify({ orderedIds }),
+      body: JSON.stringify({ orderedIds, admin_id: activeAdmin }),
     });
   }
 
   /* -------------------------------------------------------------
-   * AUDIT LOGS DATABASE API
+   * AUDIT LOGS DATABASE API (MONGODB)
    * ------------------------------------------------------------- */
-  async getLogs(params: { search?: string; status?: string; page?: number; pageSize?: number } = {}): Promise<LogListResponse> {
+  async getLogs(
+    params: { search?: string; status?: string; page?: number; pageSize?: number } = {},
+    adminId?: string
+  ): Promise<LogListResponse> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
     const q = new URLSearchParams();
     if (params.search) q.append('search', params.search);
     if (params.status && params.status !== 'all') q.append('status', params.status);
     if (params.page) q.append('page', String(params.page));
     if (params.pageSize) q.append('page_size', String(params.pageSize));
+    q.append('admin_id', activeAdmin);
 
     const qs = q.toString();
     return this.request<LogListResponse>(`/api/logs${qs ? `?${qs}` : ''}`);
   }
 
-  async recordLog(payload: Partial<AuditLog>): Promise<AuditLog> {
+  async recordLog(payload: Partial<AuditLog>, adminId?: string): Promise<AuditLog> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
     return this.request<AuditLog>('/api/logs', {
       method: 'POST',
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ ...payload, admin_id: activeAdmin }),
     });
   }
 
   /* -------------------------------------------------------------
-   * KNOWLEDGE CHUNKS DATABASE API
+   * KNOWLEDGE CHUNKS DATABASE API (MONGODB ATLAS)
    * ------------------------------------------------------------- */
-  async getChunks(params: { search?: string; doc?: string } = {}): Promise<ChunkListResponse> {
+  async getChunks(
+    params: { search?: string; doc?: string } = {},
+    adminId?: string
+  ): Promise<ChunkListResponse> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
     const q = new URLSearchParams();
     if (params.search) q.append('search', params.search);
     if (params.doc && params.doc !== 'all') q.append('doc', params.doc);
+    q.append('admin_id', activeAdmin);
 
     const qs = q.toString();
     return this.request<ChunkListResponse>(`/api/chunks${qs ? `?${qs}` : ''}`);
   }
 
   /* -------------------------------------------------------------
-   * DASHBOARD TELEMETRY STATS API
+   * DASHBOARD TELEMETRY STATS API (MONGODB)
    * ------------------------------------------------------------- */
-  async getDashboardStats(): Promise<DashboardStatsResponse> {
-    return this.request<DashboardStatsResponse>('/api/dashboard/stats');
+  async getDashboardStats(adminId?: string): Promise<DashboardStatsResponse> {
+    const activeAdmin = adminId || getStoredAuth()?.email || 'admin@knovera.ai';
+    return this.request<DashboardStatsResponse>(`/api/dashboard/stats?admin_id=${encodeURIComponent(activeAdmin)}`);
   }
 
   /* -------------------------------------------------------------
-   * CONVERSATIONS & CHAT HISTORY DATABASE API
+   * CONVERSATIONS & CHAT HISTORY DATABASE API (MONGODB)
    * ------------------------------------------------------------- */
-  async getConversations(): Promise<Conversation[]> {
-    return this.request<Conversation[]>('/api/conversations');
+  async getConversations(userId?: string): Promise<Conversation[]> {
+    const activeUser = userId || getStoredAuth()?.email || 'user@knovera.ai';
+    return this.request<Conversation[]>(`/api/conversations?user_id=${encodeURIComponent(activeUser)}`);
   }
 
-  async createConversation(title: string = 'New chat', id?: string): Promise<Conversation> {
+  async createConversation(title: string = 'New chat', id?: string, userId?: string): Promise<Conversation> {
+    const activeUser = userId || getStoredAuth()?.email || 'user@knovera.ai';
     return this.request<Conversation>('/api/conversations', {
       method: 'POST',
-      body: JSON.stringify({ id, title }),
+      body: JSON.stringify({ id, title, user_id: activeUser }),
     });
   }
 
@@ -268,4 +308,3 @@ class ApiClient {
 }
 
 export const api = new ApiClient();
-export default api;

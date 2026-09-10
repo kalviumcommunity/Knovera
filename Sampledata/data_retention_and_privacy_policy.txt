@@ -1,0 +1,27 @@
+KNOVERA GLOBAL DATA RETENTION & PRIVACY POLICY
+Document ID: POL-2026-GDPR-44
+Classification: Public Enterprise Documentation
+Effective Date: February 10, 2026
+Applies to: All Customers, Free Tier Users, and Enterprise Tenants
+
+1. OVERVIEW
+Knovera values tenant confidentiality and customer data autonomy. This policy outlines how information is gathered, indexed in vector storage (MongoDB Atlas), processed by embedding models, and retained throughout the contract lifecycle.
+
+2. DATA STORAGE & VECTOR PERSISTENCE
+- Customer uploaded documents (.txt, .pdf, .md, .csv) are stored securely in encrypted object storage.
+- Dense embeddings generated via text-embedding-3-small (1536 dimensions) are persisted in dedicated MongoDB Atlas vector collections.
+- Multi-tenant data segregation is strictly enforced via unique tenant IDs and collection namespaces.
+
+3. RETENTION TIMELINES
+- Active Workspace Documents: Retained indefinitely while the tenant account remains in good standing.
+- Chat Query History: Stored for 90 days by default; configurable up to 7 years for Enterprise customers requiring SEC/FINRA compliance.
+- Deleted Knowledge Assets: When an administrator clicks "Delete Document" in the Admin Console, the underlying document file, raw text, and all associated embedding vectors are permanently purged from MongoDB within 60 seconds.
+- Audit & Security Logs: Retained for a minimum of 1 year for compliance review.
+
+4. USER RIGHTS UNDER GDPR & CCPA
+Any registered user may:
+- Request a machine-readable export of their stored questions and conversation transcripts.
+- Exercise the "Right to be Forgotten" to delete their registered account and personal query history.
+- Opt out of telemetry analytics by disabling session metrics in settings.
+
+For questions or data deletion requests, contact privacy@knovera.ai.

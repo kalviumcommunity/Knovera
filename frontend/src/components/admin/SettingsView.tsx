@@ -43,7 +43,8 @@ const DEFAULT_SETTINGS: AdminSettings = {
   },
   system: {
     backendUrl: 'http://127.0.0.1:8000',
-    chromaHost: 'local_sqlite_embedded',
+    mongoHost: 'mongodb+srv://cluster0.p1tqslk.mongodb.net/Knovera',
+    chromaHost: 'mongodb+srv://cluster0.p1tqslk.mongodb.net/Knovera',
     healthPollSec: 30,
     organizationName: 'Knovera Enterprise Systems',
   },
@@ -664,11 +665,11 @@ export default function SettingsView() {
 
             <div>
               <label style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                CHROMADB HOST STORAGE TARGET
+                MONGODB ATLAS VECTOR STORE TARGET
               </label>
               <input
                 disabled
-                value={settings.system.chromaHost}
+                value={settings.system.mongoHost || settings.system.chromaHost || 'mongodb+srv://cluster0.p1tqslk.mongodb.net/Knovera'}
                 style={{
                   width: '100%',
                   marginTop: '6px',

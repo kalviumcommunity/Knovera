@@ -60,7 +60,7 @@ export default function AdminLayout({
       id: 'knowledge' as AdminTab,
       label: 'Knowledge Base',
       icon: <Database size={18} />,
-      badge: 'ChromaDB',
+      badge: 'MongoDB',
     },
     {
       id: 'guardrails' as AdminTab,

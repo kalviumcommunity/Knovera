@@ -22,14 +22,14 @@ export default function UserChatPage() {
   useEffect(() => {
     const auth = getStoredAuth();
     if (!auth) {
-      // Default to standard user session
+      // Default to standard demo user session
       const guest: AuthUser = {
         id: 'usr_guest',
         name: DEMO_CREDENTIALS.user.name,
         email: DEMO_CREDENTIALS.user.email,
         role: 'user',
-        organization: 'Knovera Enterprise',
-        avatarInitials: 'SJ',
+        organization: DEMO_CREDENTIALS.user.organization,
+        avatarInitials: DEMO_CREDENTIALS.user.avatarInitials,
       };
       setCurrentUser(guest);
     } else {
@@ -37,23 +37,25 @@ export default function UserChatPage() {
     }
   }, []);
 
-  // Fetch all persistent conversations from SQLite Database on mount
+  // Fetch persistent conversations scoped to this specific user from MongoDB
   const loadConversationsFromDb = useCallback(async () => {
+    if (!currentUser) return;
     setIsInitializing(true);
+    const userKey = currentUser.email || currentUser.id;
+
     try {
-      const dbConversations = await api.getConversations();
+      const dbConversations = await api.getConversations(userKey);
       if (dbConversations && dbConversations.length > 0) {
         setConversations(dbConversations);
         setActiveConvId(dbConversations[0].id);
       } else {
-        // Create initial clean conversation in DB
-        const initial = await api.createConversation('New chat');
+        // Create initial clean conversation in MongoDB for this new user
+        const initial = await api.createConversation('New chat', undefined, userKey);
         setConversations([initial]);
         setActiveConvId(initial.id);
       }
     } catch (err) {
-      console.error('Failed to load conversations from backend DB:', err);
-      // Fallback empty session
+      console.error('Failed to load conversations from backend MongoDB:', err);
       const fallbackId = `conv_${Date.now()}`;
       const fallbackConv: Conversation = {
         id: fallbackId,
@@ -67,11 +69,13 @@ export default function UserChatPage() {
     } finally {
       setIsInitializing(false);
     }
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
-    loadConversationsFromDb();
-  }, [loadConversationsFromDb]);
+    if (currentUser) {
+      loadConversationsFromDb();
+    }
+  }, [currentUser, loadConversationsFromDb]);
 
   // Keyboard shortcut Ctrl+K / Cmd+K for New Chat
   useEffect(() => {
@@ -83,18 +87,19 @@ export default function UserChatPage() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [currentUser]);
 
   const activeConversation = conversations.find((c) => c.id === activeConvId);
 
-  // Create New Chat in SQLite Database
+  // Create New Chat in MongoDB
   const handleNewChat = async () => {
+    const userKey = currentUser?.email || currentUser?.id || 'user@knovera.ai';
     try {
-      const newConv = await api.createConversation('New chat');
+      const newConv = await api.createConversation('New chat', undefined, userKey);
       setConversations((prev) => [newConv, ...prev]);
       setActiveConvId(newConv.id);
     } catch (err) {
-      console.error('Failed to create new conversation in DB:', err);
+      console.error('Failed to create new conversation in MongoDB:', err);
       const localId = `conv_${Date.now()}`;
       const localConv: Conversation = {
         id: localId,
@@ -108,9 +113,8 @@ export default function UserChatPage() {
     }
   };
 
-  // Rename Conversation in SQLite Database
+  // Rename Conversation in MongoDB
   const handleRenameConversation = async (id: string, newTitle: string) => {
-    // Optimistic update
     setConversations((prev) =>
       prev.map((c) => (c.id === id ? { ...c, title: newTitle, updatedAt: new Date().toISOString() } : c))
     );
@@ -122,7 +126,7 @@ export default function UserChatPage() {
     }
   };
 
-  // Delete Conversation from SQLite Database
+  // Delete Conversation from MongoDB
   const handleDeleteConversation = async (id: string) => {
     const filtered = conversations.filter((c) => c.id !== id);
     setConversations(filtered);
@@ -137,11 +141,11 @@ export default function UserChatPage() {
     try {
       await api.deleteConversation(id);
     } catch (err) {
-      console.error('Failed to delete conversation from DB:', err);
+      console.error('Failed to delete conversation from MongoDB:', err);
     }
   };
 
-  // Send message and persist turns to SQLite Database
+  // Send message and persist turns to MongoDB
   const handleSendMessage = async (
     text: string,
     attachedFile?: { name: string; size: number }
@@ -150,10 +154,11 @@ export default function UserChatPage() {
 
     let convId = activeConvId;
     let targetConv = conversations.find((c) => c.id === convId);
+    const userKey = currentUser?.email || currentUser?.id || 'user@knovera.ai';
 
     if (!targetConv) {
       try {
-        const created = await api.createConversation(text ? text.slice(0, 32) : 'New chat');
+        const created = await api.createConversation(text ? text.slice(0, 32) : 'New chat', undefined, userKey);
         targetConv = created;
         convId = created.id;
         setConversations((prev) => [created, ...prev]);
@@ -204,7 +209,7 @@ export default function UserChatPage() {
 
     // Save user message to database asynchronously
     api.saveChatMessage(convId, userTurn).catch((err) =>
-      console.warn('Failed to save user message turn to DB:', err)
+      console.warn('Failed to save user message turn to MongoDB:', err)
     );
 
     setIsLoading(true);
@@ -216,12 +221,12 @@ export default function UserChatPage() {
         content: m.content,
       }));
 
+      // Submit chat query with dynamic backend thresholding
       const res = await api.sendChatMessage({
         session_id: convId,
         message: text,
         history: historyPayload,
         k: 4,
-        score_threshold: 0.70,
       });
 
       const assistantTurn: ChatTurn = {
@@ -235,7 +240,7 @@ export default function UserChatPage() {
 
       // Save assistant message to database asynchronously
       api.saveChatMessage(convId, assistantTurn).catch((err) =>
-        console.warn('Failed to save assistant turn to DB:', err)
+        console.warn('Failed to save assistant turn to MongoDB:', err)
       );
 
       // Update state
@@ -283,21 +288,9 @@ export default function UserChatPage() {
     );
   };
 
-  const handleRegenerateLast = () => {
-    if (!activeConversation || activeConversation.messages.length < 2) return;
-    const lastUserTurn = [...activeConversation.messages].reverse().find((m) => m.role === 'user');
-    if (lastUserTurn) {
-      handleSendMessage(lastUserTurn.content);
-    }
-  };
-
-  const handleSwitchToAdmin = () => {
-    const auth = getStoredAuth();
-    if (auth && auth.role === 'admin') {
-      router.push('/admin');
-    } else {
-      router.push('/admin/login');
-    }
+  const handleClearHistory = () => {
+    setConversations([]);
+    handleNewChat();
   };
 
   const handleLogout = () => {
@@ -312,33 +305,44 @@ export default function UserChatPage() {
         height: '100vh',
         width: '100vw',
         overflow: 'hidden',
-        backgroundColor: 'var(--bg-surface)',
+        backgroundColor: '#ffffff',
       }}
     >
-      {/* Left Sidebar — Chat History */}
+      {/* ChatGPT-Style Sidebar */}
       <ChatSidebar
         conversations={conversations}
         activeConversationId={activeConvId}
-        onSelectConversation={setActiveConvId}
+        onSelectConversation={(id) => setActiveConvId(id)}
         onNewChat={handleNewChat}
         onRenameConversation={handleRenameConversation}
         onDeleteConversation={handleDeleteConversation}
         isOpen={sidebarOpen}
         onToggleOpen={() => setSidebarOpen(!sidebarOpen)}
-        onSwitchToAdmin={handleSwitchToAdmin}
+        onSwitchToAdmin={() => router.push('/admin')}
         onLogout={handleLogout}
-        userName={currentUser?.name || 'Sarah Jenkins'}
-        userEmail={currentUser?.email || 'user@knovera.ai'}
+        userName={currentUser?.name || DEMO_CREDENTIALS.user.name}
+        userEmail={currentUser?.email || DEMO_CREDENTIALS.user.email}
       />
 
-      {/* Right Panel — Chat */}
-      <ChatArea
-        messages={activeConversation ? activeConversation.messages : []}
-        isLoading={isLoading}
-        onSendMessage={handleSendMessage}
-        onRegenerateLast={handleRegenerateLast}
-        onFeedback={handleFeedback}
-      />
+      {/* Main Chat Workspace Area */}
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          overflow: 'hidden',
+          backgroundColor: '#ffffff',
+          position: 'relative',
+        }}
+      >
+        <ChatArea
+          messages={activeConversation?.messages || []}
+          isLoading={isLoading}
+          onSendMessage={handleSendMessage}
+          onFeedback={handleFeedback}
+        />
+      </div>
     </div>
   );
 }

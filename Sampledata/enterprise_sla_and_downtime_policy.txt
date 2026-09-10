@@ -1,0 +1,18 @@
+KNOVERA ENTERPRISE SLA & SERVICE CREDIT POLICY
+Document Reference: SLA-2026-V4
+Applicable Services: Knovera RAG Assistant, MongoDB Vector Storage, Ingestion Engine
+
+1. Service Availability Guarantee
+Knovera guarantees a Monthly Uptime Percentage of at least 99.95% for all Enterprise Plan production endpoints and vector database clusters.
+
+2. Downtime Service Credit Calculation
+If the Monthly Uptime Percentage falls below our guaranteed SLA threshold during any given billing month, customers are entitled to the following financial service credits:
+- 99.0% to 99.94% Monthly Uptime: 10% credit applied against the monthly invoice fee.
+- 98.0% to 98.99% Monthly Uptime: 25% credit applied against the monthly invoice fee.
+- Less than 98.0% Monthly Uptime: 50% credit applied against the monthly invoice fee.
+
+3. Credit Claim Procedures
+To receive an SLA credit, customers must submit a claim ticket to billing@knovera.ai within fourteen (14) calendar days following the end of the affected calendar month. The claim must include dates, incident times, and affected API endpoints.
+
+4. Exclusions
+Downtime resulting from scheduled maintenance (announced with at least 48 hours notice), customer internet connectivity failures, or force majeure events are excluded from downtime calculations.

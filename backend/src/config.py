@@ -50,10 +50,17 @@ class APIConfig:
             os.getenv("OPENROUTER_MODEL", os.getenv("OPENAI_MODEL", "gpt-4o-mini"))
         ).strip()
 
-        # Vector Database Settings
-        self.vector_db_url: str = os.getenv(
+        # MongoDB & Vector Database Settings
+        self.mongodb_url: str = (
+            os.getenv("MONGODB_URL")
+            or os.getenv("Mongodb_url")
+            or os.getenv("MONGODB_URI")
+            or os.getenv("VECTOR_DB_URL", "")
+        ).strip()
+        self.mongodb_db_name: str = os.getenv("MONGODB_DB_NAME", "Knovera").strip()
+        self.vector_db_url: str = self.mongodb_url or os.getenv(
             "VECTOR_DB_URL",
-            os.getenv("CHROMA_PERSIST_DIR", str(_root_dir / "data" / "chroma_db"))
+            str(_root_dir / "data" / "chroma_db")
         ).strip()
         self.collection_name: str = os.getenv("COLLECTION_NAME", "knovera_knowledge_base").strip()
 
@@ -79,9 +86,9 @@ class APIConfig:
             self.top_k = 4
 
         try:
-            self.min_top_score: float = float(os.getenv("MIN_TOP_SCORE", "0.72"))
+            self.min_top_score: float = float(os.getenv("MIN_TOP_SCORE", "0.20"))
         except ValueError:
-            self.min_top_score = 0.72
+            self.min_top_score = 0.20
 
         # Upload Settings
         self.upload_dir: str = os.getenv("UPLOAD_DIR", str(_root_dir / "uploads")).strip()
@@ -97,17 +104,27 @@ class APIConfig:
         Export configuration as dictionary.
         
         Args:
-            mask_secrets: If True, masks API keys for safe logging and client inspection.
+            mask_secrets: If True, masks API keys and database credentials for safe logging and inspection.
             
         Returns:
             Dict[str, Any]: Configuration dictionary.
         """
+        import re
+
         def mask_key(key: str) -> str:
             if not key:
                 return "Not Configured"
             if len(key) <= 8:
                 return "***"
             return f"{key[:4]}...{key[-4:]}"
+
+        def mask_mongo_url(url: str) -> str:
+            if not url:
+                return "Not Configured"
+            # Mask password in mongodb://user:pass@host or mongodb+srv://user:pass@host
+            return re.sub(r'(mongodb(?:\+srv)?://[^:]+:)([^@]+)(@.+)', r'\1***\3', url)
+
+        masked_db_url = mask_mongo_url(self.vector_db_url) if mask_secrets else self.vector_db_url
 
         return {
             "app_env": self.app_env,
@@ -118,7 +135,9 @@ class APIConfig:
             "cors_origins": self.cors_origins,
             "embedding_model": self.embedding_model,
             "chat_model": self.chat_model,
-            "vector_db_url": self.vector_db_url,
+            "vector_db_type": "mongodb" if ("mongodb" in self.vector_db_url.lower()) else "chromadb",
+            "vector_db_url": masked_db_url,
+            "mongodb_db_name": self.mongodb_db_name,
             "collection_name": self.collection_name,
             "top_k": self.top_k,
             "min_top_score": self.min_top_score,

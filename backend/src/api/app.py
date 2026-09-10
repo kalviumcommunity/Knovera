@@ -20,6 +20,11 @@ from src.api.routes.health import router as health_router
 from src.api.routes.query import router as query_router
 from src.api.routes.documents import router as documents_router
 from src.api.routes.evaluation import router as eval_router
+from src.api.routes.guardrails import router as guardrails_router
+from src.api.routes.logs import router as logs_router
+from src.api.routes.chunks import router as chunks_router
+from src.api.routes.conversations import router as conversations_router
+from src.api.routes.dashboard import router as dashboard_router
 
 logger = logging.getLogger("knovera.api")
 
@@ -153,5 +158,12 @@ def create_app(config: Optional[APIConfig] = None) -> FastAPI:
     app.include_router(documents_router)
     app.include_router(eval_router, prefix="/api")
     app.include_router(eval_router)
+
+    # Mount enterprise database-backed routers
+    app.include_router(guardrails_router)
+    app.include_router(logs_router)
+    app.include_router(chunks_router)
+    app.include_router(conversations_router)
+    app.include_router(dashboard_router)
 
     return app

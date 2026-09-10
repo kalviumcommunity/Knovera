@@ -1,0 +1,12 @@
+"""
+src/api/routes/__init__.py
+
+FastAPI routers for Knovera.
+"""
+
+from src.api.routes.health import router as health_router
+from src.api.routes.query import router as query_router
+from src.api.routes.documents import router as documents_router
+from src.api.routes.evaluation import router as eval_router
+
+__all__ = ["health_router", "query_router", "documents_router", "eval_router"]

@@ -59,55 +59,40 @@ TURN 6:
 --------------------------------------------------------------------------------
   User: [USER] (10 tokens) How do we handle disputes or customer escalations?
   Assistant: [ASSISTANT] (46 tokens) Disputed refund cases are escalated to the Customer Relations team, who review t...
-  History tokens BEFORE trim: 445
-  ⚠️  Approaching token budget (80% threshold = 400)
-  ✓ Trimmed 1 old turn(s)
-    Tokens freed: 68
-    History tokens AFTER trim: 377
+  History tokens BEFORE trim: 377
+  ✓ Within budget (using 75.4%)
   Final status: 11 messages, 377 tokens (75.4% of budget)
 
 TURN 7:
 --------------------------------------------------------------------------------
   User: [USER] (9 tokens) What documentation is required for a refund claim?
   Assistant: [ASSISTANT] (56 tokens) Required documentation includes: a valid sales receipt or order reference ID, pr...
-  History tokens BEFORE trim: 442
-  ⚠️  Approaching token budget (80% threshold = 400)
-  ✓ Trimmed 1 old turn(s)
-    Tokens freed: 75
-    History tokens AFTER trim: 367
+  History tokens BEFORE trim: 367
+  ✓ Within budget (using 73.4%)
   Final status: 11 messages, 367 tokens (73.4% of budget)
 
 TURN 8:
 --------------------------------------------------------------------------------
   User: [USER] (13 tokens) Can refunds be issued to a different payment method than the original?
   Assistant: [ASSISTANT] (47 tokens) Refunds are always issued to the original payment method to prevent fraud and en...
-  History tokens BEFORE trim: 427
-  ⚠️  Approaching token budget (80% threshold = 400)
-  ✓ Trimmed 1 old turn(s)
-    Tokens freed: 64
-    History tokens AFTER trim: 363
+  History tokens BEFORE trim: 363
+  ✓ Within budget (using 72.6%)
   Final status: 11 messages, 363 tokens (72.6% of budget)
 
 TURN 9:
 --------------------------------------------------------------------------------
   User: [USER] (10 tokens) What is our policy on international returns and refunds?
   Assistant: [ASSISTANT] (48 tokens) International returns follow the same 30-day window but require customers to arr...
-  History tokens BEFORE trim: 421
-  ⚠️  Approaching token budget (80% threshold = 400)
-  ✓ Trimmed 1 old turn(s)
-    Tokens freed: 51
-    History tokens AFTER trim: 370
+  History tokens BEFORE trim: 370
+  ✓ Within budget (using 74.0%)
   Final status: 11 messages, 370 tokens (74.0% of budget)
 
 TURN 10:
 --------------------------------------------------------------------------------
   User: [USER] (12 tokens) How should staff handle repeat return requests from the same customer?
   Assistant: [ASSISTANT] (60 tokens) Staff should review the customer's return history in the CRM. Multiple returns (...
-  History tokens BEFORE trim: 442
-  ⚠️  Approaching token budget (80% threshold = 400)
-  ✓ Trimmed 1 old turn(s)
-    Tokens freed: 60
-    History tokens AFTER trim: 382
+  History tokens BEFORE trim: 382
+  ✓ Within budget (using 76.4%)
   Final status: 11 messages, 382 tokens (76.4% of budget)
 
 ================================================================================
@@ -122,13 +107,7 @@ Within budget: ✓ YES
 Usage: 76.4%
 
 TRIMMING EVENTS:
-Total trim events: 5
-  Turn 6: Removed 1 turn(s), saved 68 tokens → 377 tokens remain
-  Turn 7: Removed 1 turn(s), saved 75 tokens → 367 tokens remain
-  Turn 8: Removed 1 turn(s), saved 64 tokens → 363 tokens remain
-  Turn 9: Removed 1 turn(s), saved 51 tokens → 370 tokens remain
-  Turn 10: Removed 1 turn(s), saved 60 tokens → 382 tokens remain
-Total tokens saved by trimming: 318
+No trimming was necessary (unusual with small budget).
 
 TOKEN USAGE OVER TIME:
 Turn   Messages     Tokens     %Budget    Trimmed?  
@@ -138,11 +117,11 @@ Turn   Messages     Tokens     %Budget    Trimmed?
 3      7            278        55.6       No        
 4      9            329        65.8       No        
 5      11           389        77.8       No        
-6      11           377        75.4       Yes       
-7      11           367        73.4       Yes       
-8      11           363        72.6       Yes       
-9      11           370        74.0       Yes       
-10     11           382        76.4       Yes       
+6      11           377        75.4       No        
+7      11           367        73.4       No        
+8      11           363        72.6       No        
+9      11           370        74.0       No        
+10     11           382        76.4       No        
 
 ================================================================================
 CONCLUSION

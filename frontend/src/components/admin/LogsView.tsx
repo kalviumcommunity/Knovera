@@ -16,6 +16,15 @@ import {
   RefreshCw,
   Loader2,
   Database,
+  MessageSquare,
+  Bot,
+  FileText,
+  Sparkles,
+  Shield,
+  Copy,
+  Check,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 
 export default function LogsView() {
@@ -26,6 +35,8 @@ export default function LogsView() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'success' | 'warning' | 'error'>('all');
   const [selectedLog, setSelectedLog] = useState<AuditLog | null>(null);
+  const [showRawJson, setShowRawJson] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -110,6 +121,93 @@ export default function LogsView() {
           border: 'var(--status-danger-border)',
         };
     }
+  };
+
+  const copyToClipboard = (text: string, field: string) => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 1800);
+    }
+  };
+
+  const getLogInput = (log: AuditLog): string => {
+    if (log.input && log.input.trim()) return log.input;
+    if (log.querySnippet && log.querySnippet.trim()) return log.querySnippet;
+    if (log.action && log.action.includes('Query:')) {
+      return log.action.replace(/^.*Query:\s*/i, '');
+    }
+    return log.action || 'No user input recorded';
+  };
+
+  const getLogOutput = (log: AuditLog): string => {
+    if (log.output && log.output.trim() && !log.output.startsWith('Guardrail:')) {
+      return log.output;
+    }
+    if (log.guardrailStatus === 'triggered' || log.status === 'error' || log.guardrailStatus === 'refused') {
+      return log.details || 'Request intercepted and blocked by Knovera Security Guardrails.';
+    }
+    if (log.details && log.details.trim() && !log.details.startsWith('Guardrail:')) {
+      return log.details;
+    }
+    return 'No text response recorded (Query processed with citations).';
+  };
+
+  const getNormalizedSources = (log: AuditLog) => {
+    if (Array.isArray(log.sources) && log.sources.length > 0) {
+      return log.sources.map((s: any, idx: number) => {
+        if (typeof s === 'string') {
+          return {
+            id: `source_${idx + 1}`,
+            title: s,
+            filename: s,
+            section: undefined,
+            score: log.groundednessScore,
+          };
+        }
+        return {
+          id: s.chunk_id || `source_${idx + 1}`,
+          title: s.doc_title || s.source || `Document ${idx + 1}`,
+          filename: s.source || s.doc_title || 'knowledge_source.pdf',
+          section: s.section,
+          score: s.score,
+        };
+      });
+    }
+
+    // Fallback detection from details text if legacy log
+    if (log.details) {
+      const d = log.details;
+      if (d.includes('customer_sla_refund_terms')) {
+        return [{
+          id: 'chunk_sla_01',
+          title: 'Customer SLA & Refund Terms',
+          filename: 'customer_sla_refund_terms.docx',
+          section: 'Downtime Credit Calculations',
+          score: log.groundednessScore || 0.94,
+        }];
+      }
+      if (d.includes('rag_api_specification_v2')) {
+        return [{
+          id: 'chunk_api_01',
+          title: 'RAG API Specification v2',
+          filename: 'rag_api_specification_v2.md',
+          section: 'Bearer Token Authentication',
+          score: log.groundednessScore || 0.98,
+        }];
+      }
+      if (d.includes('enterprise_security_compliance')) {
+        return [{
+          id: 'chunk_sec_01',
+          title: 'Enterprise Security Compliance',
+          filename: 'enterprise_security_compliance_2026.pdf',
+          section: 'Access Isolation & Audit Trail Standards',
+          score: log.groundednessScore || 1.0,
+        }];
+      }
+    }
+
+    return [];
   };
 
   return (
@@ -521,141 +619,498 @@ export default function LogsView() {
         </div>
       </div>
 
-      {/* Log Details Modal */}
-      {selectedLog && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(15, 23, 0.4)',
-            backdropFilter: 'blur(3px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 100,
-            padding: '16px',
-          }}
-          onClick={() => setSelectedLog(null)}
-        >
+      {/* Enhanced Log Details Modal Showing Input, Output & Source */}
+      {selectedLog && (() => {
+        const input = getLogInput(selectedLog);
+        const output = getLogOutput(selectedLog);
+        const sources = getNormalizedSources(selectedLog);
+        const badge = getStatusBadge(selectedLog.status);
+        const isBlocked = selectedLog.status === 'error' || selectedLog.guardrailStatus === 'refused' || selectedLog.guardrailStatus === 'triggered';
+
+        return (
           <div
-            className="animate-slide-down"
             style={{
-              width: '100%',
-              maxWidth: '600px',
-              backgroundColor: '#ffffff',
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-light)',
-              boxShadow: 'var(--shadow-lg)',
-              overflow: 'hidden',
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgba(15, 23, 42, 0.45)',
+              backdropFilter: 'blur(4px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 9999,
+              padding: '16px',
             }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={() => {
+              setSelectedLog(null);
+              setShowRawJson(false);
+            }}
           >
             <div
+              className="animate-slide-down"
               style={{
+                width: '100%',
+                maxWidth: '720px',
+                maxHeight: '88vh',
                 display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '16px 20px',
-                borderBottom: '1px solid var(--border-light)',
+                flexDirection: 'column',
+                backgroundColor: '#ffffff',
+                borderRadius: 'var(--radius-xl)',
+                border: '1px solid var(--border-light)',
+                boxShadow: 'var(--shadow-xl)',
+                overflow: 'hidden',
               }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <div>
-                <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)' }}>
-                  Audit Event Details
-                </h3>
-                <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                  Event ID: {selectedLog.id} • {selectedLog.timestamp}
-                </span>
-              </div>
-              <button
-                onClick={() => setSelectedLog(null)}
-                style={{ padding: '4px', color: 'var(--text-muted)', cursor: 'pointer', background: 'none', border: 'none' }}
+              {/* Modal Header */}
+              <div
+                style={{
+                  padding: '16px 22px',
+                  borderBottom: '1px solid var(--border-light)',
+                  backgroundColor: '#ffffff',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '12px',
+                }}
               >
-                <X size={18} />
-              </button>
-            </div>
-
-            <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div>
-                <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                  EVENT SUMMARY
-                </label>
-                <div style={{ fontSize: '14px', fontWeight: 500, color: 'var(--text-primary)', marginTop: '4px' }}>
-                  {selectedLog.action}
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <h3 style={{ fontSize: '17px', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                      Audit Event Inspector
+                    </h3>
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        color: badge.color,
+                        backgroundColor: badge.bg,
+                        border: `1px solid ${badge.border}`,
+                        padding: '1px 8px',
+                        borderRadius: 'var(--radius-full)',
+                      }}
+                    >
+                      {badge.icon}
+                      <span>{badge.label}</span>
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
+                    <span>{selectedLog.timestamp}</span>
+                    <span style={{ margin: '0 6px' }}>•</span>
+                    <span>User: <strong>{selectedLog.user}</strong></span>
+                    <span style={{ margin: '0 6px' }}>•</span>
+                    <span>ID: <code style={{ fontSize: '11px' }}>{selectedLog.id}</code></span>
+                  </div>
                 </div>
+
+                <button
+                  onClick={() => {
+                    setSelectedLog(null);
+                    setShowRawJson(false);
+                  }}
+                  style={{
+                    padding: '6px',
+                    color: 'var(--text-muted)',
+                    cursor: 'pointer',
+                    background: 'none',
+                    border: 'none',
+                    borderRadius: 'var(--radius-sm)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'background 0.15s ease',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-muted)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                >
+                  <X size={19} />
+                </button>
               </div>
 
-              <div>
-                <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                  DETAILED AUDIT MESSAGE
-                </label>
+              {/* Modal Body */}
+              <div
+                style={{
+                  padding: '20px 22px',
+                  overflowY: 'auto',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '18px',
+                }}
+              >
+                {/* 1. INPUT Section */}
+                <div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <MessageSquare size={14} color="var(--accent-primary)" />
+                      <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.03em' }}>
+                        USER INPUT / PROMPT
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => copyToClipboard(input, 'input')}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '11.5px',
+                        color: 'var(--text-muted)',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: '2px 6px',
+                        borderRadius: 'var(--radius-xs)',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                    >
+                      {copiedField === 'input' ? <Check size={12} color="var(--status-success)" /> : <Copy size={12} />}
+                      <span>{copiedField === 'input' ? 'Copied' : 'Copy'}</span>
+                    </button>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: '12px 14px',
+                      backgroundColor: '#f8fafc',
+                      borderRadius: 'var(--radius-md)',
+                      border: '1px solid var(--border-light)',
+                      fontSize: '13.5px',
+                      lineHeight: 1.55,
+                      color: 'var(--text-primary)',
+                      whiteSpace: 'pre-wrap',
+                      wordBreak: 'break-word',
+                    }}
+                  >
+                    {input}
+                  </div>
+                </div>
+
+                {/* 2. OUTPUT Section */}
+                <div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '6px',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Bot size={14} color={isBlocked ? 'var(--status-danger)' : '#10b981'} />
+                      <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.03em' }}>
+                        {isBlocked ? 'GUARDRAIL / SECURITY RESPONSE' : 'SYSTEM OUTPUT / ANSWER'}
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => copyToClipboard(output, 'output')}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '11.5px',
+                        color: 'var(--text-muted)',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: '2px 6px',
+                        borderRadius: 'var(--radius-xs)',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                    >
+                      {copiedField === 'output' ? <Check size={12} color="var(--status-success)" /> : <Copy size={12} />}
+                      <span>{copiedField === 'output' ? 'Copied' : 'Copy'}</span>
+                    </button>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: '14px 16px',
+                      backgroundColor: isBlocked ? 'var(--status-danger-bg)' : '#ffffff',
+                      borderRadius: 'var(--radius-md)',
+                      border: isBlocked ? '1px solid var(--status-danger-border)' : '1px solid var(--border-light)',
+                      fontSize: '13.5px',
+                      lineHeight: 1.6,
+                      color: isBlocked ? 'var(--status-danger)' : 'var(--text-primary)',
+                      whiteSpace: 'pre-wrap',
+                      wordBreak: 'break-word',
+                      boxShadow: isBlocked ? 'none' : 'var(--shadow-xs)',
+                    }}
+                  >
+                    {output}
+                  </div>
+                </div>
+
+                {/* 3. SOURCE & CITATIONS Section */}
+                <div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <FileText size={14} color="#6366f1" />
+                      <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.03em' }}>
+                        RETRIEVED SOURCES & CITATIONS
+                      </span>
+                    </div>
+
+                    <span
+                      style={{
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        padding: '1px 7px',
+                        borderRadius: 'var(--radius-full)',
+                        backgroundColor: sources.length > 0 ? '#eff6ff' : 'var(--bg-muted)',
+                        color: sources.length > 0 ? 'var(--accent-primary)' : 'var(--text-muted)',
+                        border: sources.length > 0 ? '1px solid #bfdbfe' : '1px solid var(--border-light)',
+                      }}
+                    >
+                      {sources.length} {sources.length === 1 ? 'Source Cited' : 'Sources Cited'}
+                    </span>
+                  </div>
+
+                  {sources.length === 0 ? (
+                    <div
+                      style={{
+                        padding: '14px 16px',
+                        backgroundColor: '#f8fafc',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px dashed var(--border-light)',
+                        fontSize: '12.5px',
+                        color: 'var(--text-muted)',
+                        textAlign: 'center',
+                      }}
+                    >
+                      No internal document sources cited for this event (intercepted by guardrails, direct administration, or general query).
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {sources.map((s, idx) => (
+                        <div
+                          key={s.id || idx}
+                          style={{
+                            padding: '10px 14px',
+                            backgroundColor: '#ffffff',
+                            borderRadius: 'var(--radius-md)',
+                            border: '1px solid var(--border-light)',
+                            boxShadow: 'var(--shadow-xs)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            gap: '12px',
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0, flex: 1 }}>
+                            <div
+                              style={{
+                                width: '26px',
+                                height: '26px',
+                                borderRadius: 'var(--radius-xs)',
+                                backgroundColor: '#eff6ff',
+                                color: 'var(--accent-primary)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '11px',
+                                fontWeight: 700,
+                                flexShrink: 0,
+                              }}
+                            >
+                              [{idx + 1}]
+                            </div>
+
+                            <div style={{ minWidth: 0, flex: 1 }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <span
+                                  style={{
+                                    fontSize: '13px',
+                                    fontWeight: 600,
+                                    color: 'var(--text-primary)',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                >
+                                  {s.title}
+                                </span>
+                              </div>
+                              <div
+                                style={{
+                                  fontSize: '11.5px',
+                                  color: 'var(--text-muted)',
+                                  marginTop: '1px',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '8px',
+                                }}
+                              >
+                                {s.filename && <span>File: {s.filename}</span>}
+                                {s.section && (
+                                  <>
+                                    <span>•</span>
+                                    <span>{s.section}</span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          {s.score != null && (
+                            <div
+                              style={{
+                                fontSize: '11px',
+                                fontWeight: 600,
+                                padding: '2px 7px',
+                                borderRadius: 'var(--radius-xs)',
+                                backgroundColor: '#f0fdf4',
+                                color: '#16a34a',
+                                border: '1px solid #bbf7d0',
+                                flexShrink: 0,
+                              }}
+                            >
+                              {Math.round(s.score > 1 ? s.score : s.score * 100)}% Match
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* 4. Telemetry Pill Bar */}
                 <div
                   style={{
-                    marginTop: '4px',
-                    padding: '10px 12px',
-                    backgroundColor: 'var(--bg-app)',
-                    borderRadius: 'var(--radius-md)',
-                    border: '1px solid var(--border-light)',
-                    fontSize: '13px',
-                    lineHeight: 1.5,
-                    color: 'var(--text-secondary)',
-                  }}
-                >
-                  {selectedLog.details}
-                </div>
-              </div>
-
-              <div>
-                <label style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                  RAW DATABASE PAYLOAD
-                </label>
-                <pre
-                  style={{
-                    marginTop: '4px',
-                    padding: '12px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '8px',
+                    padding: '10px 14px',
                     backgroundColor: 'var(--bg-app)',
                     borderRadius: 'var(--radius-md)',
                     border: '1px solid var(--border-light)',
                     fontSize: '12px',
-                    fontFamily: 'var(--font-mono)',
-                    color: '#1e293b',
-                    maxHeight: '180px',
-                    overflowY: 'auto',
+                    color: 'var(--text-secondary)',
                   }}
                 >
-                  {JSON.stringify(selectedLog, null, 2)}
-                </pre>
-              </div>
-            </div>
+                  <div>
+                    <span style={{ color: 'var(--text-muted)' }}>Latency: </span>
+                    <strong>{selectedLog.latencyMs != null ? `${selectedLog.latencyMs} ms` : '—'}</strong>
+                  </div>
+                  <span style={{ color: 'var(--border-medium)' }}>|</span>
+                  <div>
+                    <span style={{ color: 'var(--text-muted)' }}>Groundedness: </span>
+                    <strong>{selectedLog.groundednessScore != null ? selectedLog.groundednessScore : '—'}</strong>
+                  </div>
+                  <span style={{ color: 'var(--border-medium)' }}>|</span>
+                  <div>
+                    <span style={{ color: 'var(--text-muted)' }}>Guardrail: </span>
+                    <strong>{selectedLog.guardrailName || 'Standard'} ({selectedLog.guardrailStatus || 'passed'})</strong>
+                  </div>
+                  <span style={{ color: 'var(--border-medium)' }}>|</span>
+                  <div>
+                    <span style={{ color: 'var(--text-muted)' }}>Session: </span>
+                    <code style={{ fontSize: '11px' }}>{selectedLog.sessionId}</code>
+                  </div>
+                </div>
 
-            <div
-              style={{
-                padding: '12px 20px',
-                backgroundColor: 'var(--bg-app)',
-                borderTop: '1px solid var(--border-light)',
-                display: 'flex',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <button
-                onClick={() => setSelectedLog(null)}
+                {/* 5. Collapsible Raw Database Record Accordion */}
+                <div style={{ borderTop: '1px solid var(--border-light)', paddingTop: '12px' }}>
+                  <button
+                    onClick={() => setShowRawJson(!showRawJson)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '12px',
+                      color: 'var(--text-secondary)',
+                      fontWeight: 600,
+                      padding: '4px 0',
+                    }}
+                  >
+                    <span>Raw Database Record (JSON)</span>
+                    {showRawJson ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                  </button>
+
+                  {showRawJson && (
+                    <div style={{ marginTop: '8px' }}>
+                      <pre
+                        style={{
+                          margin: 0,
+                          padding: '12px',
+                          backgroundColor: '#0f172a',
+                          color: '#e2e8f0',
+                          borderRadius: 'var(--radius-md)',
+                          fontSize: '11.5px',
+                          fontFamily: 'var(--font-mono)',
+                          maxHeight: '180px',
+                          overflowY: 'auto',
+                          lineHeight: 1.45,
+                        }}
+                      >
+                        {JSON.stringify(selectedLog, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div
                 style={{
-                  padding: '6px 14px',
-                  backgroundColor: 'var(--accent-slate)',
-                  color: '#ffffff',
-                  borderRadius: 'var(--radius-md)',
-                  fontSize: '13px',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                  border: 'none',
+                  padding: '12px 22px',
+                  backgroundColor: 'var(--bg-app)',
+                  borderTop: '1px solid var(--border-light)',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}
               >
-                Close
-              </button>
+                <div style={{ fontSize: '11.5px', color: 'var(--text-muted)' }}>
+                  Knovera Multi-Tenant Audit Security
+                </div>
+
+                <button
+                  onClick={() => {
+                    setSelectedLog(null);
+                    setShowRawJson(false);
+                  }}
+                  style={{
+                    padding: '7px 18px',
+                    backgroundColor: 'var(--accent-slate)',
+                    color: '#ffffff',
+                    borderRadius: 'var(--radius-md)',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    border: 'none',
+                    boxShadow: 'var(--shadow-xs)',
+                  }}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }

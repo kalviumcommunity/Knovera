@@ -150,30 +150,9 @@ function UserAuthContent() {
                 marginLeft: '8px',
               }}
             >
-              User Portal
+              Portal
             </span>
           </div>
-        </Link>
-
-        <Link
-          href="/admin/login"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            fontSize: '12.5px',
-            color: 'var(--text-secondary)',
-            textDecoration: 'none',
-            padding: '6px 12px',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--bg-app)',
-            border: '1px solid var(--border-light)',
-            fontWeight: 500,
-            transition: 'all 0.15s ease',
-          }}
-        >
-          <ShieldCheck size={14} color="var(--accent-primary)" />
-          <span>Admin Console Login →</span>
         </Link>
       </header>
 
@@ -818,30 +797,6 @@ function UserAuthContent() {
           </button>
           <div style={{ textAlign: 'center', fontSize: '11px', color: 'var(--text-light)', marginTop: '4px' }}>
             Credentials: <code>user@knovera.ai</code> / <code>user123</code>
-          </div>
-
-          {/* Admin Switcher Footer */}
-          <div
-            style={{
-              marginTop: '24px',
-              paddingTop: '16px',
-              borderTop: '1px solid var(--border-subtle)',
-              textAlign: 'center',
-              fontSize: '12.5px',
-              color: 'var(--text-secondary)',
-            }}
-          >
-            Are you a platform administrator?{' '}
-            <Link
-              href="/admin/login"
-              style={{
-                color: 'var(--accent-primary)',
-                fontWeight: 600,
-                textDecoration: 'none',
-              }}
-            >
-              Sign in to Admin Console →
-            </Link>
           </div>
         </div>
       </div>

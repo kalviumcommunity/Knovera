@@ -176,6 +176,14 @@ export interface Guardrail {
   updatedAt?: string;
 }
 
+export interface LogSourceItem {
+  source: string;
+  doc_title?: string;
+  section?: string;
+  score?: number;
+  chunk_id?: string;
+}
+
 export interface AuditLog {
   id: string;
   timestamp: string;
@@ -185,10 +193,13 @@ export interface AuditLog {
   querySnippet?: string;
   latencyMs: number;
   groundednessScore?: number;
-  guardrailStatus?: 'passed' | 'triggered' | 'bypassed';
+  guardrailStatus?: 'passed' | 'triggered' | 'bypassed' | 'refused' | string;
   guardrailName?: string;
   status: 'success' | 'warning' | 'error';
   details?: string;
+  input?: string;
+  output?: string;
+  sources?: LogSourceItem[] | string[];
 }
 
 export interface AdminSettings {

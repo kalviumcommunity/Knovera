@@ -277,41 +277,12 @@ def generate_answer(
 
 def _synthesize_offline_grounded_answer(query: str, context: str) -> str:
     """
-    Generates a deterministic, grounded answer from the context passages when
-    operating in offline mode or during unit tests.
+    Generates an intelligent semantic grounded answer from context passages
+    handling synonym equivalence (e.g. describe vs define) and extracting
+    actionable policy details.
     """
-    query_words = set(w.lower() for w in re.findall(r'\b\w+\b', query) if len(w) > 2)
-    
-    # Parse context blocks
-    blocks = context.split("\n\n")
-    best_sentences = []
-    
-    for block in blocks:
-        lines = block.strip().split("\n")
-        header = lines[0] if lines else ""
-        body = " ".join(lines[1:]) if len(lines) > 1 else block
-        
-        # Extract citation index from header (e.g. "[1]")
-        citation = header.split("]")[0] + "]" if "]" in header else "[1]"
-        
-        # Split body into sentences
-        sentences = [s.strip() for s in re.split(r'(?<=[.!?])\s+', body) if len(s.strip()) > 10]
-        for sent in sentences:
-            sent_clean = sent.rstrip(".")
-            sent_words = set(w.lower() for w in re.findall(r'\b\w+\b', sent_clean))
-            overlap = len(query_words.intersection(sent_words))
-            if overlap > 0:
-                best_sentences.append((overlap, f"{sent_clean}. {citation}"))
-                
-    if best_sentences:
-        # Sort by query term overlap descending
-        best_sentences.sort(key=lambda x: x[0], reverse=True)
-        top_sentences = [s[1] for s in best_sentences[:2]]
-        return "Based on the provided documentation: " + " ".join(top_sentences)
-        
-    # Generic fallback based on context excerpt
-    first_block = blocks[0] if blocks else ""
-    return f"According to the documentation: {first_block[:200]}..."
+    from src.services.semantic_engine import synthesize_semantic_grounded_answer
+    return synthesize_semantic_grounded_answer(query=query, context=context)
 
 
 # ============================================================================

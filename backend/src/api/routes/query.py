@@ -32,6 +32,9 @@ from src.services.hallucination_guardrail import (
     STANDARD_SAFE_REFUSAL
 )
 from src.services.history_manager import HistoryManager
+from src.services.semantic_engine import reformulate_conversational_query
+
+from src.services.guardrail_engine import get_guardrail_engine
 
 logger = logging.getLogger("knovera.api.query")
 router = APIRouter(tags=["RAG Core"])
@@ -72,17 +75,38 @@ class RAGService:
         k: Optional[int] = None,
         score_threshold: Optional[float] = None,
         use_api: Optional[bool] = None,
-        metadata_filter: Optional[Dict[str, Any]] = None
+        metadata_filter: Optional[Dict[str, Any]] = None,
+        admin_id: Optional[str] = None
     ) -> Dict[str, Any]:
         start_time = time.perf_counter()
         latencies: Dict[str, float] = {}
 
         target_k = k if k is not None else self.config.top_k
         active_use_api = use_api if use_api is not None else self.config.use_live_api
+        target_admin = admin_id or "admin@knovera.ai"
 
-        # Stage 1: Embed Query
+        # Stage 0: AI Safety Guardrails Pre-Execution Scan
+        guardrail_engine = get_guardrail_engine()
+        decision = guardrail_engine.evaluate_input(question, admin_id=target_admin)
+
+        if decision.is_refused:
+            latencies["total_ms"] = round((time.perf_counter() - start_time) * 1000, 2)
+            return {
+                "query": decision.sanitized_query,
+                "answer": decision.refusal_message,
+                "sources": [],
+                "status": "refused_guardrail",
+                "guardrail_status": "refused",
+                "guardrail_name": decision.triggered_guardrail or "Prompt Injection & Jailbreak Prevention",
+                "latency_ms": latencies["total_ms"],
+                "stage_latencies_ms": latencies
+            }
+
+        effective_query = decision.sanitized_query
+
+        # Stage 1: Embed Query (using sanitized query with PII masked)
         t0 = time.perf_counter()
-        query_vector = embed_query(question, generator=self.embedding_generator)
+        query_vector = embed_query(effective_query, generator=self.embedding_generator)
         latencies["embed_ms"] = round((time.perf_counter() - t0) * 1000, 2)
 
         # Stage 2: Retrieve Chunks
@@ -127,10 +151,12 @@ class RAGService:
                 })
 
             return {
-                "query": question,
+                "query": effective_query,
                 "answer": answer_text,
                 "sources": formatted_sources,
                 "status": status_code,
+                "guardrail_status": "refused",
+                "guardrail_name": "Grounded Hallucination Shield",
                 "latency_ms": latencies["total_ms"],
                 "stage_latencies_ms": latencies
             }
@@ -143,12 +169,18 @@ class RAGService:
         # Stage 5: Generate Grounded Answer
         t0 = time.perf_counter()
         answer = generate_answer(
-            query=question,
+            query=effective_query,
             context=context,
             model_name=self.config.chat_model,
             use_api=active_use_api
         )
         latencies["generate_ms"] = round((time.perf_counter() - t0) * 1000, 2)
+
+        # Stage 6: Output Guardrail & Secret Scrubbing
+        sanitized_answer = guardrail_engine.sanitize_output(
+            answer,
+            append_disclaimer=decision.append_disclaimer
+        )
 
         formatted_sources = []
         for chunk in chunks:
@@ -165,10 +197,12 @@ class RAGService:
         latencies["total_ms"] = round((time.perf_counter() - start_time) * 1000, 2)
 
         return {
-            "query": question,
-            "answer": answer,
+            "query": effective_query,
+            "answer": sanitized_answer,
             "sources": formatted_sources,
             "status": "answered",
+            "guardrail_status": decision.guardrail_status,
+            "guardrail_name": decision.triggered_guardrail or "Grounded Hallucination Shield",
             "latency_ms": latencies["total_ms"],
             "stage_latencies_ms": latencies
         }
@@ -196,6 +230,7 @@ def get_rag_service(config: APIConfig = Depends(get_config)) -> RAGService:
 )
 def query_rag(
     request: QueryRequest,
+    x_admin_id: Optional[str] = Header(None, alias="X-Admin-Id"),
     rag_service: RAGService = Depends(get_rag_service)
 ) -> QueryResponse:
     """
@@ -204,12 +239,14 @@ def query_rag(
     synthesizes a grounded answer, and returns structured JSON with source citations.
     """
     try:
+        target_admin = x_admin_id or "admin@knovera.ai"
         result = rag_service.execute_query(
             question=request.question,
             k=request.k,
             score_threshold=request.score_threshold,
             use_api=request.use_api,
-            metadata_filter=request.metadata_filter
+            metadata_filter=request.metadata_filter,
+            admin_id=target_admin
         )
 
         source_objects = [
@@ -223,6 +260,37 @@ def query_rag(
             )
             for s in result.get("sources", [])
         ]
+
+        # Record query log in MongoDB Atlas
+        try:
+            from src.services.mongo_storage import get_mongo_storage
+            storage = get_mongo_storage()
+            storage.create_log({
+                "session_id": "api_query",
+                "user": "api_client",
+                "action": f"API Query: {request.question[:45]}",
+                "query_snippet": request.question,
+                "input": request.question,
+                "output": result.get("answer", ""),
+                "sources": [
+                    {
+                        "source": s.source,
+                        "doc_title": s.doc_title,
+                        "section": s.section,
+                        "score": s.score,
+                        "chunk_id": s.chunk_id
+                    }
+                    for s in source_objects
+                ],
+                "latency_ms": result.get("latency_ms", 0.0),
+                "groundedness_score": source_objects[0].score if source_objects else 0.0,
+                "guardrail_status": result.get("guardrail_status", "passed"),
+                "guardrail_name": result.get("guardrail_name", "Grounded Hallucination Shield"),
+                "status": "success" if result.get("guardrail_status") in ["passed", "redacted"] else ("error" if result.get("guardrail_status") == "refused" else "warning"),
+                "details": f"Guardrail: {result.get('guardrail_name')} ({result.get('guardrail_status')}). Citations: {len(source_objects)}."
+            }, admin_id=target_admin)
+        except Exception as log_err:
+            logger.warning(f"Could not record query log in MongoDB: {log_err}")
 
         return QueryResponse(
             query=result.get("query", request.question),
@@ -264,6 +332,7 @@ def chat_rag(
     """
     start_time = time.perf_counter()
     session_id = request.session_id
+    target_admin = x_admin_id or "admin@knovera.ai"
 
     # Retrieve or create session history
     if session_id not in _session_histories:
@@ -275,18 +344,27 @@ def chat_rag(
         for msg in request.history:
             history.add_message(msg.role, msg.content)
 
-    # Add current user message
-    history.add_message("user", request.message)
+    # Contextualize conversational follow-ups (e.g., "can you tell more about this", "elaborate")
+    combined_history = request.history if request.history else history.get_messages()
+    effective_question = reformulate_conversational_query(
+        current_query=request.message,
+        history=combined_history
+    )
 
-    # Execute query
+    # Execute query through guardrail pipeline
     result = rag_service.execute_query(
-        question=request.message,
+        question=effective_question,
         k=request.k,
         score_threshold=request.score_threshold,
-        use_api=request.use_api
+        use_api=request.use_api,
+        admin_id=target_admin
     )
 
     answer = result.get("answer", "")
+    sanitized_query = result.get("query", effective_question)
+
+    # Add interaction turns to history using user's query
+    history.add_message("user", request.message)
     history.add_message("assistant", answer)
 
     source_objects = [
@@ -301,24 +379,40 @@ def chat_rag(
         for s in result.get("sources", [])
     ]
 
-    total_latency = round((time.perf_counter() - start_time) * 1000, 2)
+    source_records = [
+        {
+            "source": s.source,
+            "doc_title": s.doc_title,
+            "section": s.section,
+            "score": s.score,
+            "chunk_id": s.chunk_id
+        }
+        for s in source_objects
+    ]
 
-    # Record audit log in MongoDB Atlas
+    total_latency = round((time.perf_counter() - start_time) * 1000, 2)
+    gr_status = result.get("guardrail_status", "passed")
+    gr_name = result.get("guardrail_name", "Grounded Hallucination Shield")
+
+    # Record sanitized audit log in MongoDB Atlas (guarantees no raw PII in database logs)
     try:
         from src.services.mongo_storage import get_mongo_storage
         storage = get_mongo_storage()
         storage.create_log({
             "session_id": session_id,
             "user": x_user_id or "user@knovera.ai",
-            "action": f"Chat Query: {request.message[:45]}",
-            "query_snippet": request.message,
+            "action": f"Chat Query: {sanitized_query[:45]}",
+            "query_snippet": sanitized_query,
+            "input": request.message,
+            "output": answer,
+            "sources": source_records,
             "latency_ms": total_latency,
             "groundedness_score": source_objects[0].score if source_objects else 0.0,
-            "guardrail_status": "passed" if result.get("status") == "answered" else "refused",
-            "guardrail_name": "Grounded Hallucination Shield",
-            "status": "success" if result.get("status") == "answered" else "warning",
-            "details": f"Generated grounded response with {len(source_objects)} citations from indexed knowledge base."
-        }, admin_id=x_admin_id or "admin@knovera.ai")
+            "guardrail_status": gr_status,
+            "guardrail_name": gr_name,
+            "status": "success" if gr_status in ["passed", "redacted"] else ("error" if gr_status == "refused" else "warning"),
+            "details": f"Guardrail: {gr_name} ({gr_status}). Citations: {len(source_objects)}."
+        }, admin_id=target_admin)
     except Exception as log_err:
         logger.warning(f"Could not record query log in MongoDB: {log_err}")
 

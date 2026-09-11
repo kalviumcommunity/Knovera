@@ -318,7 +318,6 @@ export default function UserChatPage() {
         onDeleteConversation={handleDeleteConversation}
         isOpen={sidebarOpen}
         onToggleOpen={() => setSidebarOpen(!sidebarOpen)}
-        onSwitchToAdmin={() => router.push('/admin')}
         onLogout={handleLogout}
         userName={currentUser?.name || DEMO_CREDENTIALS.user.name}
         userEmail={currentUser?.email || DEMO_CREDENTIALS.user.email}

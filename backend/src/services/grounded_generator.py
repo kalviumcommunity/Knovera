@@ -185,44 +185,9 @@ def _synthesize_deterministic_grounded_answer(
     context: str,
     chunks: List[Dict[str, Any]]
 ) -> str:
-    """Extracts query-supported factual sentences directly from context with citation markers."""
-    if not context or not context.strip():
-        return STANDARD_MISSING_CONTEXT_FALLBACK
-        
-    query_words = set(w.lower() for w in re.findall(r'\b\w+\b', question) if len(w) > 2)
-    blocks = context.split("\n\n---\n\n") if "\n\n---\n\n" in context else context.split("\n\n")
-    scored_sentences = []
-    
-    for block in blocks:
-        lines = block.strip().split("\n")
-        header = lines[0] if lines else ""
-        body = " ".join(lines[1:]) if len(lines) > 1 else block
-        
-        # Extract citation marker, e.g. "[1]"
-        marker_match = re.search(r'\[\d+\]', header)
-        marker = marker_match.group(0) if marker_match else "[1]"
-        
-        header_words = set(w.lower() for w in re.findall(r'\b\w+\b', header))
-        sentences = [s.strip() for s in re.split(r'(?<=[.!?])\s+', body) if len(s.strip()) > 10]
-        for sent in sentences:
-            sent_clean = sent.rstrip(".")
-            sent_words = set(w.lower() for w in re.findall(r'\b\w+\b', sent_clean))
-            overlap = len(query_words.intersection(sent_words))
-            for qw in query_words:
-                if len(qw) > 3 and any((qw in sw or sw in qw) for sw in sent_words):
-                    overlap += 0.5
-                if len(qw) > 3 and any((qw in hw or hw in qw) for hw in header_words):
-                    overlap += 0.25
-            if overlap > 0:
-                scored_sentences.append((overlap, f"{sent_clean}. {marker}"))
-                
-    if scored_sentences:
-        scored_sentences.sort(key=lambda x: x[0], reverse=True)
-        top_sentences = [s[1] for s in scored_sentences[:2]]
-        return "Based on the provided documentation: " + " ".join(top_sentences)
-        
-    first_chunk_text = chunks[0].get("text", "") if chunks else ""
-    return f"According to the provided context: {first_chunk_text[:180]}... [1]"
+    """Extracts query-supported factual sentences directly from context with citation markers and semantic understanding."""
+    from src.services.semantic_engine import synthesize_semantic_grounded_answer
+    return synthesize_semantic_grounded_answer(query=question, context=context, chunks=chunks)
 
 
 # ============================================================================

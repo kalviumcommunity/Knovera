@@ -386,17 +386,36 @@ class MongoStorage:
         if self.is_connected:
             try:
                 col = self._db["audit_logs"]
-                query: Dict[str, Any] = {"admin_id": target_admin}
+                conditions = []
+
+                # Ensure admin can see their tenant logs; if no isolated logs exist, show all workspace logs
+                count_for_target = col.count_documents({"admin_id": target_admin}) if target_admin else 0
+                if count_for_target > 0:
+                    conditions.append({
+                        "$or": [
+                            {"admin_id": target_admin},
+                            {"admin_id": "admin@knovera.ai"}
+                        ]
+                    })
+
                 if status and status != "all":
-                    query["status"] = status
+                    if status == "error":
+                        conditions.append({"status": {"$in": ["error", "warning", "refused"]}})
+                    else:
+                        conditions.append({"status": status})
+
                 if search:
-                    query["$or"] = [
-                        {"action": {"$regex": search, "$options": "i"}},
-                        {"user": {"$regex": search, "$options": "i"}},
-                        {"query_snippet": {"$regex": search, "$options": "i"}},
-                        {"details": {"$regex": search, "$options": "i"}}
-                    ]
-                
+                    conditions.append({
+                        "$or": [
+                            {"action": {"$regex": search, "$options": "i"}},
+                            {"user": {"$regex": search, "$options": "i"}},
+                            {"query_snippet": {"$regex": search, "$options": "i"}},
+                            {"details": {"$regex": search, "$options": "i"}},
+                            {"guardrail_name": {"$regex": search, "$options": "i"}}
+                        ]
+                    })
+
+                query = {"$and": conditions} if conditions else {}
                 total = col.count_documents(query)
                 skip = (page - 1) * page_size
                 cursor = col.find(query).sort("timestamp", -1).skip(skip).limit(page_size)
@@ -405,7 +424,7 @@ class MongoStorage:
                     doc["id"] = doc.get("id") or str(doc.get("_id"))
                     doc.pop("_id", None)
                     logs.append(doc)
-                
+
                 return {
                     "logs": logs,
                     "total": total,

@@ -29,7 +29,7 @@ interface ChatSidebarProps {
   onDeleteConversation: (id: string) => void;
   isOpen: boolean;
   onToggleOpen: () => void;
-  onSwitchToAdmin: () => void;
+  onSwitchToAdmin?: () => void;
   onLogout?: () => void;
   userName?: string;
   userEmail?: string;
@@ -540,10 +540,10 @@ export default function ChatSidebar({
         )}
       </div>
 
-      {/* Bottom Footer: Enterprise User & Admin Switch Button */}
+      {/* Bottom Footer: User Profile & Session */}
       <div
         style={{
-          padding: '10px 12px 14px 12px',
+          padding: '12px 14px',
           borderTop: '1px solid var(--border-light)',
           backgroundColor: 'var(--bg-surface)',
           display: 'flex',
@@ -551,33 +551,6 @@ export default function ChatSidebar({
           gap: '8px',
         }}
       >
-        <button
-          onClick={onSwitchToAdmin}
-          style={{
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '8px 10px',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--accent-primary-subtle)',
-            border: '1px solid var(--accent-primary-border)',
-            color: 'var(--accent-primary)',
-            fontSize: '12.5px',
-            fontWeight: 500,
-            cursor: 'pointer',
-            transition: 'background 0.15s ease',
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#dbeafe')}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--accent-primary-subtle)')}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-            <ShieldCheck size={15} />
-            <span>Admin Dashboard</span>
-          </div>
-          <ChevronRight size={14} />
-        </button>
-
         <div
           style={{
             display: 'flex',
